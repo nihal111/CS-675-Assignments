@@ -25,8 +25,8 @@ namespace csX75
     glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
     // Load shaders and use the resulting shader program
-    std::string vertex_shader_file("vshader.glsl");
-    std::string fragment_shader_file("fshader.glsl");
+    std::string vertex_shader_file("shaders/vshader.glsl");
+    std::string fragment_shader_file("shaders/fshader.glsl");
 
     std::vector<GLuint> shader_list;
     shader_list.push_back(csX75::load_shader(GL_VERTEX_SHADER, vertex_shader_file));
