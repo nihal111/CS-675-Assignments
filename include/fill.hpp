@@ -43,9 +43,4 @@ namespace mydraw
 	{
 
 	};
-
-	class scanfill_t : public fill_t
-	{
-
-	};
 }
