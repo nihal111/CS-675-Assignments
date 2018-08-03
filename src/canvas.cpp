@@ -218,8 +218,8 @@ namespace mydraw
 
 		num_bytes_written = stbi_write_tga( drwfilename.c_str(), width, height, 4, (void*)ustore );
 
-		if (ustore != NULL)
-			delete[] ustore;
+		//if (ustore != NULL)
+			//delete[] ustore;
 
 		return num_bytes_written;
 	}

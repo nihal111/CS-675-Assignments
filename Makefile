@@ -43,7 +43,7 @@ else
   OPENGLLIB := -lGL
   LDFLAGS := 
   CPPFLAGS := -I$(INCDIR)
-  CFLAGS := -std=c++11 -O3 -Wall 
+  CFLAGS := -std=c++11 -O3 -Wall -Wno-unused-function
 endif
 
 GLEWLIB= -lGLEW

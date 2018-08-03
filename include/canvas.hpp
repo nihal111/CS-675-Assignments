@@ -76,8 +76,8 @@ namespace mydraw
 		//! The drawing context for the canvas
 		draw_context_t* context;
 
-		int width;
-		int height;
+		unsigned int width;
+		unsigned int height;
 
 		//! Pixel data for the canvas is stored in this array of size 4*width*height
 		float* store;
@@ -110,8 +110,8 @@ namespace mydraw
 		void set_pixel(const unsigned int x, const unsigned int y);
 		void erase_pixel(const point_t &pt);
 
-		int get_width(void) const { return width; }
-		int get_height(void) const { return height; }
+		unsigned int get_width(void) const { return width; }
+		unsigned int get_height(void) const { return height; }
 
 		unsigned int get_canvas_texture(void) {return canvas_texture;}
 		void set_canvas_texture(unsigned int _tex) { canvas_texture = _tex;}
