@@ -60,6 +60,7 @@ namespace mydraw
 	public:
 		virtual ~brush_t() { }
 		virtual void stroke (const point_t &pt, canvas_t &canvas) = 0;
+	        virtual void stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas) = 0;
 
 		void set_size(int _size) {size = _size;}
 		void set_type(brush_type_t _type) { type = _type;}
@@ -85,7 +86,7 @@ namespace mydraw
 		~point_brush_t() { }
 
 		void stroke (const point_t &pt, canvas_t &canvas);
-
+	        void stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas); 
 	};
 
 	/**
@@ -106,6 +107,7 @@ namespace mydraw
 		~eraser_point_brush_t() { }
 
 		void stroke (const point_t &pt, canvas_t &canvas);
+	        void stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas);
 	};
 
 

@@ -84,7 +84,7 @@ namespace mydraw
 			{
 				unsigned int index=0, uindex=0;
 				index=(4*width*y) + (4*x);
-				uindex=(4*width*(height-y)) + (4*x);
+				uindex=(4*width*(height-1-y)) + (4*x);
 				store[index]=float(ustore[uindex])/255.0f;
 				store[index+1]=float(ustore[uindex+1])/255.0f;
 				store[index+2]=float(ustore[uindex+2])/255.0f;
@@ -98,6 +98,7 @@ namespace mydraw
 		width=1024;
 		height=768;
 		init_context();
+		store = NULL;
 		make_store();
 	}
 
@@ -105,6 +106,7 @@ namespace mydraw
 	{
 		drw_file_present=false;
 		init_context();
+		store = NULL;
 		make_store();
 	}
 
@@ -112,6 +114,7 @@ namespace mydraw
 	{
 		drw_file_present=true;
 		init_context();
+		store = NULL;
 		load();
 	}
 
@@ -203,24 +206,25 @@ namespace mydraw
 			drwfilename="default.tga"; drw_file_present=true;
 		}
 
+		
 		unsigned char* ustore = new unsigned char[width*height*4];
 		for(unsigned int x=0; x<width; x++)
 			for(unsigned int y=0;y<height; y++)
 			{
 				unsigned int index=0, uindex=0;
 				index=(4*width*y) + (4*x);
-				uindex=(4*width*(height-y)) + (4*x);
+				uindex=(4*width*(height-1-y)) + (4*x);
 				ustore[uindex] = (unsigned char)(255.0f*store[index]);
 				ustore[uindex+1]=(unsigned char)(255.0f*store[index+1]);
 				ustore[uindex+2]=(unsigned char)(255.0f*store[index+2]);
 				ustore[uindex+3]=(unsigned char)(255.0f*store[index+3]);
 			}
-
+	
 		num_bytes_written = stbi_write_tga( drwfilename.c_str(), width, height, 4, (void*)ustore );
 
-		//if (ustore != NULL)
-			//delete[] ustore;
-
+		if (ustore != NULL)
+		  delete[] ustore;
+		
 		return num_bytes_written;
 	}
 }

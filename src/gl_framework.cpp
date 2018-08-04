@@ -142,7 +142,7 @@ namespace csX75
         if (action == GLFW_PRESS)
         {
           ypos=mycanvas->get_height()-ypos;
-          mycanvas->set_pixel(xpos,ypos);
+          mycanvas->get_context()->current_brush->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
         }
           break;
       default:
