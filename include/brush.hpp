@@ -79,7 +79,7 @@ namespace mydraw
 	public:
 		point_brush_t()
 		{
-			set_size(10);
+			set_size(1);
 			set_type(brush_type_t::point);
 		}
 

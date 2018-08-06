@@ -109,8 +109,9 @@ namespace mydraw
 		void set_pixel(const point_t &pt);
 		void set_pixel(const unsigned int x, const unsigned int y);
 		void erase_pixel(const point_t &pt);
+		void erase_pixel(const unsigned int x, const unsigned int y);
 
-	        draw_context_t* get_context(void) { return context; }
+		draw_context_t* get_context(void) { return context; }
 
 		unsigned int get_width(void) const { return width; }
 		unsigned int get_height(void) const { return height; }

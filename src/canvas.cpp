@@ -170,6 +170,16 @@ namespace mydraw
 		store[index+3]=context->bg_color.a;
 	}
 
+	void canvas_t::erase_pixel(const unsigned int x, const unsigned int y)
+	{
+		unsigned int index=0;
+		index=(4*width*y) + (4*x);
+		store[index]=context->bg_color.r;
+		store[index+1]=context->bg_color.g;
+		store[index+2]=context->bg_color.b;
+		store[index+3]=context->bg_color.a;
+	}
+
 	int canvas_t::load(void)
 	{
 		int num_bytes_read=0;
