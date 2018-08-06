@@ -37,10 +37,19 @@
 #include "brush.hpp"
 #include "color.hpp"
 #include "fill.hpp"
-#include"primitive.hpp"
+#include "primitive.hpp"
 
 namespace mydraw
 {
+	/**
+	 * \brief Enum for brush mode (draw or erase)
+	 */
+	enum class brush_mode_t
+	{
+		draw,
+		erase
+	};
+
 	/**
 	 * \brief Data that makes up mydraw's current context
 	 */
@@ -52,9 +61,15 @@ namespace mydraw
 	
 		brush_t *current_brush;
 		brush_t *current_eraser;
+		brush_mode_t current_brush_mode;
 
 		primitive_mode_t current_pmode;
 		fill_t	*current_fill;
+		
+		void set_draw_mode() {current_brush_mode = brush_mode_t::draw;}
+		void set_erase_mode() {current_brush_mode = brush_mode_t::erase;}
+		bool is_draw_mode() {return current_brush_mode == brush_mode_t::draw;}
+		bool is_erase_mode() {return current_brush_mode == brush_mode_t::erase;}
 	};
 
 	/**
