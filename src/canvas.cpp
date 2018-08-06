@@ -52,6 +52,7 @@ namespace mydraw
 
 		context->current_brush = new point_brush_t;
 		context->current_eraser = new eraser_point_brush_t;
+		context->current_brush_mode = brush_mode_t::draw;
 
 		context->current_pmode = primitive_mode_t::point;
 		context->current_fill = new floodfill_t;
@@ -164,6 +165,16 @@ namespace mydraw
 		index=(4*width*y) + (4*x);
 
 
+		store[index]=context->bg_color.r;
+		store[index+1]=context->bg_color.g;
+		store[index+2]=context->bg_color.b;
+		store[index+3]=context->bg_color.a;
+	}
+
+	void canvas_t::erase_pixel(const unsigned int x, const unsigned int y)
+	{
+		unsigned int index=0;
+		index=(4*width*y) + (4*x);
 		store[index]=context->bg_color.r;
 		store[index+1]=context->bg_color.g;
 		store[index+2]=context->bg_color.b;

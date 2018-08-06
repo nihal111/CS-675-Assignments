@@ -126,6 +126,16 @@ namespace csX75
       mycanvas->save();
       std::cerr<<"Saving canvas."<<std::endl;
     }
+    else if (key == GLFW_KEY_E && action == GLFW_PRESS)
+    {
+      mycanvas->get_context()->set_erase_mode();
+      std::cout<<"Switched to Eraser."<<std::endl;
+    }
+    else if (key == GLFW_KEY_B && action == GLFW_PRESS)
+    {
+      mycanvas->get_context()->set_draw_mode();
+      std::cout<<"Switched to Brush."<<std::endl;
+    }
   }  
 
   //!GLFW mouse callback
@@ -142,7 +152,14 @@ namespace csX75
         if (action == GLFW_PRESS)
         {
           ypos=mycanvas->get_height()-ypos;
-          mycanvas->get_context()->current_brush->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+          if (mycanvas->get_context()->is_draw_mode())
+          {
+            mycanvas->get_context()->current_brush->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+          }
+          else
+          {
+            mycanvas->get_context()->current_eraser->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+          }
         }
           break;
       default:

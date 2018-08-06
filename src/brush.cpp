@@ -32,27 +32,118 @@
 
 #include "brush.hpp"
 #include "canvas.hpp"
+#include <vector>
+#include <iostream>
 
 namespace mydraw 
 {
- void point_brush_t::stroke (const point_t &pt, canvas_t &canvas)
+	std::vector<point_t*> get_square_points(unsigned int xpos, unsigned int ypos, int size)
+	{
+		std::vector<point_t*> points;
+		if (size % 2 == 0)
 		{
-			if (get_size()==1)
-				canvas.set_pixel(pt);
-		}
- void point_brush_t::stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas)
- {
-   if (get_size()==1) canvas->set_pixel(xpos,ypos);
- }
-  
- void eraser_point_brush_t::stroke (const point_t &pt, canvas_t &canvas)
+			for (int i = xpos - size/2; i < int(xpos + size/2); i++)
+			{
+				for (int j = ypos - size/2; j < int(ypos + size/2); j++)
+				{
+					if (i >= 0 && j >= 0) {
+						point_t *pt = new point_t(i, j);
+						points.push_back(pt);
+					}
+				}
+			}
+		} 
+		else
 		{
-			if (get_size()==1)
-				canvas.erase_pixel(pt);
+			for (int i = xpos -(size-1)/2; i <= int(xpos + (size-1)/2); i++)
+			{
+				for (int j = ypos -(size-1)/2; j <= int(ypos + (size-1)/2); j++)
+				{
+					if (i >= 0 && j >= 0) 
+					{
+						point_t *pt = new point_t(i, j);
+						points.push_back(pt);
+					}
+				}
+			}
 		}
- void eraser_point_brush_t::stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas)
- {
-   if (get_size()==1) canvas->set_pixel(xpos,ypos);
- }
-  
+		return points;
+	}
+
+	std::vector<point_t*> get_circle_points(unsigned int xpos, unsigned int ypos, int size) {
+		std::vector<point_t*> points;
+		int radius_squared = size*size;
+		for (int i = xpos - size -1; i <= int(xpos + size + 1); i++)
+		{
+			for (int j = ypos - size -1; j <= int(ypos + size + 1); j++)
+			{
+				if (i >= 0 && j >= 0 && int((xpos - i)*(xpos - i) + (ypos - j)*(ypos - j)) <= radius_squared)
+				{
+					point_t *pt = new point_t(i, j);
+					points.push_back(pt);
+				}
+			}
+		}
+		return points;
+	}
+
+	void stroke_fill(std::vector<point_t*> points, canvas_t &canvas)
+	{
+		for(std::size_t i = 0; i < points.size(); i++)
+		{
+			canvas.set_pixel(*points[i]);
+		}
+	}
+
+	void stroke_erase(std::vector<point_t*> points, canvas_t &canvas)
+	{
+		for(std::size_t i = 0; i < points.size(); i++)
+		{
+			canvas.erase_pixel(*points[i]);
+		}
+	}
+
+	void point_brush_t::stroke (const point_t &pt, canvas_t &canvas)
+	{
+		if (get_size()==1)
+			canvas.set_pixel(pt);
+		else
+		{
+			std::vector<point_t*> points = get_circle_points(pt.x, pt.y, get_size());
+			stroke_fill(points, canvas);
+		}
+	}
+
+	void point_brush_t::stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas)
+	 {
+	 	if (get_size()==1) 
+	 		canvas->set_pixel(xpos,ypos);
+		else
+		{
+			std::vector<point_t*> points = get_circle_points(xpos, ypos, get_size());
+			stroke_fill(points, *canvas);
+		}
+	 }
+	  
+	void eraser_point_brush_t::stroke (const point_t &pt, canvas_t &canvas)
+	{
+		if (get_size()==1)
+			canvas.erase_pixel(pt);
+		else
+		{
+			std::vector<point_t*> points = get_circle_points(pt.x, pt.y, get_size());
+			stroke_erase(points, canvas);
+		}
+	}
+
+	void eraser_point_brush_t::stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas)
+	{
+		if (get_size()==1)
+			canvas->erase_pixel(xpos,ypos);
+		else
+		{
+			std::vector<point_t*> points = get_circle_points(xpos, ypos, get_size());
+			stroke_erase(points, *canvas);
+		}
+	}
 }
