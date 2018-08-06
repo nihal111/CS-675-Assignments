@@ -32,27 +32,74 @@
 
 #include "brush.hpp"
 #include "canvas.hpp"
+#include <iostream>
 
 namespace mydraw 
 {
- void point_brush_t::stroke (const point_t &pt, canvas_t &canvas)
-		{
-			if (get_size()==1)
-				canvas.set_pixel(pt);
+	void square_fill(unsigned int xpos, unsigned int ypos, canvas_t &canvas, int size) {
+		if (size % 2 == 0) {
+			for (int i = xpos - size/2; i < int(xpos + size/2); i++) {
+				for (int j = ypos - size/2; j < int(ypos + size/2); j++) {
+					if (i > 0 && j > 0) {
+						canvas.set_pixel(i, j);
+					}
+				}
+			}
+		} else {
+			for (int i = xpos -(size-1)/2; i <= int(xpos + (size-1)/2); i++) {
+				for (int j = ypos -(size-1)/2; j <= int(ypos + (size-1)/2); j++) {
+					if (i > 0 && j > 0) {
+						canvas.set_pixel(i, j);
+					}
+				}
+			}
 		}
- void point_brush_t::stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas)
- {
-   if (get_size()==1) canvas->set_pixel(xpos,ypos);
- }
-  
- void eraser_point_brush_t::stroke (const point_t &pt, canvas_t &canvas)
-		{
-			if (get_size()==1)
-				canvas.erase_pixel(pt);
+	}
+
+	void circle_fill(unsigned int xpos, unsigned int ypos, canvas_t &canvas, int size) {
+		int radius_squared = size*size;
+		for (int i = xpos - size -1; i <= int(xpos + size + 1); i++) {
+			for (int j = ypos - size -1; j <= int(ypos + size + 1); j++) {
+				if (i > 0 && j > 0 && int((xpos - i)*(xpos - i) + (ypos - j)*(ypos - j)) <= radius_squared) {
+					canvas.set_pixel(i, j);
+				}
+			}
 		}
- void eraser_point_brush_t::stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas)
- {
-   if (get_size()==1) canvas->set_pixel(xpos,ypos);
- }
-  
+	}
+
+	void point_brush_t::stroke (const point_t &pt, canvas_t &canvas)
+	{
+		if (get_size()==1)
+			canvas.set_pixel(pt);
+		else {
+			circle_fill(pt.x, pt.y, canvas, get_size());
+		}
+	}
+
+	void point_brush_t::stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas)
+	 {
+	 	if (get_size()==1) 
+	 		canvas->set_pixel(xpos,ypos);
+		else {
+			circle_fill(xpos, ypos, *canvas, get_size());
+		}
+	 }
+	  
+	void eraser_point_brush_t::stroke (const point_t &pt, canvas_t &canvas)
+	{
+		if (get_size()==1)
+			canvas.erase_pixel(pt);
+		else {
+			
+		}
+	}
+
+	void eraser_point_brush_t::stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas)
+	{
+		if (get_size()==1)
+			canvas->set_pixel(xpos,ypos);
+		else {
+			
+		}
+	}
 }
