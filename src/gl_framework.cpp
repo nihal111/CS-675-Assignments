@@ -136,6 +136,25 @@ namespace csX75
       mycanvas->get_context()->set_draw_mode();
       std::cout<<"Switched to Brush."<<std::endl;
     }
+    else if (key == GLFW_KEY_P && action == GLFW_PRESS)
+    {
+      mycanvas->get_context()->clear_buffer();
+      if (mycanvas->get_context()->is_point_mode())
+      {
+        mycanvas->get_context()->set_line_mode();
+        std::cout<<"Switched to Line mode."<<std::endl;
+      }
+      else if (mycanvas->get_context()->is_line_mode())
+      {
+        mycanvas->get_context()->set_triangle_mode();
+        std::cout<<"Switched to Triangle mode."<<std::endl;
+      }
+      else if (mycanvas->get_context()->is_triangle_mode())
+      {
+        mycanvas->get_context()->set_point_mode();
+        std::cout<<"Switched to Point mode."<<std::endl;
+      }
+    }
   }  
 
   //!GLFW mouse callback
@@ -154,9 +173,20 @@ namespace csX75
           ypos=mycanvas->get_height()-ypos;
           if (mycanvas->get_context()->is_draw_mode())
           {
-            mycanvas->get_context()->current_brush->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+            if (mycanvas->get_context()->is_point_mode())
+            {
+              mycanvas->get_context()->current_brush->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+            }
+            if (mycanvas->get_context()->is_line_mode())
+            {
+              mycanvas->draw_line((unsigned int)xpos, (unsigned int)ypos);
+            }
+            if (mycanvas->get_context()->is_triangle_mode())
+            {
+              mycanvas->draw_triangle((unsigned int)xpos, (unsigned int)ypos);
+            }
           }
-          else
+          else if (mycanvas->get_context()->is_erase_mode())
           {
             mycanvas->get_context()->current_eraser->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
           }
