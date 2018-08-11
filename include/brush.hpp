@@ -123,7 +123,7 @@ namespace mydraw
 	public:
 		smooth_brush_t()
 		{
-			set_size(1);
+			set_size(3);
 			set_type(brush_type_t::smooth);
 		}
 

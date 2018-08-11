@@ -237,6 +237,19 @@ namespace mydraw
 
 			// Get the points fitting the curve.
 			std::vector<point_t*> points = get_smooth_curve_points(prev_point, next_point, prev_grad, next_grad, *canvas);
+			unsigned int total_points = points.size();
+
+			// Take the size into account.
+			if (get_size()!=1)
+			{
+				for(std::size_t i = 0; i < total_points; i++)
+				{
+					point_t pt = *points[i];
+					std::vector<point_t*> circ_points = get_circle_points(pt.x, pt.y, get_size());
+					points.insert(points.end(), circ_points.begin(), circ_points.end());
+				}
+			}
+
 			stroke_fill(points, *canvas);
 		}
 	}
