@@ -48,7 +48,8 @@ namespace mydraw
 	enum class brush_mode_t
 	{
 		draw,
-		erase
+		erase,
+		smooth
 	};
 
 	/**
@@ -62,6 +63,7 @@ namespace mydraw
 	
 		brush_t *current_brush;
 		brush_t *current_eraser;
+		brush_t *current_smooth_brush;
 		brush_mode_t current_brush_mode;
 
 		primitive_mode_t current_pmode;
@@ -70,8 +72,10 @@ namespace mydraw
 		
 		void set_draw_mode() {current_brush_mode = brush_mode_t::draw;}
 		void set_erase_mode() {current_brush_mode = brush_mode_t::erase;}
+		void set_smooth_mode() {current_brush_mode = brush_mode_t::smooth;}
 		bool is_draw_mode() {return current_brush_mode == brush_mode_t::draw;}
 		bool is_erase_mode() {return current_brush_mode == brush_mode_t::erase;}
+		bool is_smooth_mode() {return current_brush_mode == brush_mode_t::smooth;}
 
 		void set_point_mode() {current_pmode = primitive_mode_t::point;}
 		void set_line_mode() {current_pmode = primitive_mode_t::line;}

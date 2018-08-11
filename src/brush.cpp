@@ -146,4 +146,26 @@ namespace mydraw
 			stroke_erase(points, *canvas);
 		}
 	}
+
+	void smooth_brush_t::stroke (const point_t &pt, canvas_t &canvas)
+	{
+		if (get_size()==1)
+			canvas.set_pixel(pt);
+		else
+		{
+			std::vector<point_t*> points = get_circle_points(pt.x, pt.y, get_size());
+			stroke_fill(points, canvas);
+		}
+	}
+
+	void smooth_brush_t::stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas)
+	 {
+		point_t pt(xpos, ypos);
+		buffer.push_back(pt);
+
+		if (buffer.size() > 1)
+		{
+			canvas->bresenham_draw_line(buffer[buffer.size() - 1], buffer[buffer.size() - 2]);
+		}
+	 }
 }
