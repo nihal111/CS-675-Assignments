@@ -38,6 +38,7 @@
 #include "color.hpp"
 #include "fill.hpp"
 #include "primitive.hpp"
+#include <vector>
 
 namespace mydraw
 {
@@ -64,12 +65,22 @@ namespace mydraw
 		brush_mode_t current_brush_mode;
 
 		primitive_mode_t current_pmode;
+		std::vector<point_t> buffer;
 		fill_t	*current_fill;
 		
 		void set_draw_mode() {current_brush_mode = brush_mode_t::draw;}
 		void set_erase_mode() {current_brush_mode = brush_mode_t::erase;}
 		bool is_draw_mode() {return current_brush_mode == brush_mode_t::draw;}
 		bool is_erase_mode() {return current_brush_mode == brush_mode_t::erase;}
+
+		void set_point_mode() {current_pmode = primitive_mode_t::point;}
+		void set_line_mode() {current_pmode = primitive_mode_t::line;}
+		void set_triangle_mode() {current_pmode = primitive_mode_t::triangle;}
+		bool is_point_mode() {return current_pmode == primitive_mode_t::point;}
+		bool is_line_mode() {return current_pmode == primitive_mode_t::line;}
+		bool is_triangle_mode() {return current_pmode == primitive_mode_t::triangle;}
+
+		void clear_buffer() {buffer.clear();}
 	};
 
 	/**
@@ -121,10 +132,17 @@ namespace mydraw
 		int save(void);
 
 		color_t get_pixel(const unsigned int x, const unsigned int y) const;
+
+		void draw_line(const unsigned int x, const unsigned int y);
+		void draw_triangle(const unsigned int x, const unsigned int y);
+
 		void set_pixel(const point_t &pt);
 		void set_pixel(const unsigned int x, const unsigned int y);
 		void erase_pixel(const point_t &pt);
 		void erase_pixel(const unsigned int x, const unsigned int y);
+
+		void bresenham_draw_line(const point_t &pt1, const point_t &pt2);
+		void create_triangle(const point_t &pt1, const point_t &pt2, const point_t &pt3);
 
 		draw_context_t* get_context(void) { return context; }
 
