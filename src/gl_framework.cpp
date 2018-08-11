@@ -138,6 +138,8 @@ namespace csX75
     }
     else if (key == GLFW_KEY_T && action == GLFW_PRESS)
     {
+      mycanvas->get_context()->current_smooth_brush->clear_points_buffer();
+      mycanvas->get_context()->current_smooth_brush->clear_gradient_buffer();
       mycanvas->get_context()->set_smooth_mode();
       std::cout<<"Switched to Smooth Brush."<<std::endl;
     }

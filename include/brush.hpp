@@ -67,6 +67,10 @@ namespace mydraw
 		const int get_size(void) const { return size; }
 		const brush_type_t get_type(void) const {return type;}
 		std::vector<point_t> buffer;
+		std::vector<float> gradient_buffer;
+
+		void clear_points_buffer() {buffer.clear();}
+		void clear_gradient_buffer() {gradient_buffer.clear();}
 	};
 
 	/**
