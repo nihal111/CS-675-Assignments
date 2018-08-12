@@ -281,6 +281,10 @@ namespace mydraw
 	{
 		unsigned int x=pt.x;
 		unsigned int y=pt.y;
+
+		if (x >= width || y >= height || x < 0 || y < 0)
+			return;
+
 		unsigned int index=0;
 		index=(4*width*y) + (4*x);
 
@@ -292,9 +296,11 @@ namespace mydraw
 
 	void canvas_t::set_pixel(const unsigned int x, const unsigned int y)
 	{
+		if (x >= width || y >= height || x < 0 || y < 0)
+			return;
+
 		unsigned int index=0;
 		index=(4*width*y) + (4*x);
-
 
 		store[index]=context->brush_color.r;
 		store[index+1]=context->brush_color.g;
@@ -307,9 +313,11 @@ namespace mydraw
 		unsigned int x=pt.x;
 		unsigned int y=pt.y;
 
+		if (x >= width || y >= height || x < 0 || y < 0)
+			return;
+
 		unsigned int index=0;
 		index=(4*width*y) + (4*x);
-
 
 		store[index]=context->bg_color.r;
 		store[index+1]=context->bg_color.g;
@@ -319,8 +327,12 @@ namespace mydraw
 
 	void canvas_t::erase_pixel(const unsigned int x, const unsigned int y)
 	{
+		if (x >= width || y >= height || x < 0 || y < 0)
+			return;
+
 		unsigned int index=0;
 		index=(4*width*y) + (4*x);
+		
 		store[index]=context->bg_color.r;
 		store[index+1]=context->bg_color.g;
 		store[index+2]=context->bg_color.b;
