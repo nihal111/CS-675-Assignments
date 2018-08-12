@@ -34,6 +34,7 @@
 #include "canvas.hpp"
 #include <vector>
 #include <iostream>
+#include <cmath>
 
 namespace mydraw 
 {
@@ -158,57 +159,39 @@ namespace mydraw
 		}
 	}
 
-	std::vector<point_t*> get_smooth_curve_points(const point_t &pt1, const point_t &pt2, const float gr1, const float gr2, canvas_t &canvas)
+	float dist_points(const point_t &pt1, const point_t &pt2)
 	{
-		// The points lying on the cubic curve.
+		float length = sqrt((pt1.x - pt2.x)*(pt1.x - pt2.x) + (pt1.y - pt2.y)*(pt1.y - pt2.y));
+		return length;
+	}
+
+	std::vector<point_t*> get_bezzier_curve_points(const point_t &pt1, const point_t &pt2, const point_t &pt3,canvas_t &canvas)
+	{
 		std::vector<point_t*> points;
-		float xpos1 = pt1.x;
-		float ypos1 = pt1.y;
-		float grad1 = gr1;
-
-		float xpos2 = pt2.x;
-		float ypos2 = pt2.y;
-		float grad2 = gr2;
-
-		if (pt1.x > pt2.x)
+		for (float t = 0; t <= 1; t = t + 0.001)
 		{
-			xpos1 = pt2.x;
-			ypos1 = pt2.y;
-			grad1 = gr2;
+			float xpos = (1-t)*(1-t)*pt1.x + 2*(1-t)*t*pt3.x + t*t*pt2.x;
+			float ypos = (1-t)*(1-t)*pt1.y + 2*(1-t)*t*pt3.y + t*t*pt2.y;
 
-			xpos2 = pt1.x;
-			ypos2 = pt1.y;
-			grad2 = gr1;
-		}
-
-		// Calculate the spline curve.
-		float a = grad1*(xpos2 - xpos1) - (ypos2 - ypos1);
-		float b = -grad2*(xpos2 - xpos1) + (ypos2 - ypos1);
-
-		for (float i = xpos1; i <= xpos2; i = i + 0.01)
-		{
-			float t = (i - xpos1)/(xpos2 - xpos1);
-			int j = int((1-t)*ypos1 + t*ypos2 + t*(1-t)*(a*(1-t) + b*t));
-
-			if (i >= 0 && j >= 0)
+			if (xpos >= 0 && ypos >= 0)
 			{
-				if ((unsigned int) i <= canvas.get_width() && (unsigned int) j <= canvas.get_height())
+				if ((unsigned int) xpos <= canvas.get_width() && (unsigned int) ypos <= canvas.get_height())
 				{
-					point_t *pt = new point_t(int(i), j);
+					point_t *pt = new point_t(int(xpos), int(ypos));
 					points.push_back(pt);
 				}
 			}
-
 		}
-
 		return points;
 	}
 
-	float calculate_gradient (const point_t &pt1, const point_t &pt2)
+	point_t calc_gradient_vector(const point_t &pt1, const point_t &pt2)
 	{
-		// Calculate the slope between two points.
-		float y = 1.0*(pt2.y - pt1.y)/(pt2.x - pt1.x);
-		return y;
+		float length = dist_points(pt1, pt2);
+		float xgrad = (pt2.x - pt1.x)/length;
+		float ygrad = (pt2.y - pt1.y)/length;
+		point_t grad(xgrad, ygrad);
+		return grad;
 	}
 
 	void smooth_brush_t::stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas)
@@ -224,19 +207,20 @@ namespace mydraw
 
 			if (buffer.size() == 2)
 			{
-				gradient_buffer.push_back(calculate_gradient(prev_point, next_point));
-				gradient_buffer.push_back(calculate_gradient(prev_point, next_point));
-			}
-			else
-			{
-				gradient_buffer.push_back(calculate_gradient(prev_point, next_point));
+				point_t gradient_vector = calc_gradient_vector(prev_point, next_point);
+				grad_buffer.push_back(gradient_vector);
+				grad_buffer.push_back(gradient_vector);
 			}
 
-			float prev_grad = gradient_buffer[buffer.size() - 2];
-			float next_grad = gradient_buffer[buffer.size() - 1];
+			point_t grad = grad_buffer[grad_buffer.size() - 1];
 
-			// Get the points fitting the curve.
-			std::vector<point_t*> points = get_smooth_curve_points(prev_point, next_point, prev_grad, next_grad, *canvas);
+			// Calculate a intermediate point.
+			float length = dist_points(prev_point, next_point)/3;
+			float ix = prev_point.x + length*grad.x;
+			float iy = prev_point.y + length*grad.y;
+			point_t ipoint(ix, iy);
+
+			std::vector<point_t*> points = get_bezzier_curve_points(prev_point, next_point, ipoint, *canvas);
 			unsigned int total_points = points.size();
 
 			// Take the size into account.
@@ -250,7 +234,13 @@ namespace mydraw
 				}
 			}
 
+			// Draw the curved point.
 			stroke_fill(points, *canvas);
+
+			// Calculate the next gradient vector.
+			point_t next_grad = calc_gradient_vector(ipoint, next_point);
+			grad_buffer.push_back(next_grad);
+
 		}
 	}
 }
