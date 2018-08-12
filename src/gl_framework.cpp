@@ -31,6 +31,7 @@
 */
 
 #include "gl_framework.hpp"
+#include "primitive.hpp"
 
 namespace csX75
 {
@@ -200,11 +201,11 @@ namespace csX75
             }
             if (mycanvas->get_context()->is_line_mode())
             {
-              mycanvas->draw_line((unsigned int)xpos, (unsigned int)ypos);
+              mydraw::draw_line((unsigned int)xpos, (unsigned int)ypos, mycanvas);
             }
             if (mycanvas->get_context()->is_triangle_mode())
             {
-              mycanvas->draw_triangle((unsigned int)xpos, (unsigned int)ypos);
+              mydraw::draw_triangle((unsigned int)xpos, (unsigned int)ypos, mycanvas);
             }
           }
           else if (mycanvas->get_context()->is_erase_mode())
