@@ -36,6 +36,9 @@
 
 namespace mydraw
 {
+	//! Forward Declaration to prevent a circular dependency
+	class canvas_t;
+	
 	enum class primitive_mode_t
 	{
 		point,
@@ -46,5 +49,11 @@ namespace mydraw
 	//2D point
 	typedef glm::vec2 point_t;
 
-	
+	void printer(int num);
+
+
+	void bresenham_draw_line(const point_t &pt1, const point_t &pt2);
+	void create_triangle(const point_t &pt1, const point_t &pt2, const point_t &pt3);
+	void draw_line(const unsigned int x, const unsigned int y, canvas_t *canvas);
+	void draw_triangle(const unsigned int x, const unsigned int y, canvas_t *canvas);
 }
