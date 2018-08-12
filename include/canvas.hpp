@@ -69,6 +69,11 @@ namespace mydraw
 		primitive_mode_t current_pmode;
 		std::vector<point_t> buffer;
 		fill_t	*current_fill;
+
+		void set_brush_color(color_t new_color) { brush_color = new_color; }
+		void set_bg_color(color_t new_color) { bg_color = new_color; }
+		color_t get_brush_color() { return brush_color; }
+		color_t get_bg_color() { return bg_color; }
 		
 		void set_draw_mode() {current_brush_mode = brush_mode_t::draw;}
 		void set_erase_mode() {current_brush_mode = brush_mode_t::erase;}
