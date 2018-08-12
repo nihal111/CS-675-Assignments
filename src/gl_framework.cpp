@@ -155,6 +155,20 @@ namespace csX75
         std::cout<<"Switched to Point mode."<<std::endl;
       }
     }
+    else if (key == GLFW_KEY_KP_ADD && action == GLFW_PRESS)
+    {
+      int prev_size = mycanvas->get_context()->current_brush->get_size();
+      mycanvas->get_context()->current_brush->set_size(prev_size + 1);
+      std::cout<<"Brush size set to "<<
+        mycanvas->get_context()->current_brush->get_size()<<std::endl;
+    }
+    else if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_PRESS)
+    {
+      int prev_size = mycanvas->get_context()->current_brush->get_size();
+      mycanvas->get_context()->current_brush->set_size(std::max(prev_size - 1, 1));
+      std::cout<<"Brush size set to "<<
+        mycanvas->get_context()->current_brush->get_size()<<std::endl;
+    }
   }  
 
   //!GLFW mouse callback
