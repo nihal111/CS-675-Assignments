@@ -31,6 +31,8 @@
 */
 
 #include "gl_framework.hpp"
+#include "primitive.hpp"
+#include "color.hpp"
 
 namespace csX75
 {
@@ -141,6 +143,34 @@ namespace csX75
       mycanvas->get_context()->set_fill_mode();
       std::cout<<"Switched to Fill mode."<<std::endl;
     }
+    else if (key == GLFW_KEY_T && action == GLFW_PRESS)
+    {
+      mycanvas->get_context()->current_smooth_brush->clear_points_buffer();
+      mycanvas->get_context()->current_smooth_brush->clear_gradient_buffer();
+      mycanvas->get_context()->set_smooth_mode();
+      std::cout<<"Switched to Smooth Brush."<<std::endl;
+    }
+    else if (key == GLFW_KEY_C && action == GLFW_PRESS)
+    {
+      std::cout<<"Enter new brush color (RGBA, float): ";
+      float r, g, b, a;
+      std::cin >> r >> g >> b >> a;
+      mydraw::color_t new_color(r, g, b, a);
+      mycanvas->get_context()->set_brush_color(new_color);
+      std::cout<<"Brush color set to "<< r << " " << " " 
+            << g << " " << b << " " << a << std::endl;
+      
+    }
+    else if (key == GLFW_KEY_D && action == GLFW_PRESS)
+    {
+      std::cout<<"Enter new BG color (RGBA, float): ";
+      float r, g, b, a;
+      std::cin >> r >> g >> b >> a;
+      mydraw::color_t new_color(r, g, b, a);
+      mycanvas->get_context()->set_bg_color(new_color);
+      std::cout<<"BG color set to "<< r << " " << " " 
+            << g << " " << b << " " << a << std::endl;
+    }
     else if (key == GLFW_KEY_P && action == GLFW_PRESS)
     {
       mycanvas->get_context()->clear_buffer();
@@ -158,6 +188,42 @@ namespace csX75
       {
         mycanvas->get_context()->set_point_mode();
         std::cout<<"Switched to Point mode."<<std::endl;
+      }
+    }
+    else if (key == GLFW_KEY_KP_ADD && action == GLFW_PRESS)
+    {
+      if (mycanvas->get_context()->is_draw_mode() || mycanvas->get_context()->is_smooth_mode())
+      {
+        int prev_size = mycanvas->get_context()->current_brush->get_size();
+        mycanvas->get_context()->current_brush->set_size(prev_size + 1);
+        mycanvas->get_context()->current_smooth_brush->set_size(prev_size + 1);
+        std::cout<<"Brush size set to "<<
+                mycanvas->get_context()->current_brush->get_size()<<std::endl;
+      }
+      else if (mycanvas->get_context()->is_erase_mode())
+      {
+        int prev_size = mycanvas->get_context()->current_eraser->get_size();
+        mycanvas->get_context()->current_eraser->set_size(prev_size + 1);
+        std::cout<<"Brush size set to "<<
+                mycanvas->get_context()->current_eraser->get_size()<<std::endl;
+      }
+    }
+    else if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_PRESS)
+    {
+      if (mycanvas->get_context()->is_draw_mode() || mycanvas->get_context()->is_smooth_mode())
+      {
+        int prev_size = mycanvas->get_context()->current_brush->get_size();
+        mycanvas->get_context()->current_brush->set_size(std::max(prev_size - 1, 1));
+        mycanvas->get_context()->current_smooth_brush->set_size(std::max(prev_size - 1, 1));
+        std::cout<<"Brush size set to "<<
+                mycanvas->get_context()->current_brush->get_size()<<std::endl;
+      }
+      else if (mycanvas->get_context()->is_erase_mode())
+      {
+        int prev_size = mycanvas->get_context()->current_eraser->get_size();
+        mycanvas->get_context()->current_eraser->set_size(std::max(prev_size - 1, 1));
+        std::cout<<"Brush size set to "<<
+                mycanvas->get_context()->current_eraser->get_size()<<std::endl;
       }
     }
   }  
@@ -184,11 +250,11 @@ namespace csX75
             }
             if (mycanvas->get_context()->is_line_mode())
             {
-              mycanvas->draw_line((unsigned int)xpos, (unsigned int)ypos);
+              mydraw::draw_line((unsigned int)xpos, (unsigned int)ypos, mycanvas);
             }
             if (mycanvas->get_context()->is_triangle_mode())
             {
-              mycanvas->draw_triangle((unsigned int)xpos, (unsigned int)ypos);
+              mydraw::draw_triangle((unsigned int)xpos, (unsigned int)ypos, mycanvas);
             }
           }
           else if (mycanvas->get_context()->is_erase_mode())
@@ -198,6 +264,10 @@ namespace csX75
           else if (mycanvas->get_context()->is_fill_mode())
           {
             mycanvas->get_context()->current_fill->fill_canvas((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+          }
+          else if (mycanvas->get_context()->is_smooth_mode())
+          {
+            mycanvas->get_context()->current_smooth_brush->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
           }
         }
           break;

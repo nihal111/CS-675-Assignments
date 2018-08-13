@@ -31,7 +31,7 @@
 */
 
 #pragma once
-
+#include <vector>
 #include "primitive.hpp"
 
 /**
@@ -43,7 +43,7 @@ namespace mydraw
 	class canvas_t;
 
 	//! Define more brush enumerations here
-	enum class brush_type_t {point, eraser_point};
+	enum class brush_type_t {point, eraser_point, smooth};
 
 	/**
 	 * \brief An abstract base brush class
@@ -66,6 +66,12 @@ namespace mydraw
 		void set_type(brush_type_t _type) { type = _type;}
 		const int get_size(void) const { return size; }
 		const brush_type_t get_type(void) const {return type;}
+		std::vector<point_t> buffer;
+		std::vector<float> gradient_buffer;
+		std::vector<point_t> grad_buffer;
+
+		void clear_points_buffer() {buffer.clear();}
+		void clear_gradient_buffer() {gradient_buffer.clear();}
 	};
 
 	/**
@@ -105,6 +111,24 @@ namespace mydraw
 		}
 
 		~eraser_point_brush_t() { }
+
+		void stroke (const point_t &pt, canvas_t &canvas);
+	        void stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas);
+	};
+
+	/**
+	 * \brief A smooth brush
+	 */
+	class smooth_brush_t: public brush_t
+	{
+	public:
+		smooth_brush_t()
+		{
+			set_size(1);
+			set_type(brush_type_t::smooth);
+		}
+
+		~smooth_brush_t() { }
 
 		void stroke (const point_t &pt, canvas_t &canvas);
 	        void stroke (unsigned int xpos, unsigned int ypos, canvas_t *canvas);

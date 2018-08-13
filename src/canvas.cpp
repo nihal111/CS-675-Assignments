@@ -53,6 +53,7 @@ namespace mydraw
 		context->current_brush = new point_brush_t;
 		context->current_eraser = new eraser_point_brush_t;
 		context->current_fill = new floodfill_t;
+		context->current_smooth_brush = new smooth_brush_t;
 		context->current_brush_mode = brush_mode_t::draw;
 
 		context->current_pmode = primitive_mode_t::point;
@@ -131,156 +132,14 @@ namespace mydraw
 		return color_t(r,g,b,a);
 	}
 
-	void canvas_t::bresenham_draw_line(const point_t &pt1, const point_t &pt2)
-	{	int x1, x2, y1, y2;
-		float slope, error;
-		if (pt2.y > pt1.y)
-		{
-			x1 = pt1.x, y1 = pt1.y;
-			x2 = pt2.x, y2 = pt2.y;
-		} else {
-			x1 = pt2.x, y1 = pt2.y;
-			x2 = pt1.x, y2 = pt1.y;
-		}
-
-		if (x1 == x2)
-		{
-			for (int y = y1; y <= y2; y++)
-			{
-				set_pixel(x1, y);
-			}
-			return;
-		}
-
-		if (y1 == y2)
-		{
-			for (int x = std::min(x1, x2); x <= std::max(x1, x2); x++)
-			{
-				set_pixel(x, y1);
-			}
-			return;
-		}
-
-		if (x1 < x2) {
-			slope = 1.0*(y2 - y1)/(x2 - x1);
-
-			if (slope < 1)
-			{
-				error = 0;
-
-				int y = y1;
-
-				for (int x = x1; x <= x2; x++)
-				{
-					set_pixel(x, y);
-					error = error + slope;
-					if (error >= 0.5)
-					{
-						y = y + 1;
-						error = error - 1.0;
-					}
-				}
-				return;
-			}
-			else
-			{
-				slope = 1.0*(x2 - x1)/(y2 - y1);
-				error = 0;
-
-				int x = x1;
-
-				for (int y = y1; y <= y2; y++)
-				{
-					set_pixel(x, y);
-					error = error + slope;
-					if (error >= 0.5)
-					{
-						x = x + 1;
-						error = error - 1.0;
-					}
-				}
-				return;
-			}
-		} 
-		else
-		{
-			slope = -1.0*(y2 - y1)/(x2 - x1);
-
-			if (slope < 1)
-			{
-				error = 0;
-
-				int y = y1;
-				for (int x = x1; x >= x2; x--)
-				{
-					set_pixel(x, y);
-					error = error + slope;
-					if (error >= 0.5)
-					{
-						y = y + 1;
-						error = error - 1.0;
-					}
-				}
-				return;
-			} 
-			else
-			{
-				slope = -1.0*(x2 - x1)/(y2 - y1);
-				error = 0;
-				int x = x2;
-				for (int y = y2; y >= y1; y--)
-				{
-					set_pixel(x, y);
-					error = error + slope;
-					if (error >= 0.5)
-					{
-						x = x + 1;
-						error = error - 1.0;
-					}
-				}
-			}
-		}
-	}
-
-	void canvas_t::create_triangle(const point_t &pt1, const point_t &pt2, const point_t &pt3)
-	{
-		bresenham_draw_line(pt1, pt2);
-		bresenham_draw_line(pt2, pt3);
-		bresenham_draw_line(pt1, pt3);
-	}
-
-	void canvas_t::draw_line(const unsigned int x, const unsigned int y)
-	{	
-		point_t pt(x, y);
-		context->buffer.push_back(pt);
-
-		if (context->buffer.size() == 2) {
-			//draw line
-			bresenham_draw_line(context->buffer[0], context->buffer[1]);
-
-			//clear buffer
-			context->buffer.clear();
-		}
-	}
-
-	void canvas_t::draw_triangle(const unsigned int x, const unsigned int y)
-	{
-		point_t pt(x, y);
-		context->buffer.push_back(pt);
-
-		if (context->buffer.size() == 3) {
-			//draw line
-			create_triangle(context->buffer[0], context->buffer[1], context->buffer[2]);
-
-			//clear first pt from buffer
-			context->buffer.erase(context->buffer.begin());
-		}
-	}
-
 	void canvas_t::set_pixel(const point_t &pt)
 	{
 		unsigned int x=pt.x;
 		unsigned int y=pt.y;
+
+		if (x >= width || y >= height || x < 0 || y < 0)
+			return;
+
 		unsigned int index=0;
 		index=(4*width*y) + (4*x);
 
@@ -292,9 +151,11 @@ namespace mydraw
 
 	void canvas_t::set_pixel(const unsigned int x, const unsigned int y)
 	{
+		if (x >= width || y >= height || x < 0 || y < 0)
+			return;
+
 		unsigned int index=0;
 		index=(4*width*y) + (4*x);
-
 
 		store[index]=context->brush_color.r;
 		store[index+1]=context->brush_color.g;
@@ -307,9 +168,11 @@ namespace mydraw
 		unsigned int x=pt.x;
 		unsigned int y=pt.y;
 
+		if (x >= width || y >= height || x < 0 || y < 0)
+			return;
+
 		unsigned int index=0;
 		index=(4*width*y) + (4*x);
-
 
 		store[index]=context->bg_color.r;
 		store[index+1]=context->bg_color.g;
@@ -319,8 +182,12 @@ namespace mydraw
 
 	void canvas_t::erase_pixel(const unsigned int x, const unsigned int y)
 	{
+		if (x >= width || y >= height || x < 0 || y < 0)
+			return;
+
 		unsigned int index=0;
 		index=(4*width*y) + (4*x);
+		
 		store[index]=context->bg_color.r;
 		store[index+1]=context->bg_color.g;
 		store[index+2]=context->bg_color.b;
