@@ -136,6 +136,11 @@ namespace csX75
       mycanvas->get_context()->set_draw_mode();
       std::cout<<"Switched to Brush."<<std::endl;
     }
+    else if (key == GLFW_KEY_F && action == GLFW_PRESS)
+    {
+      mycanvas->get_context()->set_fill_mode();
+      std::cout<<"Switched to Fill mode."<<std::endl;
+    }
     else if (key == GLFW_KEY_P && action == GLFW_PRESS)
     {
       mycanvas->get_context()->clear_buffer();
@@ -189,6 +194,10 @@ namespace csX75
           else if (mycanvas->get_context()->is_erase_mode())
           {
             mycanvas->get_context()->current_eraser->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+          }
+          else if (mycanvas->get_context()->is_fill_mode())
+          {
+            mycanvas->get_context()->current_fill->fill_canvas((unsigned int)xpos, (unsigned int)ypos, mycanvas);
           }
         }
           break;

@@ -34,13 +34,22 @@
 
 namespace mydraw
 {
+	class canvas_t;
+
 	class fill_t
 	{
-
+		public:
+			virtual ~fill_t() { }
+		    virtual void fill_canvas (unsigned int xpos, unsigned int ypos, canvas_t *canvas) = 0;
 	};
 
 	class floodfill_t : public fill_t
 	{
+		public:
+			floodfill_t() { }
+			~floodfill_t() { }
+
+			void fill_canvas (unsigned int xpos, unsigned int ypos, canvas_t *canvas);
 
 	};
 }

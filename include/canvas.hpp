@@ -48,7 +48,8 @@ namespace mydraw
 	enum class brush_mode_t
 	{
 		draw,
-		erase
+		erase,
+		fill_brush
 	};
 
 	/**
@@ -62,16 +63,18 @@ namespace mydraw
 	
 		brush_t *current_brush;
 		brush_t *current_eraser;
+		fill_t *current_fill;
 		brush_mode_t current_brush_mode;
 
 		primitive_mode_t current_pmode;
 		std::vector<point_t> buffer;
-		fill_t	*current_fill;
 		
 		void set_draw_mode() {current_brush_mode = brush_mode_t::draw;}
 		void set_erase_mode() {current_brush_mode = brush_mode_t::erase;}
+		void set_fill_mode() {current_brush_mode = brush_mode_t::fill_brush;}
 		bool is_draw_mode() {return current_brush_mode == brush_mode_t::draw;}
 		bool is_erase_mode() {return current_brush_mode == brush_mode_t::erase;}
+		bool is_fill_mode() {return current_brush_mode == brush_mode_t::fill_brush;}
 
 		void set_point_mode() {current_pmode = primitive_mode_t::point;}
 		void set_line_mode() {current_pmode = primitive_mode_t::line;}
