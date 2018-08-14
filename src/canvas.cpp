@@ -52,11 +52,11 @@ namespace mydraw
 
 		context->current_brush = new point_brush_t;
 		context->current_eraser = new eraser_point_brush_t;
+		context->current_fill = new floodfill_t;
 		context->current_smooth_brush = new smooth_brush_t;
 		context->current_brush_mode = brush_mode_t::draw;
 
 		context->current_pmode = primitive_mode_t::point;
-		context->current_fill = new floodfill_t;
 	}
 
 	void canvas_t::make_store(void)
