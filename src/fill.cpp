@@ -43,9 +43,9 @@ namespace mydraw
 
 		unsigned int visited[canvas->get_width()][canvas->get_height()];
 
-		for (int i = 0; (unsigned int) i < canvas->get_height(); i++)
+		for (int i = 0; (unsigned int) i < canvas->get_width(); i++)
 		{
-			for (int j = 0; (unsigned int) j < canvas->get_width(); j++)
+			for (int j = 0; (unsigned int) j < canvas->get_height(); j++)
 			{
 				visited[i][j] = 0;
 			}
