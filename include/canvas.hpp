@@ -76,18 +76,36 @@ namespace mydraw
 		color_t get_brush_color() { return brush_color; }
 		color_t get_bg_color() { return bg_color; }
 		
-		void set_draw_mode() {current_brush_mode = brush_mode_t::draw;}
-		void set_erase_mode() {current_brush_mode = brush_mode_t::erase;}
-		void set_smooth_mode() {current_brush_mode = brush_mode_t::smooth;}
+		void set_draw_mode() {
+			buffer.clear();
+			current_brush_mode = brush_mode_t::draw;
+		}
+		void set_erase_mode() {
+			buffer.clear();
+			current_brush_mode = brush_mode_t::erase;
+		}
+		void set_smooth_mode() {
+			buffer.clear();
+			current_brush_mode = brush_mode_t::smooth;
+		}
 		void set_fill_mode() {current_brush_mode = brush_mode_t::fill_brush;}
 		bool is_draw_mode() {return current_brush_mode == brush_mode_t::draw;}
 		bool is_erase_mode() {return current_brush_mode == brush_mode_t::erase;}
 		bool is_smooth_mode() {return current_brush_mode == brush_mode_t::smooth;}
 		bool is_fill_mode() {return current_brush_mode == brush_mode_t::fill_brush;}
 
-		void set_point_mode() {current_pmode = primitive_mode_t::point;}
-		void set_line_mode() {current_pmode = primitive_mode_t::line;}
-		void set_triangle_mode() {current_pmode = primitive_mode_t::triangle;}
+		void set_point_mode() {
+			buffer.clear();
+			current_pmode = primitive_mode_t::point;
+		}
+		void set_line_mode() {
+			buffer.clear();
+			current_pmode = primitive_mode_t::line;
+		}
+		void set_triangle_mode() {
+			buffer.clear();
+			current_pmode = primitive_mode_t::triangle;
+		}
 		bool is_point_mode() {return current_pmode == primitive_mode_t::point;}
 		bool is_line_mode() {return current_pmode == primitive_mode_t::line;}
 		bool is_triangle_mode() {return current_pmode == primitive_mode_t::triangle;}

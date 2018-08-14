@@ -38,6 +38,7 @@ namespace mydraw
 {
 	//! Forward Declaration to prevent a circular dependency
 	class canvas_t;
+	class brush_t;
 	
 	enum class primitive_mode_t
 	{
@@ -51,6 +52,6 @@ namespace mydraw
 
 	void printer(int num);
 	
-	void draw_line(const unsigned int x, const unsigned int y, canvas_t *canvas);
-	void draw_triangle(const unsigned int x, const unsigned int y, canvas_t *canvas);
+	void draw_line(const unsigned int x, const unsigned int y, canvas_t *canvas, brush_t *brush);
+	void draw_triangle(const unsigned int x, const unsigned int y, canvas_t *canvas, brush_t *brush);
 }
