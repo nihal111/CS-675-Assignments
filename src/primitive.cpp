@@ -35,7 +35,7 @@
 
 namespace mydraw {
 
-	void bresenham_draw_line(const point_t &pt1, const point_t &pt2, canvas_t *canvas)
+	void bresenham_draw_line(const point_t &pt1, const point_t &pt2, canvas_t *canvas, brush_t *brush)
 	{	int x1, x2, y1, y2;
 		float slope, error;
 		if (pt2.y > pt1.y)
@@ -51,7 +51,7 @@ namespace mydraw {
 		{
 			for (int y = y1; y <= y2; y++)
 			{
-				canvas->get_context()->current_brush->stroke((unsigned int) x1, (unsigned int) y, canvas);
+				brush->stroke((unsigned int) x1, (unsigned int) y, canvas);
 			}
 			return;
 		}
@@ -60,7 +60,7 @@ namespace mydraw {
 		{
 			for (int x = std::min(x1, x2); x <= std::max(x1, x2); x++)
 			{
-				canvas->get_context()->current_brush->stroke((unsigned int) x, (unsigned int) y1, canvas);
+				brush->stroke((unsigned int) x, (unsigned int) y1, canvas);
 			}
 			return;
 		}
@@ -76,7 +76,7 @@ namespace mydraw {
 
 				for (int x = x1; x <= x2; x++)
 				{
-					canvas->get_context()->current_brush->stroke((unsigned int) x, (unsigned int) y, canvas);
+					brush->stroke((unsigned int) x, (unsigned int) y, canvas);
 					error = error + slope;
 					if (error >= 0.5)
 					{
@@ -95,7 +95,7 @@ namespace mydraw {
 
 				for (int y = y1; y <= y2; y++)
 				{
-					canvas->get_context()->current_brush->stroke((unsigned int) x, (unsigned int) y, canvas);
+					brush->stroke((unsigned int) x, (unsigned int) y, canvas);
 					error = error + slope;
 					if (error >= 0.5)
 					{
@@ -117,7 +117,7 @@ namespace mydraw {
 				int y = y1;
 				for (int x = x1; x >= x2; x--)
 				{
-					canvas->get_context()->current_brush->stroke((unsigned int) x, (unsigned int) y, canvas);
+					brush->stroke((unsigned int) x, (unsigned int) y, canvas);
 					error = error + slope;
 					if (error >= 0.5)
 					{
@@ -134,7 +134,7 @@ namespace mydraw {
 				int x = x2;
 				for (int y = y2; y >= y1; y--)
 				{
-					canvas->get_context()->current_brush->stroke((unsigned int) x, (unsigned int) y, canvas);
+					brush->stroke((unsigned int) x, (unsigned int) y, canvas);
 					error = error + slope;
 					if (error >= 0.5)
 					{
@@ -146,14 +146,14 @@ namespace mydraw {
 		}
 	}
 
-	void create_triangle(const point_t &pt1, const point_t &pt2, const point_t &pt3, canvas_t *canvas)
+	void create_triangle(const point_t &pt1, const point_t &pt2, const point_t &pt3, canvas_t *canvas, brush_t *brush)
 	{
-		bresenham_draw_line(pt1, pt2, canvas);
-		bresenham_draw_line(pt2, pt3, canvas);
-		bresenham_draw_line(pt1, pt3, canvas);
+		bresenham_draw_line(pt1, pt2, canvas, brush);
+		bresenham_draw_line(pt2, pt3, canvas, brush);
+		bresenham_draw_line(pt1, pt3, canvas, brush);
 	}
 
-	void draw_line(const unsigned int x, const unsigned int y, canvas_t *canvas)
+	void draw_line(const unsigned int x, const unsigned int y, canvas_t *canvas, brush_t *brush)
 	{	
 		point_t pt(x, y);
 		canvas->get_context()->buffer.push_back(pt);
@@ -162,14 +162,15 @@ namespace mydraw {
 			//draw line
 			bresenham_draw_line(canvas->get_context()->buffer[0], 
 				canvas->get_context()->buffer[1],
-				canvas);
+				canvas, 
+				brush);
 
 			//clear first pt from buffer
 			canvas->get_context()->buffer.erase(canvas->get_context()->buffer.begin());
 		}
 	}
 
-	void draw_triangle(const unsigned int x, const unsigned int y, canvas_t *canvas)
+	void draw_triangle(const unsigned int x, const unsigned int y, canvas_t *canvas, brush_t *brush)
 	{
 		point_t pt(x, y);
 		canvas->get_context()->buffer.push_back(pt);
@@ -179,7 +180,8 @@ namespace mydraw {
 			create_triangle(canvas->get_context()->buffer[0], 
 				canvas->get_context()->buffer[1], 
 				canvas->get_context()->buffer[2],
-				canvas);
+				canvas,
+				brush);
 
 			//clear first pt from buffer
 			canvas->get_context()->buffer.erase(canvas->get_context()->buffer.begin());

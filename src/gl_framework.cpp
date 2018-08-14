@@ -33,6 +33,7 @@
 #include "gl_framework.hpp"
 #include "primitive.hpp"
 #include "color.hpp"
+#include "brush.hpp"
 
 namespace csX75
 {
@@ -173,7 +174,6 @@ namespace csX75
     }
     else if (key == GLFW_KEY_P && action == GLFW_PRESS)
     {
-      mycanvas->get_context()->clear_buffer();
       if (mycanvas->get_context()->is_point_mode())
       {
         mycanvas->get_context()->set_line_mode();
@@ -244,22 +244,35 @@ namespace csX75
           ypos=mycanvas->get_height()-ypos;
           if (mycanvas->get_context()->is_draw_mode())
           {
+            mydraw::brush_t *current_brush = mycanvas->get_context()->current_brush;
             if (mycanvas->get_context()->is_point_mode())
             {
-              mycanvas->get_context()->current_brush->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+              current_brush->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
             }
             if (mycanvas->get_context()->is_line_mode())
             {
-              mydraw::draw_line((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+              mydraw::draw_line((unsigned int)xpos, (unsigned int)ypos, mycanvas, current_brush);
             }
             if (mycanvas->get_context()->is_triangle_mode())
             {
-              mydraw::draw_triangle((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+              mydraw::draw_triangle((unsigned int)xpos, (unsigned int)ypos, mycanvas, current_brush);
             }
           }
           else if (mycanvas->get_context()->is_erase_mode())
           {
-            mycanvas->get_context()->current_eraser->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+            mydraw::brush_t *current_eraser = mycanvas->get_context()->current_eraser;
+            if (mycanvas->get_context()->is_point_mode())
+            {
+              current_eraser->stroke((unsigned int)xpos, (unsigned int)ypos, mycanvas);
+            }
+            if (mycanvas->get_context()->is_line_mode())
+            {
+              mydraw::draw_line((unsigned int)xpos, (unsigned int)ypos, mycanvas, current_eraser);
+            }
+            if (mycanvas->get_context()->is_triangle_mode())
+            {
+              mydraw::draw_triangle((unsigned int)xpos, (unsigned int)ypos, mycanvas, current_eraser);
+            }
           }
           else if (mycanvas->get_context()->is_fill_mode())
           {
