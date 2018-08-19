@@ -190,7 +190,7 @@ namespace csX75
         std::cout<<"Switched to Point mode."<<std::endl;
       }
     }
-    else if (key == GLFW_KEY_KP_ADD && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_L && action == GLFW_PRESS)
     {
       if (mycanvas->get_context()->is_draw_mode() || mycanvas->get_context()->is_smooth_mode())
       {
@@ -208,7 +208,7 @@ namespace csX75
                 mycanvas->get_context()->current_eraser->get_size()<<std::endl;
       }
     }
-    else if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_K && action == GLFW_PRESS)
     {
       if (mycanvas->get_context()->is_draw_mode() || mycanvas->get_context()->is_smooth_mode())
       {
