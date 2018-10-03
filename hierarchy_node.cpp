@@ -8,12 +8,20 @@ extern std::vector<glm::mat4> matrixStack;
 namespace csX75
 {
 
-	HNode::HNode(HNode* a_parent, GLuint num_v, glm::vec4* a_vertices, glm::vec4* a_colours, std::size_t v_size, std::size_t c_size){
+	HNode::HNode(HNode* a_parent, GLuint num_v, glm::vec4* a_vertices, glm::vec4* a_colours, std::size_t v_size, std::size_t c_size,
+				GLfloat _min_rx=-1, GLfloat _max_rx=-1, GLfloat _min_ry=-1, GLfloat _max_ry=-1, GLfloat _min_rz=-1, GLfloat _max_rz=-1){
 
 		num_vertices = num_v;
 		vertex_buffer_size = v_size;
 		color_buffer_size = c_size;
 		// initialize vao and vbo of the object;
+
+		min_rx = _min_rx;
+		max_rx = _max_rx;
+		min_ry = _min_ry;
+		max_ry = _max_ry;
+		min_rz = _min_rz;
+		max_rz = _max_rz;
 
 
 		//Ask GL for a Vertex Attribute Objects (vao)
@@ -119,34 +127,46 @@ namespace csX75
 	}
 
 	void HNode::inc_rx(){
-		rx++;
-		update_matrices();
+		if (max_rx == -1 || rx + 1 <= max_rx) {
+			rx++;
+			update_matrices();
+		}
 	}
 
 
 	void HNode::inc_ry(){
-		ry++;
-		update_matrices();
+		if (max_ry == -1 || ry + 1 <= max_ry) {
+			ry++;
+			update_matrices();
+		}
 	}
 
 	void HNode::inc_rz(){
-		rz++;
-		update_matrices();
+		if (max_rz == -1 || rz + 1 <= max_rz) {
+			rz++;
+			update_matrices();
+		}
 	}
 
 	void HNode::dec_rx(){
-		rx--;
-		update_matrices();
+		if (min_rx == -1 || rx - 1 >= min_rx) {
+			rx--;
+			update_matrices();
+		}
 	}
 
 	void HNode::dec_ry(){
-		ry--;
-		update_matrices();
+		if (min_ry == -1 || ry - 1 >= min_ry) {
+			ry--;
+			update_matrices();
+		}
 	}
 
 	void HNode::dec_rz(){
-		rz--;
-		update_matrices();
+		if (min_rz == -1 || rz - 1 >= min_rz) {
+			rz--;
+			update_matrices();
+		}
 	}
 
 
