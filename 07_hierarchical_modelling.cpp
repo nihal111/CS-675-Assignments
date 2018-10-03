@@ -30,60 +30,90 @@ glm::mat4 view_matrix;
 glm::mat4 modelview_matrix;
 
 GLuint uModelViewMatrix;
-const int num_vertices = 36;
+const int base_box_num_vertices = 36;
 
 
 //-----------------------------------------------------------------
-
-//Eight vertices in homogenous coordinates
-//elongated cuboid , basic arm in the hierarchy;
-glm::vec4 positions[8] = {
-  glm::vec4(0.0, -0.25, 0.25, 1.0),
-  glm::vec4(0.0, 0.25, 0.25, 1.0),
-  glm::vec4(2.0, 0.25, 0.25, 1.0),
-  glm::vec4(2.0, -0.25, 0.25, 1.0),
-  glm::vec4(0.0, -0.25, -0.25, 1.0),
-  glm::vec4(0.0, 0.25, -0.25, 1.0),
-  glm::vec4(2.0, 0.25, -0.25, 1.0),
-  glm::vec4(2.0, -0.25, -0.25, 1.0)
+glm::vec4 box_vertices[8] = {
+  glm::vec4(-1.0, -0.5, 0.5, 1.0),
+  glm::vec4(-1.0, 0.5, 0.5, 1.0),
+  glm::vec4(1.0, 0.5, 0.5, 1.0),
+  glm::vec4(1.0, -0.5, 0.5, 1.0),
+  glm::vec4(-1.0, -0.5, -0.5, 1.0),
+  glm::vec4(-1.0, 0.5, -0.5, 1.0),
+  glm::vec4(1.0, 0.5, -0.5, 1.0),
+  glm::vec4(1.0, -0.5, -0.5, 1.0)
 };
 
-//RGBA colors
-glm::vec4 colors[8] = {
-  glm::vec4(0.0, 0.0, 0.0, 1.0),
-  glm::vec4(1.0, 0.0, 0.0, 1.0),
-  glm::vec4(1.0, 1.0, 0.0, 1.0),
-  glm::vec4(0.0, 1.0, 0.0, 1.0),
-  glm::vec4(0.0, 0.0, 1.0, 1.0),
-  glm::vec4(1.0, 0.0, 1.0, 1.0),
-  glm::vec4(1.0, 1.0, 1.0, 1.0),
-  glm::vec4(0.0, 1.0, 1.0, 1.0)
+glm::vec4 lid_vertices[4] = {
+  glm::vec4(-1.0, 0.5, 0.5, 1.0),
+  glm::vec4(1.0, 0.5, 0.5, 1.0),
+  glm::vec4(-1.0, 0.5, -0.5, 1.0),
+  glm::vec4(1.0, 0.5, -0.5, 1.0)
 };
+
+glm::vec4 color = glm::vec4(0.6, 0.6, 0.6, 1.0);
+glm::vec4 grey = glm::vec4(0.3, 0.3, 0.3, 1.0);
+glm::vec4 white = glm::vec4(0.2, 0.7, 0.7, 1.0);
+glm::vec4 red = glm::vec4(1.0, 0.2, 0.2, 1.0);
+glm::vec4 yellow = glm::vec4(0.8, 0.8, 0.0, 1.0);
+glm::vec4 green = glm::vec4(0.2, 0.7, 0.2, 1.0);
+glm::vec4 blue = glm::vec4(0.2, 0.2, 0.7, 1.0);
 
 int tri_idx=0;
-glm::vec4 v_positions[num_vertices];
-glm::vec4 v_colors[num_vertices];
+glm::vec4 base_box_positions[base_box_num_vertices];
+glm::vec4 base_box_colors[base_box_num_vertices];
+
 
 // quad generates two triangles for each face and assigns colors to the vertices
-void quad(int a, int b, int c, int d)
+void box_quad(int a, int b, int c, int d, glm::vec4 color)
 {
-  v_colors[tri_idx] = colors[a]; v_positions[tri_idx] = positions[a]; tri_idx++;
-  v_colors[tri_idx] = colors[b]; v_positions[tri_idx] = positions[b]; tri_idx++;
-  v_colors[tri_idx] = colors[c]; v_positions[tri_idx] = positions[c]; tri_idx++;
-  v_colors[tri_idx] = colors[a]; v_positions[tri_idx] = positions[a]; tri_idx++;
-  v_colors[tri_idx] = colors[c]; v_positions[tri_idx] = positions[c]; tri_idx++;
-  v_colors[tri_idx] = colors[d]; v_positions[tri_idx] = positions[d]; tri_idx++;
+  base_box_colors[tri_idx] = color; base_box_positions[tri_idx] = box_vertices[a];
+  tri_idx++;
+  base_box_colors[tri_idx] = color; base_box_positions[tri_idx] = box_vertices[b];
+  tri_idx++;
+  base_box_colors[tri_idx] = color; base_box_positions[tri_idx] = box_vertices[c];
+  tri_idx++;
+  base_box_colors[tri_idx] = color; base_box_positions[tri_idx] = box_vertices[a];
+  tri_idx++;
+  base_box_colors[tri_idx] = color; base_box_positions[tri_idx] = box_vertices[c];
+  tri_idx++;
+  base_box_colors[tri_idx] = color; base_box_positions[tri_idx] = box_vertices[d];
+  tri_idx++;
+ }
+
+
+static const int lid_num_vertices = 6;
+int lid_tri_idx=0;
+glm::vec4 lid_positions[lid_num_vertices];
+glm::vec4 lid_colors[lid_num_vertices];
+
+void lid_quad(int a, int b, int c, int d, glm::vec4 color)
+{
+  lid_colors[lid_tri_idx] = color; lid_positions[lid_tri_idx] = lid_vertices[a];
+  lid_tri_idx++;
+  lid_colors[lid_tri_idx] = color; lid_positions[lid_tri_idx] = lid_vertices[b];
+  lid_tri_idx++;
+  lid_colors[lid_tri_idx] = color; lid_positions[lid_tri_idx] = lid_vertices[c];
+  lid_tri_idx++;
+  lid_colors[lid_tri_idx] = color; lid_positions[lid_tri_idx] = lid_vertices[a];
+  lid_tri_idx++;
+  lid_colors[lid_tri_idx] = color; lid_positions[lid_tri_idx] = lid_vertices[c];
+  lid_tri_idx++;
+  lid_colors[lid_tri_idx] = color; lid_positions[lid_tri_idx] = lid_vertices[d];
+  lid_tri_idx++;
  }
 
 // generate 12 triangles: 36 vertices and 36 colors
 void colorcube(void)
 {
-    quad( 1, 0, 3, 2 );
-    quad( 2, 3, 7, 6 );
-    quad( 3, 0, 4, 7 );
-    quad( 6, 5, 1, 2 );
-    quad( 4, 5, 6, 7 );
-    quad( 5, 4, 0, 1 );
+  box_quad( 1, 0, 3, 2, red);
+  box_quad( 2, 3, 7, 6, green);
+  box_quad( 3, 0, 4, 7, white);
+  box_quad( 4, 5, 6, 7, grey);
+  box_quad( 5, 4, 0, 1, blue);
+
+  lid_quad( 3, 2, 0, 1, yellow);
 }
 
 
@@ -114,12 +144,21 @@ void initBuffersGL(void)
 
   //note that the buffers are initialized in the respective constructors
  
-  node1 = new csX75::HNode(NULL,num_vertices,v_positions,v_colors,sizeof(v_positions),sizeof(v_colors));
-  node2 = new csX75::HNode(node1,num_vertices,v_positions,v_colors,sizeof(v_positions),sizeof(v_colors));
-  node2->change_parameters(2.0,0.0,0.0,0.0,0.0,0.0);
-  node3 = new csX75::HNode(node2,num_vertices,v_positions,v_colors,sizeof(v_positions),sizeof(v_colors));
-  node3->change_parameters(2.0,0.0,0.0,0.0,0.0,0.0);
-  root_node = curr_node = node3;
+  // node1 = new csX75::HNode(NULL,num_vertices,v_positions,v_colors,sizeof(v_positions),sizeof(v_colors));
+  // node2 = new csX75::HNode(node1,num_vertices,v_positions,v_colors,sizeof(v_positions),sizeof(v_colors));
+  // node2->change_parameters(2.0,0.0,0.0,0.0,0.0,0.0);
+  // node3 = new csX75::HNode(node2,num_vertices,v_positions,v_colors,sizeof(v_positions),sizeof(v_colors));
+  // node3->change_parameters(2.0,0.0,0.0,0.0,0.0,0.0);
+  // root_node = curr_node = node3;
+
+  base_box = new csX75::HNode(NULL, base_box_num_vertices, base_box_positions, base_box_colors, 
+    sizeof(base_box_positions), sizeof(base_box_colors));
+  lid = new csX75::HNode(base_box, lid_num_vertices, lid_positions, lid_colors, 
+    sizeof(lid_positions), sizeof(lid_colors));
+  lid->change_parameters(0.0,-0.5,0.5,  // translation
+                         0.0,0.0,0.0,   // rotation
+                         0.0,0.5,-0.5); // back translation
+  curr_node = lid;
 
 }
 
@@ -150,7 +189,7 @@ void renderGL(void)
 
   matrixStack.push_back(view_matrix);
 
-  node1->render_tree();
+  base_box->render_tree();
 
 }
 

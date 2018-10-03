@@ -50,7 +50,7 @@ namespace csX75
 
 		//initial parameters are set to 0;
 
-		tx=ty=tz=rx=ry=rz=0;
+		tx=ty=tz=rx=ry=rz=btx=bty=btz=0;
 
 		update_matrices();
 	}
@@ -63,6 +63,8 @@ namespace csX75
 
 		translation = glm::translate(glm::mat4(1.0f),glm::vec3(tx,ty,tz));
 
+		back_translation = glm::translate(glm::mat4(1.0f),glm::vec3(btx,bty,btz));
+
 
 	}
 
@@ -71,13 +73,17 @@ namespace csX75
 
 	}
 
-	void HNode::change_parameters(GLfloat atx, GLfloat aty, GLfloat atz, GLfloat arx, GLfloat ary, GLfloat arz){
+	void HNode::change_parameters(GLfloat atx, GLfloat aty, GLfloat atz, GLfloat arx, GLfloat ary, GLfloat arz, 
+			GLfloat abtx, GLfloat abty, GLfloat abtz){
 		tx = atx;
 		ty = aty;
 		tz = atz;
 		rx = arx;
 		ry = ary;
 		rz = arz;
+		btx = abtx;
+		bty = abty;
+		btz = abtz;
 
 		update_matrices();
 	}
@@ -98,13 +104,15 @@ namespace csX75
 
 	void HNode::render_tree(){
 		
-		matrixStack.push_back(translation);
+		matrixStack.push_back(back_translation);
 		matrixStack.push_back(rotation);
+		matrixStack.push_back(translation);
 
 		render();
 		for(int i=0;i<children.size();i++){
 			children[i]->render_tree();
 		}
+		matrixStack.pop_back();
 		matrixStack.pop_back();
 		matrixStack.pop_back();
 

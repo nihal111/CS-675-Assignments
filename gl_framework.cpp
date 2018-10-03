@@ -3,7 +3,7 @@
 
 extern GLfloat c_xrot,c_yrot,c_zrot;
 extern bool enable_perspective;
-extern csX75::HNode* node1, *node2, *node3,*curr_node;
+extern csX75::HNode* base_box, *lid,*curr_node;
 namespace csX75
 {
   //! Initialize GL State
@@ -38,37 +38,35 @@ namespace csX75
     //!Close the window if the ESC key was pressed
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
       glfwSetWindowShouldClose(window, GL_TRUE);
-    else if (key == GLFW_KEY_1 && action == GLFW_PRESS)
-      curr_node = node1;  
-    else if (key == GLFW_KEY_2 && action == GLFW_PRESS)
-      curr_node = node2; 
-    else if (key == GLFW_KEY_3 && action == GLFW_PRESS)
-      curr_node = node3; 
-    else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_1)
+      curr_node = base_box;  
+    else if (key == GLFW_KEY_2)
+      curr_node = lid;
+    else if (key == GLFW_KEY_LEFT)
       curr_node->dec_ry();
-    else if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_RIGHT)
       curr_node->inc_ry();
-    else if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_UP)
       curr_node->dec_rx();
-    else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_DOWN)
       curr_node->inc_rx();
-    else if (key == GLFW_KEY_PAGE_UP && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_PAGE_UP)
       curr_node->dec_rz();
-    else if (key == GLFW_KEY_PAGE_DOWN && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_PAGE_DOWN)
       curr_node->inc_rz();
-    else if (key == GLFW_KEY_P && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_P)
       enable_perspective = !enable_perspective;   
-    else if (key == GLFW_KEY_A  && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_A)
       c_yrot -= 1.0;
-    else if (key == GLFW_KEY_D  && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_D)
       c_yrot += 1.0;
-    else if (key == GLFW_KEY_W  && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_W)
       c_xrot -= 1.0;
-    else if (key == GLFW_KEY_S  && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_S)
       c_xrot += 1.0;        
-    else if (key == GLFW_KEY_Q  && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_Q)
       c_zrot -= 1.0;
-    else if (key == GLFW_KEY_E  && action == GLFW_PRESS)
+    else if (key == GLFW_KEY_E)
       c_zrot += 1.0;   
   }
 };  
