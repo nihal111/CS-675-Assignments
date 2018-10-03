@@ -16,6 +16,8 @@
 
 #include "07_hierarchical_modelling.hpp"
 #include "opening_box.cpp"
+#include "box.cpp"
+#include "glm/ext.hpp"
 
 GLuint shaderProgram;
 
@@ -35,7 +37,18 @@ GLuint uModelViewMatrix;
 
 //-----------------------------------------------------------------
 
+glm::vec4 new_box_vertices[8] = {
+  glm::vec4(-1.0, -0.5, 0.5, 1.0),
+  glm::vec4(-1.0, 0.5, 0.5, 1.0),
+  glm::vec4(1.0, 0.5, 0.5, 1.0),
+  glm::vec4(1.0, -0.5, 0.5, 1.0),
+  glm::vec4(-1.0, -0.5, -0.5, 1.0),
+  glm::vec4(-1.0, 0.5, -0.5, 1.0),
+  glm::vec4(1.0, 0.5, -0.5, 1.0),
+  glm::vec4(1.0, -0.5, -0.5, 1.0)
+};
 
+csX75::HNode* new_box;
 //-----------------------------------------------------------------
 
 void initBuffersGL(void)
@@ -58,6 +71,8 @@ void initBuffersGL(void)
   uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
 
   init_opening_box();
+
+  new_box = get_box(new_box_vertices, red);
 
 }
 
@@ -88,7 +103,8 @@ void renderGL(void)
 
   matrixStack.push_back(view_matrix);
 
-  base_box->render_tree();
+  // base_box->render_tree();
+  new_box->render_tree();
 
 }
 
