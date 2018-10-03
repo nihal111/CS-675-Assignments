@@ -63,6 +63,11 @@ namespace csX75
 		update_matrices();
 	}
 
+	void HNode::set_parent(HNode* a_parent) {
+		parent = a_parent;
+		parent->add_child(this);
+	}
+
 	void HNode::update_matrices(){
 
 		rotation = glm::rotate(glm::mat4(1.0f), glm::radians(rx), glm::vec3(1.0f,0.0f,0.0f));

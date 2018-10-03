@@ -48,7 +48,8 @@ glm::vec4 new_box_vertices[8] = {
   glm::vec4(1.0, -0.5, -0.5, 1.0)
 };
 
-csX75::HNode* new_box;
+csX75::HNode* upper_arm;
+csX75::HNode* lower_arm;
 //-----------------------------------------------------------------
 
 void initBuffersGL(void)
@@ -72,7 +73,13 @@ void initBuffersGL(void)
 
   init_opening_box();
 
-  new_box = get_box(new_box_vertices, red);
+  lower_arm = get_box(new_box_vertices, red);
+  upper_arm = get_box(new_box_vertices, blue);
+
+  lower_arm->change_parameters(2.0,0.0,0.0,  // translation
+                               0.0,0.0,0.0,   // rotation
+                               0.0,0.0,0.0); // back translation
+  lower_arm->set_parent(upper_arm);
 
 }
 
@@ -94,17 +101,17 @@ void renderGL(void)
 
   //creating the projection matrix
   if(enable_perspective)
-    projection_matrix = glm::frustum(-7.0, 7.0, -7.0, 7.0, 1.0, 7.0);
+    projection_matrix = glm::frustum(-2.0, 2.0, -2.0, 2.0, 1.0, 5.0);
     //projection_matrix = glm::perspective(glm::radians(90.0),1.0,0.1,5.0);
   else
-    projection_matrix = glm::ortho(-7.0, 7.0, -7.0, 7.0, -5.0, 5.0);
+    projection_matrix = glm::ortho(-2.0, 2.0, -2.0, 2.0, -5.0, 5.0);
 
   view_matrix = projection_matrix*lookat_matrix;
 
   matrixStack.push_back(view_matrix);
 
-  // base_box->render_tree();
-  new_box->render_tree();
+  base_box->render_tree();
+  // upper_arm->render_tree();
 
 }
 
@@ -129,7 +136,7 @@ int main(int argc, char** argv)
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); 
 
   //! Create a windowed mode window and its OpenGL context
-  window = glfwCreateWindow(512, 512, "CS475/CS675 Tutorial 7: Hierarchical Modelling", NULL, NULL);
+  window = glfwCreateWindow(1024, 1024, "CS475/CS675 Tutorial 7: Hierarchical Modelling", NULL, NULL);
   if (!window)
     {
       glfwTerminate();

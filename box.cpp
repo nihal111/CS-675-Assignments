@@ -31,9 +31,6 @@ csX75::HNode* get_box(glm::vec4* a_vertices, glm::vec4 a_color) {
   tri_id = box_quad( 4, 5, 6, 7, a_vertices, a_color, tri_id, box_positions, box_colors);
   tri_id = box_quad( 5, 4, 0, 1, a_vertices, a_color, tri_id, box_positions, box_colors);
 
-  std::cout<<glm::to_string(box_positions[4])<<std::endl;
-  std::cout<<sizeof(box_positions) / sizeof(box_positions[0])<<std::endl;
-
   csX75::HNode* box = new csX75::HNode(NULL, box_num_vertices, box_positions, box_colors, 
                   sizeof(box_positions), sizeof(box_colors), 
                   -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f);

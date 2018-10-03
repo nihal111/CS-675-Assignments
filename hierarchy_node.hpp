@@ -44,6 +44,7 @@ namespace csX75	 {
 			GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, GLfloat);
 		//HNode (HNode* , glm::vec4*,  glm::vec4*,GLfloat,GLfloat,GLfloat,GLfloat,GLfloat,GLfloat);
 
+		void set_parent(HNode*);
 		void add_child(HNode*);
 		void render();
 		void change_parameters(GLfloat,GLfloat,GLfloat,
