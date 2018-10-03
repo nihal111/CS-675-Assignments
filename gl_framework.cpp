@@ -3,7 +3,7 @@
 
 extern GLfloat c_xrot,c_yrot,c_zrot;
 extern bool enable_perspective;
-extern csX75::HNode *base_box, *lid, *curr_node, *upper_arm, *lower_arm;
+extern csX75::HNode *base_box, *lid, *curr_node, *left_upper_arm, *left_lower_arm, *torso;
 namespace csX75
 {
   //! Initialize GL State
@@ -39,9 +39,11 @@ namespace csX75
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
       glfwSetWindowShouldClose(window, GL_TRUE);
     else if (key == GLFW_KEY_1)
-      curr_node = upper_arm;  
+      curr_node = left_upper_arm;  
     else if (key == GLFW_KEY_2)
-      curr_node = lower_arm;
+      curr_node = left_lower_arm;
+    else if (key == GLFW_KEY_3)
+      curr_node = torso;
     else if (key == GLFW_KEY_LEFT)
       curr_node->dec_ry();
     else if (key == GLFW_KEY_RIGHT)
