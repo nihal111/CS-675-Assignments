@@ -12,10 +12,10 @@ glm::vec4 opening_box_base_vertices[8] = {
 };
 
 glm::vec4 opening_box_lid_vertices[4] = {
-  glm::vec4(-1.0, 0.5, 0.5, 1.0),
-  glm::vec4(1.0, 0.5, 0.5, 1.0),
-  glm::vec4(-1.0, 0.5, -0.5, 1.0),
-  glm::vec4(1.0, 0.5, -0.5, 1.0)
+  glm::vec4(-1.0, 0.0, 1.0, 1.0),
+  glm::vec4(1.0, 0.0, 1.0, 1.0),
+  glm::vec4(-1.0, 0.0, 0.0, 1.0),
+  glm::vec4(1.0, 0.0, 0.0, 1.0)
 };
 
 int opening_box_base_tri_idx=0;
@@ -84,7 +84,7 @@ void init_opening_box(void)
   lid = new csX75::HNode(base_box, lid_num_vertices, opening_box_lid_positions, opening_box_lid_colors, 
     					 sizeof(opening_box_lid_positions), sizeof(opening_box_lid_colors),
     					 -180.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-  lid->change_parameters(0.0,-0.5,0.5,  // translation
+  lid->change_parameters(0.0,0.5,-0.5,  // translation
                          0.0,0.0,0.0);   // rotation
   curr_node = lid;
 

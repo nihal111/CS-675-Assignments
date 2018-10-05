@@ -248,8 +248,8 @@ void renderGL(void)
 
   matrixStack.push_back(view_matrix);
 
-  // base_box->render_tree();
-  torso->render_tree();
+  base_box->render_tree();
+  // torso->render_tree();
 
 }
 
