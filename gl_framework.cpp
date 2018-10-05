@@ -3,7 +3,10 @@
 
 extern GLfloat c_xrot,c_yrot,c_zrot;
 extern bool enable_perspective;
-extern csX75::HNode *base_box, *lid, *curr_node, *left_upper_arm, *left_lower_arm, *torso;
+extern csX75::HNode *base_box, *lid, *curr_node;
+extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_lower_arm, *torso, 
+                    *left_upper_leg, *left_lower_leg, *right_upper_leg, *right_lower_leg, *neck, *head;
+
 namespace csX75
 {
   //! Initialize GL State
@@ -39,11 +42,34 @@ namespace csX75
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
       glfwSetWindowShouldClose(window, GL_TRUE);
     else if (key == GLFW_KEY_1)
-      curr_node = left_upper_arm;  
-    else if (key == GLFW_KEY_2)
-      curr_node = left_lower_arm;
-    else if (key == GLFW_KEY_3)
+      curr_node = lid;
+
+    else if (key == GLFW_KEY_T)
       curr_node = torso;
+
+    else if (key == GLFW_KEY_Y)
+      curr_node = left_upper_arm;
+    else if (key == GLFW_KEY_U)
+      curr_node = left_lower_arm;
+    else if (key == GLFW_KEY_I)
+      curr_node = right_upper_arm;
+    else if (key == GLFW_KEY_O)
+      curr_node = right_lower_arm;
+
+    else if (key == GLFW_KEY_G)
+      curr_node = left_upper_leg;
+    else if (key == GLFW_KEY_H)
+      curr_node = left_lower_leg;
+    else if (key == GLFW_KEY_J)
+      curr_node = right_upper_leg;
+    else if (key == GLFW_KEY_K)
+      curr_node = right_lower_leg;
+
+    else if (key == GLFW_KEY_N)
+      curr_node = neck;
+    else if (key == GLFW_KEY_M)
+      curr_node = head;
+
     else if (key == GLFW_KEY_LEFT)
       curr_node->dec_ry();
     else if (key == GLFW_KEY_RIGHT)
