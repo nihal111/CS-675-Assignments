@@ -4,8 +4,9 @@
 extern GLfloat c_xrot,c_yrot,c_zrot;
 extern bool enable_perspective;
 extern csX75::HNode *base_box, *lid, *curr_node;
-extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_lower_arm, *torso, 
-                    *left_upper_leg, *left_lower_leg, *right_upper_leg, *right_lower_leg, *neck, *head;
+extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_lower_arm, *left_hand, *right_hand,
+                    *left_upper_leg, *left_lower_leg, *right_upper_leg, *right_lower_leg, *left_feet, *right_feet, 
+                    *torso, *neck, *head;
 
 namespace csX75
 {
@@ -64,6 +65,15 @@ namespace csX75
       curr_node = right_upper_leg;
     else if (key == GLFW_KEY_K)
       curr_node = right_lower_leg;
+
+    else if (key == GLFW_KEY_Z)
+      curr_node = left_hand;
+    else if (key == GLFW_KEY_X)
+      curr_node = right_hand;
+    else if (key == GLFW_KEY_C)
+      curr_node = left_feet;
+    else if (key == GLFW_KEY_V)
+      curr_node = right_feet;
 
     else if (key == GLFW_KEY_N)
       curr_node = neck;

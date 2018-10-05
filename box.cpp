@@ -18,7 +18,10 @@ int box_quad(int a, int b, int c, int d, glm::vec4* box_vertices, glm::vec4 colo
   return tri_idx;
  }
 
-csX75::HNode* get_box(glm::vec4* a_vertices, glm::vec4 a_color) {
+csX75::HNode* get_box(glm::vec4* a_vertices, glm::vec4 a_color,
+                      GLfloat _min_rx=-1, GLfloat _max_rx=-1, 
+                      GLfloat _min_ry=-1, GLfloat _max_ry=-1, 
+                      GLfloat _min_rz=-1, GLfloat _max_rz=-1) {
   int box_num_vertices = 36;
   int tri_id=0;
   glm::vec4 box_positions[36];
@@ -33,6 +36,6 @@ csX75::HNode* get_box(glm::vec4* a_vertices, glm::vec4 a_color) {
 
   csX75::HNode* box = new csX75::HNode(NULL, box_num_vertices, box_positions, box_colors, 
                   sizeof(box_positions), sizeof(box_colors), 
-                  -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f);
+                  _min_rx, _max_rx, _min_ry, _max_ry, _min_rz, _max_rz);
   return box;
 }
