@@ -146,10 +146,14 @@ void initBuffersGL(void)
   // -------------- TORSO
   // torso = get_box(torso_vertices, yellow);
   // torso = get_ellipsoid(0.1, 0.15, 0.03);
-  torso = get_cylinder(0.1, 0.30, 0.03);
+  glm::vec3 myRotationAxis(0.0, 1.0, 0.0);
+  glm::vec3 translateVector(0.0, 0.0, 0.0);
+  torso = get_cylinder(0.1, 0.03, 0.30, myRotationAxis, glm::radians(90.0f), translateVector);
   //--------------- ARMS
 
-  left_upper_arm = get_box(left_arm_vertices, blue);
+  glm::vec3 myRotationAxis(0.0, 1.0, 0.0);
+  glm::vec3 translateVector(0.0, 0.0, 0.0);
+  left_upper_arm = get_cylinder(, blue);
 
   left_upper_arm->set_parent(torso);
 
