@@ -68,8 +68,11 @@ void cylinder(double radius_x, double radius_y, double height_z)
 
 }
 
-csX75::HNode* get_cylinder(double radius_x, double height_z, double radius_y) {
-  cylinder(radius_x, radius_y, height_z);
+csX75::HNode* get_cylinder(double r1, double r2, double l) {
+  cylinder(r1, r2, l);
+
+  glm::vec3 myRotationAxis(0.0, 1.0, 0.0);
+  glm::mat4 rotMatrix = glm::rotate(glm::mat4(1.0f), 3.14f , myRotationAxis );
 
   csX75::HNode* cylindrical_joint = new csX75::HNode(NULL, c_num_vertices, c_v_positions, c_v_colors, 
                   sizeof(c_v_positions), sizeof(c_v_colors), 
