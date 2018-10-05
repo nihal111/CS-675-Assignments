@@ -13,7 +13,7 @@ glm::vec4 v_normals[num_vertices];
 float phi_step=(180/(float(Lats)*10))/2;
 float theta_step=(180/(float(Longs)*10))/2;
 
-void sphere(double radius_x, double radius_y, double radius_z, int Lats, int Longs)
+void sphere(double radius_x, double radius_y, double radius_z, int Lats, int Longs, glm::vec4 color)
 {
   float theta, phi;
 
@@ -32,7 +32,7 @@ void sphere(double radius_x, double radius_y, double radius_z, int Lats, int Lon
       float z = radius_z * cos(theta);
       glm::vec4 pt(x, y, z, 1.0);
 
-      v_colors[tri_idx] = red; v_positions[tri_idx] = pt; 
+      v_colors[tri_idx] = color; v_positions[tri_idx] = pt; 
       v_normals[tri_idx] = pt; tri_idx++;
 
       if(theta+theta_step>PI)
@@ -49,16 +49,15 @@ void sphere(double radius_x, double radius_y, double radius_z, int Lats, int Lon
   }
 }
 
-
-
-csX75::HNode* get_ellipsoid(double radius_x, double radius_y, double radius_z) {
-  sphere(radius_x, radius_y, radius_z, Lats, Longs);
-
-  std::cout<<sizeof(v_positions)/sizeof(v_positions[0])<<std::endl;
+csX75::HNode* get_ellipsoid(double radius_x, double radius_y, double radius_z, glm::vec4 a_color,
+                           GLfloat _min_rx=-1, GLfloat _max_rx=-1, 
+                           GLfloat _min_ry=-1, GLfloat _max_ry=-1, 
+                           GLfloat _min_rz=-1, GLfloat _max_rz=-1) {
+  sphere(radius_x, radius_y, radius_z, Lats, Longs, a_color);
 
   csX75::HNode* ellipsoid = new csX75::HNode(NULL, num_vertices, v_positions, v_colors, 
                   sizeof(v_positions), sizeof(v_colors), 
-                  -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f,
+                  _min_rx, _max_rx, _min_ry, _max_ry, _min_rz, _max_rz,
                   GL_TRIANGLE_STRIP);
   return ellipsoid;
 }
