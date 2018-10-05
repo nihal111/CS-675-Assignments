@@ -17,8 +17,10 @@
 #include "07_hierarchical_modelling.hpp"
 #include "opening_box.cpp"
 #include "box.cpp"
+#include "cmath"
 #include "ellipsoid.cpp"
 #include "glm/ext.hpp"
+#include "cylinder.cpp"
 
 GLuint shaderProgram;
 
@@ -142,8 +144,8 @@ void initBuffersGL(void)
 
   // -------------- TORSO
   // torso = get_box(torso_vertices, yellow);
-  torso = get_ellipsoid(0.1, 0.15, 0.03);
-
+  // torso = get_ellipsoid(0.1, 0.15, 0.03);
+  torso = get_cylinder(0.1, 0.30, 0.03);
   //--------------- ARMS
 
   left_upper_arm = get_box(left_arm_vertices, blue);

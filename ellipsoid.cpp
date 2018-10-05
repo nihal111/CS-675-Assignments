@@ -1,7 +1,6 @@
 int tesselation=50;
 int Lats = tesselation;
 int Longs = tesselation;
-bool wireframe=false;
 
 double PI=3.14159265;
 const int num_vertices = 3600;
@@ -10,10 +9,6 @@ int tri_idx=0;
 glm::vec4 v_positions[num_vertices];
 glm::vec4 v_colors[num_vertices];
 glm::vec4 v_normals[num_vertices];
-
-double Radius = 1.0;
-
-int prev_tess = 30; 
 
 float phi_step=(180/(float(Lats)*10))/2;
 float theta_step=(180/(float(Longs)*10))/2;
