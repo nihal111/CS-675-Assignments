@@ -141,8 +141,8 @@ void initBuffersGL(void)
   init_opening_box();
 
   // -------------- TORSO
-  torso = get_box(torso_vertices, yellow);
-  // torso = get_ellipsoid();
+  // torso = get_box(torso_vertices, yellow);
+  torso = get_ellipsoid(0.1, 0.15, 0.03);
 
   //--------------- ARMS
 
