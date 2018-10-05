@@ -9,7 +9,8 @@ namespace csX75
 {
 
 	HNode::HNode(HNode* a_parent, GLuint num_v, glm::vec4* a_vertices, glm::vec4* a_colours, std::size_t v_size, std::size_t c_size,
-				GLfloat _min_rx=-1, GLfloat _max_rx=-1, GLfloat _min_ry=-1, GLfloat _max_ry=-1, GLfloat _min_rz=-1, GLfloat _max_rz=-1){
+				GLfloat _min_rx=-1, GLfloat _max_rx=-1, GLfloat _min_ry=-1, GLfloat _max_ry=-1, GLfloat _min_rz=-1, GLfloat _max_rz=-1,
+				GLenum _render_mode){
 
 		num_vertices = num_v;
 		vertex_buffer_size = v_size;
@@ -22,6 +23,8 @@ namespace csX75
 		max_ry = _max_ry;
 		min_rz = _min_rz;
 		max_rz = _max_rz;
+
+		render_mode = _render_mode;
 
 
 		//Ask GL for a Vertex Attribute Objects (vao)
@@ -76,9 +79,6 @@ namespace csX75
 
 		translation = glm::translate(glm::mat4(1.0f),glm::vec3(tx,ty,tz));
 
-		back_translation = glm::translate(glm::mat4(1.0f),glm::vec3(btx,bty,btz));
-
-
 	}
 
 	void HNode::add_child(HNode* a_child){
@@ -86,17 +86,13 @@ namespace csX75
 
 	}
 
-	void HNode::change_parameters(GLfloat atx, GLfloat aty, GLfloat atz, GLfloat arx, GLfloat ary, GLfloat arz, 
-			GLfloat abtx, GLfloat abty, GLfloat abtz){
+	void HNode::change_parameters(GLfloat atx, GLfloat aty, GLfloat atz, GLfloat arx, GLfloat ary, GLfloat arz){
 		tx = atx;
 		ty = aty;
 		tz = atz;
 		rx = arx;
 		ry = ary;
 		rz = arz;
-		btx = abtx;
-		bty = abty;
-		btz = abtz;
 
 		update_matrices();
 	}
@@ -108,7 +104,7 @@ namespace csX75
 
 		glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(*ms_mult));
 		glBindVertexArray (vao);
-		glDrawArrays(GL_TRIANGLES, 0, num_vertices);
+		glDrawArrays(render_mode, 0, num_vertices);
 
 		// for memory 
 		delete ms_mult;
@@ -117,7 +113,6 @@ namespace csX75
 
 	void HNode::render_tree(){
 		
-		matrixStack.push_back(back_translation);
 		matrixStack.push_back(rotation);
 		matrixStack.push_back(translation);
 
@@ -125,7 +120,6 @@ namespace csX75
 		for(int i=0;i<children.size();i++){
 			children[i]->render_tree();
 		}
-		matrixStack.pop_back();
 		matrixStack.pop_back();
 		matrixStack.pop_back();
 

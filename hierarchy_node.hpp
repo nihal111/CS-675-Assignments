@@ -24,6 +24,8 @@ namespace csX75	 {
 		GLfloat tx,ty,tz,rx,ry,rz,btx,bty,btz;
 		GLfloat min_rx, max_rx, min_ry, max_ry, min_rz, max_rz;
 
+		GLenum render_mode;
+
 		std::size_t vertex_buffer_size;
 		std::size_t color_buffer_size;
 
@@ -41,14 +43,13 @@ namespace csX75	 {
 
 	  public:
 		HNode (HNode*, GLuint, glm::vec4*,  glm::vec4*, std::size_t, std::size_t, 
-			GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, GLfloat);
+			GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, GLenum=GL_TRIANGLES);
 		//HNode (HNode* , glm::vec4*,  glm::vec4*,GLfloat,GLfloat,GLfloat,GLfloat,GLfloat,GLfloat);
 
 		void set_parent(HNode*);
 		void add_child(HNode*);
 		void render();
-		void change_parameters(GLfloat,GLfloat,GLfloat,
-			GLfloat _min_rx=-1, GLfloat _max_rx=-1, GLfloat _min_ry=-1, GLfloat _max_ry=-1, GLfloat _min_rz=-1, GLfloat _max_rz=-1);
+		void change_parameters(GLfloat,GLfloat,GLfloat,GLfloat,GLfloat,GLfloat);
 		void render_tree();
 		void inc_rx();
 		void inc_ry();

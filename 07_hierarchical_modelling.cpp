@@ -17,6 +17,7 @@
 #include "07_hierarchical_modelling.hpp"
 #include "opening_box.cpp"
 #include "box.cpp"
+#include "ellipsoid.cpp"
 #include "glm/ext.hpp"
 
 GLuint shaderProgram;
@@ -37,59 +38,70 @@ GLuint uModelViewMatrix;
 
 //-----------------------------------------------------------------
 
-glm::vec4 upper_arm_vertices[8] = {
-  glm::vec4(-0.16, 0.08, 0.02, 1.0),
-  glm::vec4(-0.16, 0.125, 0.02, 1.0),
-  glm::vec4(-0.08, 0.125, 0.02, 1.0),
-  glm::vec4(-0.08, 0.08, 0.02, 1.0),
-  glm::vec4(-0.16, 0.08, -0.02, 1.0),
-  glm::vec4(-0.16, 0.125, -0.02, 1.0),
-  glm::vec4(-0.08, 0.125, -0.02, 1.0),
-  glm::vec4(-0.08, 0.08, -0.02, 1.0),
-};
-
-glm::vec4 upper_leg_vertices[8] = {
-  glm::vec4(-0.08, -0.208, 0.02, 1.0),
-  glm::vec4(-0.08, -0.125, 0.02, 1.0),
-  glm::vec4(-0.008, -0.125, 0.02, 1.0),
-  glm::vec4(-0.008, -0.208, 0.02, 1.0),
-  glm::vec4(-0.08, -0.208, -0.02, 1.0),
-  glm::vec4(-0.08, -0.125, -0.02, 1.0),
-  glm::vec4(-0.008, -0.125, -0.02, 1.0),
-  glm::vec4(-0.008, -0.208, -0.02, 1.0),
-};
-
 glm::vec4 torso_vertices[8] = {
-  glm::vec4(-0.08, -0.125, 0.02, 1.0),
-  glm::vec4(-0.08, 0.125, 0.02, 1.0),
-  glm::vec4(0.08, 0.125, 0.02, 1.0),
-  glm::vec4(0.08, -0.125, 0.02, 1.0),
-  glm::vec4(-0.08, -0.125, -0.02, 1.0),
-  glm::vec4(-0.08, 0.125, -0.02, 1.0),
-  glm::vec4(0.08, 0.125, -0.02, 1.0),
-  glm::vec4(0.08, -0.125, -0.02, 1.0),
+  glm::vec4(-0.1, -0.15, 0.03, 1.0),
+  glm::vec4(-0.1, 0.15, 0.03, 1.0),
+  glm::vec4(0.1, 0.15, 0.03, 1.0),
+  glm::vec4(0.1, -0.15, 0.03, 1.0),
+  glm::vec4(-0.1, -0.15, -0.03, 1.0),
+  glm::vec4(-0.1, 0.15, -0.03, 1.0),
+  glm::vec4(0.1, 0.15, -0.03, 1.0),
+  glm::vec4(0.1, -0.15, -0.03, 1.0),
+};
+
+glm::vec4 left_arm_vertices[8] = {
+  glm::vec4(-0.2, -0.04, 0.02, 1.0),
+  glm::vec4(-0.2, 0.04, 0.02, 1.0),
+  glm::vec4(0.0, 0.04, 0.02, 1.0),
+  glm::vec4(0.0, -0.04, 0.02, 1.0),
+  glm::vec4(-0.2, -0.04, -0.02, 1.0),
+  glm::vec4(-0.2, 0.04, -0.02, 1.0),
+  glm::vec4(0.0, 0.04, -0.02, 1.0),
+  glm::vec4(0.0, -0.04, -0.02, 1.0),
+};
+
+glm::vec4 right_arm_vertices[8] = {
+  glm::vec4(0.0, -0.04, 0.02, 1.0),
+  glm::vec4(0.0, 0.04, 0.02, 1.0),
+  glm::vec4(0.2, 0.04, 0.02, 1.0),
+  glm::vec4(0.2, -0.04, 0.02, 1.0),
+  glm::vec4(0.0, -0.04, -0.02, 1.0),
+  glm::vec4(0.0, 0.04, -0.02, 1.0),
+  glm::vec4(0.2, 0.04, -0.02, 1.0),
+  glm::vec4(0.2, -0.04, -0.02, 1.0),
+};
+
+glm::vec4 leg_vertices[8] = {
+  glm::vec4(-0.04, -0.2, 0.02, 1.0),
+  glm::vec4(-0.04, 0.0, 0.02, 1.0),
+  glm::vec4(0.04, 0.0, 0.02, 1.0),
+  glm::vec4(0.04, -0.2, 0.02, 1.0),
+  glm::vec4(-0.04, -0.2, -0.02, 1.0),
+  glm::vec4(-0.04, 0.0, -0.02, 1.0),
+  glm::vec4(0.04, 0.0, -0.02, 1.0),
+  glm::vec4(0.04, -0.2, -0.02, 1.0),
 };
 
 glm::vec4 neck_vertices[8] = {
-  glm::vec4(-0.02, 0.125, 0.02, 1.0),
-  glm::vec4(-0.02, 0.158, 0.02, 1.0),
-  glm::vec4(0.02, 0.158, 0.02, 1.0),
-  glm::vec4(0.02, 0.125, 0.02, 1.0),
-  glm::vec4(-0.02, 0.125, -0.02, 1.0),
-  glm::vec4(-0.02, 0.158, -0.02, 1.0),
-  glm::vec4(0.02, 0.158, -0.02, 1.0),
-  glm::vec4(0.02, 0.125, -0.02, 1.0),
+  glm::vec4(-0.03, 0.0, 0.02, 1.0),
+  glm::vec4(-0.03, 0.02, 0.02, 1.0),
+  glm::vec4(0.03, 0.02, 0.02, 1.0),
+  glm::vec4(0.03, 0.0, 0.02, 1.0),
+  glm::vec4(-0.03, 0.0, -0.02, 1.0),
+  glm::vec4(-0.03, 0.02, -0.02, 1.0),
+  glm::vec4(0.03, 0.02, -0.02, 1.0),
+  glm::vec4(0.03, 0.0, -0.02, 1.0),
 };
 
 glm::vec4 head_vertices[8] = {
-  glm::vec4(-0.058, 0.158, 0.02, 1.0),
-  glm::vec4(-0.058, 0.25, 0.02, 1.0),
-  glm::vec4(0.058, 0.25, 0.02, 1.0),
-  glm::vec4(0.058, 0.158, 0.02, 1.0),
-  glm::vec4(-0.058, 0.158, -0.02, 1.0),
-  glm::vec4(-0.058, 0.25, -0.02, 1.0),
-  glm::vec4(0.058, 0.25, -0.02, 1.0),
-  glm::vec4(0.058, 0.158, -0.02, 1.0),
+  glm::vec4(-0.06, 0.0, 0.02, 1.0),
+  glm::vec4(-0.06, 0.12, 0.02, 1.0),
+  glm::vec4(0.06, 0.12, 0.02, 1.0),
+  glm::vec4(0.06, 0.0, 0.02, 1.0),
+  glm::vec4(-0.06, 0.0, -0.02, 1.0),
+  glm::vec4(-0.06, 0.12, -0.02, 1.0),
+  glm::vec4(0.06, 0.12, -0.02, 1.0),
+  glm::vec4(0.06, 0.0, -0.02, 1.0),
 };
 
 csX75::HNode* torso;
@@ -130,68 +142,83 @@ void initBuffersGL(void)
 
   // -------------- TORSO
   torso = get_box(torso_vertices, yellow);
+  // torso = get_ellipsoid();
 
   //--------------- ARMS
 
-  left_lower_arm = get_box(upper_arm_vertices, red);
-  left_upper_arm = get_box(upper_arm_vertices, blue);
+  left_upper_arm = get_box(left_arm_vertices, blue);
 
   left_upper_arm->set_parent(torso);
 
-  left_lower_arm->change_parameters(-0.08,0.0,0.0,  // translation
-                               0.0,0.0,0.0,   // rotation
-                               0.0,0.0,0.0); // back translation
+  left_upper_arm->change_parameters(-0.1,0.11,0.0,  // translation
+                               0.0,0.0,0.0);   // rotation
+
+
+  left_lower_arm = get_box(left_arm_vertices, red);
   left_lower_arm->set_parent(left_upper_arm);
 
-  right_lower_arm = get_box(upper_arm_vertices, red);
-  right_upper_arm = get_box(upper_arm_vertices, blue);
+  left_lower_arm->change_parameters(-0.2,0.0,0.0,  // translation
+                               0.0,0.0,0.0);   // rotation
+
+  right_upper_arm = get_box(right_arm_vertices, blue);
 
   right_upper_arm->set_parent(torso);
 
-  right_lower_arm->change_parameters(-0.08,0.0,0.0,  // translation
-                               0.0,0.0,0.0,   // rotation
-                               0.0,0.0,0.0); // back translation
+  right_upper_arm->change_parameters(0.1,0.11,0.0,  // translation
+                               0.0,0.0,0.0);   // rotation
+
+
+  right_lower_arm = get_box(right_arm_vertices, red);
   right_lower_arm->set_parent(right_upper_arm);
 
-  right_upper_arm->change_parameters(0.0,0.0,0.0,  // translation
-                               0.0,180.0,0.0,   // rotation
-                               0.0,0.0,0.0); // back translation
+  right_lower_arm->change_parameters(0.2,0.0,0.0,  // translation
+                               0.0,0.0,0.0);   // rotation
 
   //--------------- LEGS
 
-  left_lower_leg = get_box(upper_leg_vertices, red);
-  left_upper_leg = get_box(upper_leg_vertices, blue);
+  left_upper_leg = get_box(leg_vertices, blue);
 
   left_upper_leg->set_parent(torso);
 
-  left_lower_leg->change_parameters(0.0,-0.08,0.0,  // translation
-                               0.0,0.0,0.0,   // rotation
-                               0.0,0.0,0.0); // back translation
+  left_upper_leg->change_parameters(-0.06,-0.15,0.0,  // translation
+                               0.0,0.0,0.0);   // rotation
+
+
+  left_lower_leg = get_box(leg_vertices, red);
   left_lower_leg->set_parent(left_upper_leg);
 
-  right_lower_leg = get_box(upper_leg_vertices, red);
-  right_upper_leg = get_box(upper_leg_vertices, blue);
+  left_lower_leg->change_parameters(0.0,-0.2,0.0,  // translation
+                               0.0,0.0,0.0);   // rotation
+
+  right_upper_leg = get_box(leg_vertices, blue);
 
   right_upper_leg->set_parent(torso);
 
-  right_lower_leg->change_parameters(0.0,-0.08,0.0,  // translation
-                               0.0,0.0,0.0,   // rotation
-                               0.0,0.0,0.0); // back translation
+  right_upper_leg->change_parameters(0.06,-0.15,0.0,  // translation
+                               0.0,0.0,0.0);   // rotation
+
+
+  right_lower_leg = get_box(leg_vertices, red);
   right_lower_leg->set_parent(right_upper_leg);
 
-  right_upper_leg->change_parameters(0.0,0.0,0.0,  // translation
-                               0.0,180.0,0.0,   // rotation
-                               0.0,0.0,0.0); // back translation
+  right_lower_leg->change_parameters(0.0,-0.2,0.0,  // translation
+                               0.0,0.0,0.0);   // rotation
 
   //--------------- NECK
 
   neck = get_box(neck_vertices, green);
   neck->set_parent(torso);
 
+  neck->change_parameters(0.0, 0.15, 0.0,
+                          0.0, 0.0, 0.0);
+
   //--------------- HEAD
 
   head = get_box(head_vertices, white);
   head->set_parent(neck);
+
+  head->change_parameters(0.0, 0.02, 0.0,
+                          0.0, 0.0, 0.0);
 }
 
 void renderGL(void)

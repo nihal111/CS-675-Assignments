@@ -1,11 +1,3 @@
-glm::vec4 color = glm::vec4(0.6, 0.6, 0.6, 1.0);
-glm::vec4 grey = glm::vec4(0.3, 0.3, 0.3, 1.0);
-glm::vec4 white = glm::vec4(0.2, 0.7, 0.7, 1.0);
-glm::vec4 red = glm::vec4(1.0, 0.2, 0.2, 1.0);
-glm::vec4 yellow = glm::vec4(0.8, 0.8, 0.0, 1.0);
-glm::vec4 green = glm::vec4(0.2, 0.7, 0.2, 1.0);
-glm::vec4 blue = glm::vec4(0.2, 0.2, 0.7, 1.0);
-
 const int base_box_num_vertices = 36;
 
 glm::vec4 opening_box_base_vertices[8] = {
@@ -93,8 +85,7 @@ void init_opening_box(void)
     					 sizeof(opening_box_lid_positions), sizeof(opening_box_lid_colors),
     					 -180.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
   lid->change_parameters(0.0,-0.5,0.5,  // translation
-                         0.0,0.0,0.0,   // rotation
-                         0.0,0.5,-0.5); // back translation
+                         0.0,0.0,0.0);   // rotation
   curr_node = lid;
 
 }

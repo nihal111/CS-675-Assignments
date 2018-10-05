@@ -53,6 +53,15 @@ csX75::HNode* curr_node;
 csX75::HNode* lid;
 csX75::HNode* base_box;
 
+glm::vec4 color = glm::vec4(0.6, 0.6, 0.6, 1.0);
+glm::vec4 grey = glm::vec4(0.3, 0.3, 0.3, 1.0);
+glm::vec4 white = glm::vec4(0.2, 0.7, 0.7, 1.0);
+glm::vec4 red = glm::vec4(1.0, 0.2, 0.2, 1.0);
+glm::vec4 yellow = glm::vec4(0.8, 0.8, 0.0, 1.0);
+glm::vec4 green = glm::vec4(0.2, 0.7, 0.2, 1.0);
+glm::vec4 blue = glm::vec4(0.2, 0.2, 0.7, 1.0);
+glm::vec4 black = glm::vec4(0.2, 0.2, 0.2, 1.0);
+
 //-------------------------------------------------------------------------
 
 #endif
