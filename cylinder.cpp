@@ -51,10 +51,10 @@ void cylinder(double radius_x, double radius_y, double height_z, int c_tesselati
     glm::vec4 pt(x, 0.0, y, 1.0);
     glm::vec4 center(0.0, 0.0, y, 1.0);
 
-    c_v_colors[c_tri_idx] = red; c_v_positions[c_tri_idx] = pt; 
+    c_v_colors[c_tri_idx] = c_color; c_v_positions[c_tri_idx] = pt; 
     c_tri_idx++;
 
-    c_v_colors[c_tri_idx] = red; c_v_positions[c_tri_idx] = center; 
+    c_v_colors[c_tri_idx] = c_color; c_v_positions[c_tri_idx] = center; 
     c_tri_idx++;
 
     a += step;

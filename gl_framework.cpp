@@ -42,6 +42,7 @@ namespace csX75
     //!Close the window if the ESC key was pressed
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
       glfwSetWindowShouldClose(window, GL_TRUE);
+    
     else if (key == GLFW_KEY_1)
       curr_node = lid;
 

@@ -43,7 +43,7 @@ void sphere(double radius_x, double radius_y, double radius_z, int Lats, int Lon
       y = radius_y * sin(l) * sin(phi);
       z = radius_z * cos(l);
       pt =glm::vec4(x, y, z, 1.0);
-      v_colors[tri_idx] = red; v_positions[tri_idx] = pt; 
+      v_colors[tri_idx] = color; v_positions[tri_idx] = pt; 
       v_normals[tri_idx] = pt; tri_idx++;
     }
   }

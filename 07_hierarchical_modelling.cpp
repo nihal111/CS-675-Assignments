@@ -185,55 +185,55 @@ void initBuffersGL(void)
   // torso = get_ellipsoid(0.1, 0.15, 0.03);
   glm::vec3 myRotationAxis(1.0, 0.0, 0.0);
   glm::vec3 translateVector(0.0, 0.0, 0.0);
-  torso = get_cylinder(0.1, 0.03, 0.30, red);
+  torso = get_cylinder(0.1, 0.03, 0.30, dark_blue);
   //--------------- ARMS
 
-  left_upper_arm = get_cylinder(0.04, 0.04, 0.2, blue,
-                          -1.0,-1.0,
+  left_upper_arm = get_cylinder(0.04, 0.04, 0.2, dark_blue,
+                          -80.0,80.0,
                           -90.0,90.0,
-                          0.0,0.0);
+                          0.0,180.0);
   left_upper_arm->set_parent(torso);
   left_upper_arm->change_parameters(-0.1,0.26,0.0,  // translation
                                0.0,0.0,90.0);   // rotation
 
 
-  left_lower_arm = get_cylinder(0.04, 0.04, 0.2, red,
-                          0.0,0.0,
+  left_lower_arm = get_cylinder(0.04, 0.04, 0.2, light_blue,
+                          0.0,170.0,
                           0.0,160.0,
                           0.0,0.0);
   left_lower_arm->set_parent(left_upper_arm);
   left_lower_arm->change_parameters(0.0,0.2,0.0,  // translation
                                0.0,0.0,0.0);   // rotation
 
-  left_hand = get_box(left_hand_vertices, green,
-                          0.0,0.0,
-                          -90.0,90.0,
-                          0.0,0.0);
+  left_hand = get_box(left_hand_vertices, skin,
+                          -80.0,80.0,
+                          -10.0,10.0,
+                          -120.0,-60.0);
   left_hand->set_parent(left_lower_arm);
   left_hand->change_parameters(0.0,0.2,0.0,  // translation
                                0.0,0.0, -90);   // rotation
 
-  right_upper_arm = get_cylinder(0.04, 0.04, 0.2, blue,
-                          -1.0,-1.0,
+  right_upper_arm = get_cylinder(0.04, 0.04, 0.2, dark_blue,
+                          -80.0,80.0,
                           -90.0,90.0,
-                          0.0,0.0);
+                          -180.0,0.0);
   right_upper_arm->set_parent(torso);
   right_upper_arm->change_parameters(0.1,0.26,0.0,  // translation
                                0.0,0.0,-90.0);   // rotation
 
 
-  right_lower_arm = get_cylinder(0.04, 0.04, 0.2, red,
-                          0.0,0.0,
-                          -160.0,0.0,
+  right_lower_arm = get_cylinder(0.04, 0.04, 0.2, light_blue,
+                          0.0,170.0,
+                          0.0,160.0,
                           0.0,0.0);
   right_lower_arm->set_parent(right_upper_arm);
   right_lower_arm->change_parameters(0.0,0.2,0.0,  // translation
                                0.0,0.0,0.0);   // rotation
 
-  right_hand = get_box(right_hand_vertices, green,
-                          0.0,0.0,
-                          -90.0,90.0,
-                          0.0,0.0);
+  right_hand = get_box(right_hand_vertices, skin,
+                          -80.0,80.0,
+                          -10.0,10.0,
+                          60.0,120.0);
   right_hand->set_parent(right_lower_arm);
   right_hand->change_parameters(0.0,0.2,0.0,  // translation
                                0.0,0.0, 90);   // rotation
@@ -241,15 +241,15 @@ void initBuffersGL(void)
   //--------------- LEGS
 
   left_upper_leg = get_cylinder(0.04, 0.04, 0.2, blue,
-                          -150.0,30.0,
-                          0.0, 0.0,
+                          90.0,270.0,
+                          -45.0, 45.0,
                           -45.0,45.0);
   left_upper_leg->set_parent(torso);
   left_upper_leg->change_parameters(-0.06,0.0,0.0,  // translation
                                180,0.0,0.0);   // rotation
 
 
-  left_lower_leg = get_cylinder(0.04, 0.04, 0.2, red,
+  left_lower_leg = get_cylinder(0.04, 0.04, 0.2, blue,
                           0.0,160.0,
                           0.0,0.0,
                           0.0,0.0);
@@ -257,24 +257,24 @@ void initBuffersGL(void)
   left_lower_leg->change_parameters(0.0, 0.2,0.0,  // translation
                                0.0,0.0,0.0);   // rotation
 
-  left_feet = get_box(feet_vertices, green,
+  left_feet = get_box(feet_vertices, black,
                           -30.0,30.0,
-                          0.0,0.0,
-                          0.0,0.0);
+                          150.0,210.0,
+                          -5.0,5.0);
   left_feet->set_parent(left_lower_leg);
   left_feet->change_parameters(0.0,0.22,0.0,  // translation
                                0.0,180,0.0);   // rotation
 
   right_upper_leg = get_cylinder(0.04, 0.04, 0.2, blue,
-                          -150.0,30.0,
-                          0.0, 0.0,
+                          90.0,270.0,
+                          -45.0, 45.0,
                           -45.0,45.0);
   right_upper_leg->set_parent(torso);
   right_upper_leg->change_parameters(0.06,0.0,0.0,  // translation
                                180,0.0,0.0);   // rotation
 
 
-  right_lower_leg = get_cylinder(0.04, 0.04, 0.2, red,
+  right_lower_leg = get_cylinder(0.04, 0.04, 0.2, blue,
                           0.0,160.0,
                           0.0,0.0,
                           0.0,0.0);
@@ -282,17 +282,17 @@ void initBuffersGL(void)
   right_lower_leg->change_parameters(0.0,0.2,0.0,  // translation
                                0.0,0.0,0.0);   // rotation
 
-  right_feet = get_box(feet_vertices, green,
+  right_feet = get_box(feet_vertices, black,
                           -30.0,30.0,
-                          0.0,0.0,
-                          0.0,0.0);
+                          150.0,210.0,
+                          -5.0,5.0);
   right_feet->set_parent(right_lower_leg);
   right_feet->change_parameters(0.0,0.22,0.0,  // translation
                                0.0,180,0.0);   // rotation
 
   //--------------- NECK
 
-  neck = get_cylinder(0.03, 0.03, 0.02, green,
+  neck = get_cylinder(0.03, 0.03, 0.02, skin,
                           0.0,0.0,
                           0.0,0.0,
                           0.0,0.0);
@@ -302,7 +302,7 @@ void initBuffersGL(void)
 
   //--------------- HEAD
 
-  head = get_ellipsoid(0.06, 0.06, 0.06, white,
+  head = get_ellipsoid(0.06, 0.06, 0.06, skin,
                           -50.0,50.0,
                           -90.0,90.0,
                           0.0,0.0);

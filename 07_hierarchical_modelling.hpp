@@ -61,6 +61,9 @@ glm::vec4 yellow = glm::vec4(0.8, 0.8, 0.0, 1.0);
 glm::vec4 green = glm::vec4(0.2, 0.7, 0.2, 1.0);
 glm::vec4 blue = glm::vec4(0.2, 0.2, 0.7, 1.0);
 glm::vec4 black = glm::vec4(0.2, 0.2, 0.2, 1.0);
+glm::vec4 light_blue = glm::vec4(0.0, 0.749, 1.0, 1.0);
+glm::vec4 dark_blue = glm::vec4(0.11, 0.564, 1.0, 1.0);
+glm::vec4 skin = glm::vec4(0.9, 0.7, 0.3, 1.0);
 
 //-------------------------------------------------------------------------
 
