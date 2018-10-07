@@ -140,6 +140,7 @@ glm::vec4 head_vertices[8] = {
   glm::vec4(0.06, 0.0, -0.02, 1.0),
 };
 
+// Humanoid -------------------
 csX75::HNode* torso;
 csX75::HNode* neck;
 csX75::HNode* head;
@@ -157,35 +158,44 @@ csX75::HNode* left_feet;
 csX75::HNode* right_upper_leg;
 csX75::HNode* right_lower_leg;
 csX75::HNode* right_feet;
+
+// R2D2 -----------------------
+csX75::HNode* r2d2_body;
+csX75::HNode* r2d2_head;
+csX75::HNode* r2d2_left_arm;
+csX75::HNode* r2d2_right_arm;
+csX75::HNode* r2d2_left_hand;
+csX75::HNode* r2d2_right_hand;
+
+glm::vec4 r2d2_arm_vertices[8] = {
+  glm::vec4(-0.02, -0.37, 0.05, 1.0),
+  glm::vec4(-0.02, 0.0, 0.05, 1.0),
+  glm::vec4(0.02, 0.0, 0.05, 1.0),
+  glm::vec4(0.02, -0.37, 0.05, 1.0),
+  glm::vec4(-0.02, -0.37, -0.05, 1.0),
+  glm::vec4(-0.02, 0.0, -0.05, 1.0),
+  glm::vec4(0.02, 0.0, -0.05, 1.0),
+  glm::vec4(0.02, -0.37, -0.05, 1.0),
+};
+
+glm::vec4 r2d2_hand_vertices[8] = {
+  glm::vec4(-0.019, -0.05, 0.1, 1.0),
+  glm::vec4(-0.019, 0.0, 0.1, 1.0),
+  glm::vec4(0.019, 0.0, 0.1, 1.0),
+  glm::vec4(0.019, -0.05, 0.1, 1.0),
+  glm::vec4(-0.019, -0.05, -0.1, 1.0),
+  glm::vec4(-0.019, 0.0, -0.1, 1.0),
+  glm::vec4(0.019, 0.0, -0.1, 1.0),
+  glm::vec4(0.019, -0.05, -0.1, 1.0),
+};
+
 //-----------------------------------------------------------------
 
-void initBuffersGL(void)
+void init_humanoid()
 {
-
-  // Load shaders and use the resulting shader program
-  std::string vertex_shader_file("07_vshader.glsl");
-  std::string fragment_shader_file("07_fshader.glsl");
-
-  std::vector<GLuint> shaderList;
-  shaderList.push_back(csX75::LoadShaderGL(GL_VERTEX_SHADER, vertex_shader_file));
-  shaderList.push_back(csX75::LoadShaderGL(GL_FRAGMENT_SHADER, fragment_shader_file));
-
-  shaderProgram = csX75::CreateProgramGL(shaderList);
-  glUseProgram( shaderProgram );
-
-  // getting the attributes from the shader program
-  vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
-  vColor = glGetAttribLocation( shaderProgram, "vColor" ); 
-  uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
-
-  init_opening_box();
-
   // -------------- TORSO
-  // torso = get_box(torso_vertices, yellow);
-  // torso = get_ellipsoid(0.1, 0.15, 0.03);
-  glm::vec3 myRotationAxis(1.0, 0.0, 0.0);
-  glm::vec3 translateVector(0.0, 0.0, 0.0);
   torso = get_cylinder(0.1, 0.03, 0.30, dark_blue);
+
   //--------------- ARMS
 
   left_upper_arm = get_cylinder(0.04, 0.04, 0.2, dark_blue,
@@ -311,6 +321,76 @@ void initBuffersGL(void)
                           0.0, 0.0, 0.0);
 }
 
+void init_r2d2()
+{
+  // -------------- BODY
+  r2d2_body = get_cylinder(0.1, 0.1, 0.3, white);
+
+  r2d2_head = get_ellipsoid(0.1, 0.1, 0.1, skin);
+  r2d2_head->set_parent(r2d2_body);
+  r2d2_head->change_parameters(0.0, 0.3, 0.0,
+                          0.0, 0.0, 0.0);
+
+  r2d2_left_arm = get_box(r2d2_arm_vertices, blue,
+                          -1,-1,
+                          0.0,0.0,
+                          0.0,0.0);
+  r2d2_left_arm->set_parent(r2d2_body);
+  r2d2_left_arm->change_parameters(-0.12, 0.3, 0.0,
+                          0.0, 0.0, 0.0);
+
+  r2d2_right_arm = get_box(r2d2_arm_vertices, blue,
+                          -1,-1,
+                          0.0,0.0,                          
+                          0.0,0.0);
+  r2d2_right_arm->set_parent(r2d2_body);
+  r2d2_right_arm->change_parameters(0.12, 0.3, 0.0,
+                          0.0, 0.0, 0.0);
+
+  r2d2_left_hand = get_box(r2d2_hand_vertices, green,
+                          -45.0,45.0,
+                          0.0,0.0,                          
+                          0.0,0.0);
+  r2d2_left_hand->set_parent(r2d2_left_arm);
+  r2d2_left_hand->change_parameters(0.0, -0.37, 0.0,
+                          0.0, 0.0, 0.0);
+
+  r2d2_right_hand = get_box(r2d2_hand_vertices, green,
+                          -45.0,45.0,
+                          0.0,0.0,                          
+                          0.0,0.0);
+  r2d2_right_hand->set_parent(r2d2_right_arm);
+  r2d2_right_hand->change_parameters(0.0, -0.37, 0.0,
+                          0.0, 0.0, 0.0);
+}
+
+void initBuffersGL(void)
+{
+
+  // Load shaders and use the resulting shader program
+  std::string vertex_shader_file("07_vshader.glsl");
+  std::string fragment_shader_file("07_fshader.glsl");
+
+  std::vector<GLuint> shaderList;
+  shaderList.push_back(csX75::LoadShaderGL(GL_VERTEX_SHADER, vertex_shader_file));
+  shaderList.push_back(csX75::LoadShaderGL(GL_FRAGMENT_SHADER, fragment_shader_file));
+
+  shaderProgram = csX75::CreateProgramGL(shaderList);
+  glUseProgram( shaderProgram );
+
+  // getting the attributes from the shader program
+  vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
+  vColor = glGetAttribLocation( shaderProgram, "vColor" ); 
+  uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
+
+  init_opening_box();
+
+  init_humanoid();
+
+  init_r2d2();
+  
+}
+
 void renderGL(void)
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -339,7 +419,10 @@ void renderGL(void)
   matrixStack.push_back(view_matrix);
 
   // base_box->render_tree();
-  torso->render_tree();
+  
+  // torso->render_tree();
+
+  r2d2_body->render_tree();
 
 }
 
