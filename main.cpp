@@ -15,7 +15,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
-#include "07_hierarchical_modelling.hpp"
+#include "main.hpp"
 #include "opening_box.cpp"
 #include "box.cpp"
 #include "cmath"
@@ -37,108 +37,6 @@ glm::mat4 view_matrix;
 glm::mat4 modelview_matrix;
 
 GLuint uModelViewMatrix;
-
-
-//-----------------------------------------------------------------
-
-glm::vec4 torso_vertices[8] = {
-  glm::vec4(-0.1, -0.15, 0.03, 1.0),
-  glm::vec4(-0.1, 0.15, 0.03, 1.0),
-  glm::vec4(0.1, 0.15, 0.03, 1.0),
-  glm::vec4(0.1, -0.15, 0.03, 1.0),
-  glm::vec4(-0.1, -0.15, -0.03, 1.0),
-  glm::vec4(-0.1, 0.15, -0.03, 1.0),
-  glm::vec4(0.1, 0.15, -0.03, 1.0),
-  glm::vec4(0.1, -0.15, -0.03, 1.0),
-};
-
-glm::vec4 left_arm_vertices[8] = {
-  glm::vec4(-0.2, -0.04, 0.02, 1.0),
-  glm::vec4(-0.2, 0.04, 0.02, 1.0),
-  glm::vec4(0.0, 0.04, 0.02, 1.0),
-  glm::vec4(0.0, -0.04, 0.02, 1.0),
-  glm::vec4(-0.2, -0.04, -0.02, 1.0),
-  glm::vec4(-0.2, 0.04, -0.02, 1.0),
-  glm::vec4(0.0, 0.04, -0.02, 1.0),
-  glm::vec4(0.0, -0.04, -0.02, 1.0),
-};
-
-glm::vec4 left_hand_vertices[8] = {
-  glm::vec4(-0.1, -0.04, 0.02, 1.0),
-  glm::vec4(-0.1, 0.04, 0.02, 1.0),
-  glm::vec4(0.0, 0.04, 0.02, 1.0),
-  glm::vec4(0.0, -0.04, 0.02, 1.0),
-  glm::vec4(-0.1, -0.04, -0.02, 1.0),
-  glm::vec4(-0.1, 0.04, -0.02, 1.0),
-  glm::vec4(0.0, 0.04, -0.02, 1.0),
-  glm::vec4(0.0, -0.04, -0.02, 1.0),
-};
-
-glm::vec4 right_arm_vertices[8] = {
-  glm::vec4(0.0, -0.04, 0.02, 1.0),
-  glm::vec4(0.0, 0.04, 0.02, 1.0),
-  glm::vec4(0.2, 0.04, 0.02, 1.0),
-  glm::vec4(0.2, -0.04, 0.02, 1.0),
-  glm::vec4(0.0, -0.04, -0.02, 1.0),
-  glm::vec4(0.0, 0.04, -0.02, 1.0),
-  glm::vec4(0.2, 0.04, -0.02, 1.0),
-  glm::vec4(0.2, -0.04, -0.02, 1.0),
-};
-
-glm::vec4 right_hand_vertices[8] = {
-  glm::vec4(0.0, -0.04, 0.02, 1.0),
-  glm::vec4(0.0, 0.04, 0.02, 1.0),
-  glm::vec4(0.1, 0.04, 0.02, 1.0),
-  glm::vec4(0.1, -0.04, 0.02, 1.0),
-  glm::vec4(0.0, -0.04, -0.02, 1.0),
-  glm::vec4(0.0, 0.04, -0.02, 1.0),
-  glm::vec4(0.1, 0.04, -0.02, 1.0),
-  glm::vec4(0.1, -0.04, -0.02, 1.0),
-};
-
-glm::vec4 leg_vertices[8] = {
-  glm::vec4(-0.04, -0.2, 0.02, 1.0),
-  glm::vec4(-0.04, 0.0, 0.02, 1.0),
-  glm::vec4(0.04, 0.0, 0.02, 1.0),
-  glm::vec4(0.04, -0.2, 0.02, 1.0),
-  glm::vec4(-0.04, -0.2, -0.02, 1.0),
-  glm::vec4(-0.04, 0.0, -0.02, 1.0),
-  glm::vec4(0.04, 0.0, -0.02, 1.0),
-  glm::vec4(0.04, -0.2, -0.02, 1.0),
-};
-
-glm::vec4 feet_vertices[8] = {
-  glm::vec4(-0.04, -0.02, -0.02, 1.0),
-  glm::vec4(-0.04, 0.02, -0.02, 1.0),
-  glm::vec4(0.04, 0.02, -0.02, 1.0),
-  glm::vec4(0.04, -0.02, -0.02, 1.0),
-  glm::vec4(-0.04, -0.02, 0.1, 1.0),
-  glm::vec4(-0.04, 0.02, 0.1, 1.0),
-  glm::vec4(0.04, 0.02, 0.1, 1.0),
-  glm::vec4(0.04, -0.02, 0.1, 1.0),
-};
-
-glm::vec4 neck_vertices[8] = {
-  glm::vec4(-0.03, 0.0, 0.02, 1.0),
-  glm::vec4(-0.03, 0.02, 0.02, 1.0),
-  glm::vec4(0.03, 0.02, 0.02, 1.0),
-  glm::vec4(0.03, 0.0, 0.02, 1.0),
-  glm::vec4(-0.03, 0.0, -0.02, 1.0),
-  glm::vec4(-0.03, 0.02, -0.02, 1.0),
-  glm::vec4(0.03, 0.02, -0.02, 1.0),
-  glm::vec4(0.03, 0.0, -0.02, 1.0),
-};
-
-glm::vec4 head_vertices[8] = {
-  glm::vec4(-0.06, 0.0, 0.02, 1.0),
-  glm::vec4(-0.06, 0.12, 0.02, 1.0),
-  glm::vec4(0.06, 0.12, 0.02, 1.0),
-  glm::vec4(0.06, 0.0, 0.02, 1.0),
-  glm::vec4(-0.06, 0.0, -0.02, 1.0),
-  glm::vec4(-0.06, 0.12, -0.02, 1.0),
-  glm::vec4(0.06, 0.12, -0.02, 1.0),
-  glm::vec4(0.06, 0.0, -0.02, 1.0),
-};
 
 // Humanoid -------------------
 csX75::HNode* torso;
@@ -167,34 +65,48 @@ csX75::HNode* r2d2_right_arm;
 csX75::HNode* r2d2_left_hand;
 csX75::HNode* r2d2_right_hand;
 
-glm::vec4 r2d2_arm_vertices[8] = {
-  glm::vec4(-0.02, -0.37, 0.05, 1.0),
-  glm::vec4(-0.02, 0.0, 0.05, 1.0),
-  glm::vec4(0.02, 0.0, 0.05, 1.0),
-  glm::vec4(0.02, -0.37, 0.05, 1.0),
-  glm::vec4(-0.02, -0.37, -0.05, 1.0),
-  glm::vec4(-0.02, 0.0, -0.05, 1.0),
-  glm::vec4(0.02, 0.0, -0.05, 1.0),
-  glm::vec4(0.02, -0.37, -0.05, 1.0),
-};
-
-glm::vec4 r2d2_hand_vertices[8] = {
-  glm::vec4(-0.019, -0.05, 0.1, 1.0),
-  glm::vec4(-0.019, 0.0, 0.1, 1.0),
-  glm::vec4(0.019, 0.0, 0.1, 1.0),
-  glm::vec4(0.019, -0.05, 0.1, 1.0),
-  glm::vec4(-0.019, -0.05, -0.1, 1.0),
-  glm::vec4(-0.019, 0.0, -0.1, 1.0),
-  glm::vec4(0.019, 0.0, -0.1, 1.0),
-  glm::vec4(0.019, -0.05, -0.1, 1.0),
-};
-
 //-----------------------------------------------------------------
 
 void init_humanoid()
 {
+
+  glm::vec4 left_hand_vertices[8] = {
+    glm::vec4(-0.1, -0.04, 0.02, 1.0),
+    glm::vec4(-0.1, 0.04, 0.02, 1.0),
+    glm::vec4(0.0, 0.04, 0.02, 1.0),
+    glm::vec4(0.0, -0.04, 0.02, 1.0),
+    glm::vec4(-0.1, -0.04, -0.02, 1.0),
+    glm::vec4(-0.1, 0.04, -0.02, 1.0),
+    glm::vec4(0.0, 0.04, -0.02, 1.0),
+    glm::vec4(0.0, -0.04, -0.02, 1.0),
+  };
+
+  glm::vec4 right_hand_vertices[8] = {
+    glm::vec4(0.0, -0.04, 0.02, 1.0),
+    glm::vec4(0.0, 0.04, 0.02, 1.0),
+    glm::vec4(0.1, 0.04, 0.02, 1.0),
+    glm::vec4(0.1, -0.04, 0.02, 1.0),
+    glm::vec4(0.0, -0.04, -0.02, 1.0),
+    glm::vec4(0.0, 0.04, -0.02, 1.0),
+    glm::vec4(0.1, 0.04, -0.02, 1.0),
+    glm::vec4(0.1, -0.04, -0.02, 1.0),
+  };
+
+  glm::vec4 feet_vertices[8] = {
+    glm::vec4(-0.04, -0.02, -0.02, 1.0),
+    glm::vec4(-0.04, 0.02, -0.02, 1.0),
+    glm::vec4(0.04, 0.02, -0.02, 1.0),
+    glm::vec4(0.04, -0.02, -0.02, 1.0),
+    glm::vec4(-0.04, -0.02, 0.1, 1.0),
+    glm::vec4(-0.04, 0.02, 0.1, 1.0),
+    glm::vec4(0.04, 0.02, 0.1, 1.0),
+    glm::vec4(0.04, -0.02, 0.1, 1.0),
+  };
+
   // -------------- TORSO
   torso = get_cylinder(0.1, 0.03, 0.30, dark_blue);
+  torso->change_parameters(-1.6,0.0,0.0,  // translation
+                            0.0,0.0,0.0);   // rotation
 
   //--------------- ARMS
 
@@ -323,8 +235,32 @@ void init_humanoid()
 
 void init_r2d2()
 {
+  glm::vec4 r2d2_arm_vertices[8] = {
+    glm::vec4(-0.02, -0.37, 0.05, 1.0),
+    glm::vec4(-0.02, 0.0, 0.05, 1.0),
+    glm::vec4(0.02, 0.0, 0.05, 1.0),
+    glm::vec4(0.02, -0.37, 0.05, 1.0),
+    glm::vec4(-0.02, -0.37, -0.05, 1.0),
+    glm::vec4(-0.02, 0.0, -0.05, 1.0),
+    glm::vec4(0.02, 0.0, -0.05, 1.0),
+    glm::vec4(0.02, -0.37, -0.05, 1.0),
+  };
+
+  glm::vec4 r2d2_hand_vertices[8] = {
+    glm::vec4(-0.019, -0.05, 0.1, 1.0),
+    glm::vec4(-0.019, 0.0, 0.1, 1.0),
+    glm::vec4(0.019, 0.0, 0.1, 1.0),
+    glm::vec4(0.019, -0.05, 0.1, 1.0),
+    glm::vec4(-0.019, -0.05, -0.1, 1.0),
+    glm::vec4(-0.019, 0.0, -0.1, 1.0),
+    glm::vec4(0.019, 0.0, -0.1, 1.0),
+    glm::vec4(0.019, -0.05, -0.1, 1.0),
+  };
+
   // -------------- BODY
   r2d2_body = get_cylinder(0.1, 0.1, 0.3, white);
+  r2d2_body->change_parameters(1.5,0.0,0.0,  // translation
+                               0.0,0.0,0.0);   // rotation
 
   r2d2_head = get_ellipsoid(0.1, 0.1, 0.1, light_blue);
   r2d2_head->set_parent(r2d2_body);
@@ -368,8 +304,8 @@ void initBuffersGL(void)
 {
 
   // Load shaders and use the resulting shader program
-  std::string vertex_shader_file("07_vshader.glsl");
-  std::string fragment_shader_file("07_fshader.glsl");
+  std::string vertex_shader_file("vshader.glsl");
+  std::string fragment_shader_file("fshader.glsl");
 
   std::vector<GLuint> shaderList;
   shaderList.push_back(csX75::LoadShaderGL(GL_VERTEX_SHADER, vertex_shader_file));
@@ -418,9 +354,9 @@ void renderGL(void)
 
   matrixStack.push_back(view_matrix);
 
-  // base_box->render_tree();
+  base_box->render_tree();
   
-  // torso->render_tree();
+  torso->render_tree();
 
   r2d2_body->render_tree();
 
