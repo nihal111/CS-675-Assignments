@@ -195,6 +195,8 @@ void init_humanoid()
 {
   // -------------- TORSO
   torso = get_cylinder(0.1, 0.03, 0.30, dark_blue);
+  torso->change_parameters(-1.35,0.0,0.0,  // translation
+                            0.0,0.0,0.0);
 
   //--------------- ARMS
 
@@ -325,6 +327,8 @@ void init_r2d2()
 {
   // -------------- BODY
   r2d2_body = get_cylinder(0.1, 0.1, 0.3, white);
+  r2d2_body->change_parameters(1.5, 0.0, 0.0,
+                               0.0, 0.0, 0.0);
 
   r2d2_head = get_ellipsoid(0.1, 0.1, 0.1, light_blue);
   r2d2_head->set_parent(r2d2_body);
@@ -418,9 +422,9 @@ void renderGL(void)
 
   matrixStack.push_back(view_matrix);
 
-  // base_box->render_tree();
+  base_box->render_tree();
   
-  // torso->render_tree();
+  torso->render_tree();
 
   r2d2_body->render_tree();
 

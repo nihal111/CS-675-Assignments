@@ -81,6 +81,8 @@ void init_opening_box(void)
   base_box = new csX75::HNode(NULL, base_box_num_vertices, opening_box_base_positions, opening_box_base_colors, 
     						  sizeof(opening_box_base_positions), sizeof(opening_box_base_colors),
     						  -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f);
+  base_box->change_parameters(0.3,0.0,0.0,  // translation
+                         0.0,0.0,0.0);   // rotation
   lid = new csX75::HNode(base_box, lid_num_vertices, opening_box_lid_positions, opening_box_lid_colors, 
     					 sizeof(opening_box_lid_positions), sizeof(opening_box_lid_colors),
     					 -180.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
