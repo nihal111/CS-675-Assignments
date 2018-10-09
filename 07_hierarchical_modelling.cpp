@@ -413,7 +413,7 @@ void renderGL(void)
 
   //creating the projection matrix
   if(enable_perspective)
-    projection_matrix = glm::frustum(-2.0, 2.0, -2.0, 2.0, 1.0, 5.0);
+    projection_matrix = glm::frustum(-2.0, 2.0, -2.0, 2.0, -5.0, 5.0);
     //projection_matrix = glm::perspective(glm::radians(90.0),1.0,0.1,5.0);
   else
     projection_matrix = glm::ortho(-2.0, 2.0, -2.0, 2.0, -5.0, 5.0);
