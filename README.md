@@ -1,3 +1,7 @@
+To execute the assignment-
+
+First run `make` at the root directory and then execute `./main`.
+
 ## Keys used to control the box
 - Press 1 to select the music box
 - After pressing 1, Press B to select the base box

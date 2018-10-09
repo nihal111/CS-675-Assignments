@@ -105,7 +105,7 @@ void init_humanoid()
 
   // -------------- TORSO
   torso = get_cylinder(0.1, 0.03, 0.30, dark_blue);
-  torso->change_parameters(-1.35,0.0,0.0,  // translation
+  torso->change_parameters(-2.0,0.0,0.0,  // translation
                             0.0,0.0,0.0);
 
   //--------------- ARMS
@@ -259,7 +259,7 @@ void init_r2d2()
 
   // -------------- BODY
   r2d2_body = get_cylinder(0.1, 0.1, 0.3, white);
-  r2d2_body->change_parameters(1.5,0.0,0.0,  // translation
+  r2d2_body->change_parameters(2.0,0.0,0.0,  // translation
                                0.0,0.0,0.0);   // rotation
 
   r2d2_head = get_ellipsoid(0.1, 0.1, 0.1, light_blue);
@@ -345,10 +345,10 @@ void renderGL(void)
 
   //creating the projection matrix
   if(enable_perspective)
-    projection_matrix = glm::frustum(-2.0, 2.0, -2.0, 2.0, 1.0, 5.0);
-    //projection_matrix = glm::perspective(glm::radians(90.0),1.0,0.1,5.0);
+    projection_matrix = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 10.0);
+    // projection_matrix = glm::perspective(glm::radians(90.0),1.0,0.1,10.0);
   else
-    projection_matrix = glm::ortho(-2.0, 2.0, -2.0, 2.0, -5.0, 5.0);
+    projection_matrix = glm::ortho(-2.0, 2.0, -2.0, 2.0, -5.0, 10.0);
 
   view_matrix = projection_matrix*lookat_matrix;
 
