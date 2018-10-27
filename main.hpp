@@ -50,8 +50,37 @@ std::vector<glm::mat4> matrixStack;
 
 csX75::HNode* root_node;
 csX75::HNode* curr_node;
+
+// ---- Opening Box
 csX75::HNode* lid;
 csX75::HNode* base_box;
+
+// ---- Humanoid
+csX75::HNode* torso;
+csX75::HNode* neck;
+csX75::HNode* head;
+
+csX75::HNode* left_upper_arm;
+csX75::HNode* left_lower_arm;
+csX75::HNode* left_hand;
+csX75::HNode* right_upper_arm;
+csX75::HNode* right_lower_arm;
+csX75::HNode* right_hand;
+
+csX75::HNode* left_upper_leg;
+csX75::HNode* left_lower_leg;
+csX75::HNode* left_feet;
+csX75::HNode* right_upper_leg;
+csX75::HNode* right_lower_leg;
+csX75::HNode* right_feet;
+
+// --- R2D2
+csX75::HNode* r2d2_body;
+csX75::HNode* r2d2_head;
+csX75::HNode* r2d2_left_arm;
+csX75::HNode* r2d2_right_arm;
+csX75::HNode* r2d2_left_hand;
+csX75::HNode* r2d2_right_hand;
 
 glm::vec4 color = glm::vec4(0.6, 0.6, 0.6, 1.0);
 glm::vec4 grey = glm::vec4(0.3, 0.3, 0.3, 1.0);
