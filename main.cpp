@@ -27,6 +27,8 @@
 #include "humanoid.cpp"
 #include "r2d2.cpp"
 
+#include "room.cpp"
+
 GLuint shaderProgram;
 
 glm::mat4 rotation_matrix;
@@ -36,101 +38,6 @@ glm::mat4 lookat_matrix;
 
 glm::mat4 model_matrix;
 glm::mat4 view_matrix;
-
-GLuint room_vbo, room_vao;
-
-glm::vec4 room_positions[8] = {
-  glm::vec4(-1, -1, 1, 1.0),
-  glm::vec4(-1, 1, 1, 1.0),
-  glm::vec4(1, 1, 1, 1.0),
-  glm::vec4(1, -1, 1, 1.0),
-  glm::vec4(-1, -1, -1, 1.0),
-  glm::vec4(-1, 1, -1, 1.0),
-  glm::vec4(1, 1, -1, 1.0),
-  glm::vec4(1, -1, -1, 1.0)
-};
-
-glm::vec2 room_t_coords[4] = {
-  glm::vec2( 0.0, 0.0),
-  glm::vec2( 0.0, 1.0),
-  glm::vec2( 1.0, 0.0),
-  glm::vec2( 1.0, 1.0)
-};
-
-//6 faces, 2 triangles/face, 3 vertices/triangle
-const int room_num_vertices = 36;
-
-// generate 12 triangles: 36 vertices and 36 colors
-int room_tri_idx=0;
-glm::vec4 room_v_positions[room_num_vertices];
-glm::vec4 room_v_colors[room_num_vertices];
-glm::vec4 room_v_normals[room_num_vertices];
-glm::vec2 room_tex_coords[room_num_vertices];
-
-void quad(int a, int b, int c, int d)
-{
-  room_v_positions[room_tri_idx] = room_positions[a];
-  room_tex_coords[room_tri_idx] = room_t_coords[1];
-  room_tri_idx++;
-  room_v_positions[room_tri_idx] = room_positions[b];
-  room_tex_coords[room_tri_idx] = room_t_coords[0];
-  room_tri_idx++;
-  room_v_positions[room_tri_idx] = room_positions[c];
-  room_tex_coords[room_tri_idx] = room_t_coords[2];
-  room_tri_idx++;
-  room_v_positions[room_tri_idx] = room_positions[a];
-  room_tex_coords[room_tri_idx] = room_t_coords[1];
-  room_tri_idx++;
-  room_v_positions[room_tri_idx] = room_positions[c]; 
-  room_tex_coords[room_tri_idx] = room_t_coords[2];
-  room_tri_idx++;
-  room_v_positions[room_tri_idx] = room_positions[d]; 
-  room_tex_coords[room_tri_idx] = room_t_coords[3];
-  room_tri_idx++;
-}
-
-void room_colorcube(void)
-{
-  quad( 1, 0, 3, 2);
-  quad( 2, 3, 7, 6);
-  quad( 3, 0, 4, 7);
-  quad( 6, 5, 1, 2);
-  quad( 4, 5, 6, 7);
-  quad( 5, 4, 0, 1);
-}
-
-void init_room()
-{
-  // Load Textures
-  GLuint tex = LoadTexture("images/all.bmp",256,256);
-  glBindTexture(GL_TEXTURE_2D, tex);
-
-  //Ask GL for two Vertex Attribute Objects (vao) , one for the sphere and one for the wireframe
-  glGenVertexArrays (1, &room_vao);
-  //Ask GL for two Vertex Buffer Object (vbo)
-  glGenBuffers (1, &room_vbo);
-
-  //Set 0 as the current array to be used by binding it
-  glBindVertexArray (room_vao);
-  //Set 0 as the current buffer to be used by binding it
-  glBindBuffer (GL_ARRAY_BUFFER, room_vbo);
-
-  room_colorcube();
-
-  //Copy the points into the current buffer
-  glBufferData (GL_ARRAY_BUFFER, sizeof (room_v_positions) + sizeof(room_tex_coords), NULL, GL_STATIC_DRAW);
-  glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(room_v_positions), room_v_positions );
-  glBufferSubData( GL_ARRAY_BUFFER, sizeof(room_v_positions), sizeof(room_tex_coords), room_tex_coords);
-  // set up vertex array
-
-  //Position
-  glEnableVertexAttribArray( vPosition );
-  glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
-  //Textures
-  glEnableVertexAttribArray( texCoord );
-  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(room_v_positions)) );
-}
-
 
 
 void initBuffersGL(void)
@@ -160,7 +67,7 @@ void initBuffersGL(void)
 
   init_r2d2();
 
-  init_room();
+  init_room_walls();
   
 }
 
@@ -182,20 +89,19 @@ void renderGL(void)
 
   //creating the projection matrix
   if(enable_perspective)
-    projection_matrix = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 10.0);
+    projection_matrix = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 40.0);
     // projection_matrix = glm::perspective(glm::radians(90.0),1.0,0.1,10.0);
   else
-    projection_matrix = glm::ortho(-3.0, 3.0, -3.0, 3.0, 1.0, 10.0);
+    projection_matrix = glm::ortho(-3.0, 3.0, -3.0, 3.0, 1.0, 40.0);
 
   view_matrix = projection_matrix*lookat_matrix;
   matrixStack.push_back(view_matrix);
 
-  glUniform1i(useTexture, 1);
-  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
 
-  glBindVertexArray (room_vao);
-  glDrawArrays(GL_TRIANGLES, 0, room_num_vertices);
-
+  // ---- Draw the Room
+  draw_room(view_matrix);
+  
+  // ---- Draw the models
   glUniform1i(useTexture, 0);
 
   base_box->render_tree();

@@ -64,3 +64,21 @@ This assignment is our own original work and has not been copied from anywhere e
 2. _Prof. Parag Chaudhuri's Tutorials_: Tutorial 07 for hierarchical model. Tutorial 05 for ellipsoid. The tutorials can be found [here](https://github.com/paragchaudhuri/cs475-tutorials) 
 
 3. _Cylinder_: The methodology for drawing a cylinder can be found [here](https://www.gamedev.net/forums/topic/359467-draw-cylinder-with-triangle-strips/)
+
+
+#### Textures
+Wall-
+https://www.freepik.com/free-photo/white-textured-wall-background-texture_1198826.htm#term=wall&page=1&position=12
+
+http://www.sketchuptut.com/stone-wall-texture-sketchup-warehouse-type166
+
+http://www.tutorialsforblender3d.com/Walls/Page6
+
+Floor-
+https://www.freepik.com/free-photo/wood-background-texture_3164807.htm#term=tiles&page=5&position=42
+
+https://www.deviantart.com/devin-busha/art/Wood-Study-3-147242468
+
+Roof-
+http://www.tutorialsforblender3d.com/Walls/Page8
+

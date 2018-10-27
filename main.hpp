@@ -83,6 +83,14 @@ csX75::HNode* r2d2_right_arm;
 csX75::HNode* r2d2_left_hand;
 csX75::HNode* r2d2_right_hand;
 
+// ---- Room
+GLuint room_walls_vbo, room_walls_vao;
+GLuint room_floor_vbo, room_floor_vao;
+GLuint room_roof_vbo, room_roof_vao;
+extern const int room_walls_num_vertices;
+extern const int room_floor_num_vertices;
+extern const int room_roof_num_vertices;
+
 // ---- Colors
 glm::vec4 color = glm::vec4(0.6, 0.6, 0.6, 1.0);
 glm::vec4 grey = glm::vec4(0.3, 0.3, 0.3, 1.0);
