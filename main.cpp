@@ -41,8 +41,6 @@ glm::mat4 view_matrix;
 glm::mat4 modelview_matrix;
 glm::mat3 normal_matrix;
 
-GLuint uModelViewMatrix;
-
 GLuint roomUModelViewMatrix;
 GLuint room_vbo, room_vao;
 
@@ -197,6 +195,7 @@ void initBuffersGL(void)
   vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
   vColor = glGetAttribLocation( shaderProgram, "vColor" ); 
   uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
+  useTexture = glGetUniformLocation( shaderProgram, "useTexture");
 
   init_opening_box();
 
@@ -204,7 +203,7 @@ void initBuffersGL(void)
 
   init_r2d2();
 
-  init_room();
+  // init_room();
   
 }
 
@@ -234,22 +233,24 @@ void renderGL(void)
 
   view_matrix = projection_matrix*lookat_matrix;
   matrixStack.push_back(view_matrix);
-
-  modelview_matrix = view_matrix*model_matrix;
-  glUniformMatrix4fv(roomUModelViewMatrix, 1, GL_FALSE, glm::value_ptr(modelview_matrix));
+  
+  // modelview_matrix = view_matrix*model_matrix;
+  // glUniformMatrix4fv(roomUModelViewMatrix, 1, GL_FALSE, glm::value_ptr(modelview_matrix));
 
   // glUniformMatrix4fv(roomViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
   // normal_matrix = glm::transpose (glm::inverse(glm::mat3(modelview_matrix)));
   // glUniformMatrix3fv(roomNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal_matrix));
 
-  glBindVertexArray (room_vao);
-  glDrawArrays(GL_TRIANGLES, 0, room_num_vertices);
+  // glBindVertexArray (room_vao);
+  // glDrawArrays(GL_TRIANGLES, 0, room_num_vertices);
 
-  // base_box->render_tree();
+  glUniform1i(useTexture, 0);
+
+  base_box->render_tree();
   
-  // torso->render_tree();
+  torso->render_tree();
 
-  // r2d2_body->render_tree();
+  r2d2_body->render_tree();
 
 }
 

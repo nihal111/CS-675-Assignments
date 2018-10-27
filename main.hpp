@@ -43,7 +43,7 @@ bool solid=true;
 //Enable/Disable perspective view
 bool enable_perspective=true;
 //Shader program attribs
-GLuint vPosition,vColor;
+GLuint vPosition, vColor, uModelViewMatrix, useTexture;
 
 //global matrix stack for hierarchical modelling
 std::vector<glm::mat4> matrixStack;
@@ -82,6 +82,7 @@ csX75::HNode* r2d2_right_arm;
 csX75::HNode* r2d2_left_hand;
 csX75::HNode* r2d2_right_hand;
 
+// ---- Colors
 glm::vec4 color = glm::vec4(0.6, 0.6, 0.6, 1.0);
 glm::vec4 grey = glm::vec4(0.3, 0.3, 0.3, 1.0);
 glm::vec4 white = glm::vec4(0.9, 0.9, 0.9, 1.0);
