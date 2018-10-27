@@ -37,44 +37,17 @@ glm::mat4 lookat_matrix;
 glm::mat4 model_matrix;
 glm::mat4 view_matrix;
 
-
-glm::mat4 modelview_matrix;
-glm::mat3 normal_matrix;
-
-GLuint roomUModelViewMatrix;
 GLuint room_vbo, room_vao;
 
 glm::vec4 room_positions[8] = {
-  glm::vec4(-0.5, -0.5, 0.5, 1.0),
-  glm::vec4(-0.5, 0.5, 0.5, 1.0),
-  glm::vec4(0.5, 0.5, 0.5, 1.0),
-  glm::vec4(0.5, -0.5, 0.5, 1.0),
-  glm::vec4(-0.5, -0.5, -0.5, 1.0),
-  glm::vec4(-0.5, 0.5, -0.5, 1.0),
-  glm::vec4(0.5, 0.5, -0.5, 1.0),
-  glm::vec4(0.5, -0.5, -0.5, 1.0)
-};
-
-glm::vec4 room_normals[8] = {
-  glm::vec4(-0.5, -0.5, 0.5, 1.0),
-  glm::vec4(-0.5, 0.5, 0.5, 1.0),
-  glm::vec4(0.5, 0.5, 0.5, 1.0),
-  glm::vec4(0.5, -0.5, 0.5, 1.0),
-  glm::vec4(-0.5, -0.5, -0.5, 1.0),
-   glm::vec4(-0.5, 0.5, -0.5, 1.0),
-  glm::vec4(0.5, 0.5, -0.5, 1.0),
-  glm::vec4(0.5, -0.5, -0.5, 1.0)
-};
-//RGBA colors
-glm::vec4 room_colors[8] = {
-  glm::vec4(0.0, 0.0, 0.0, 1.0),
-  glm::vec4(1.0, 0.0, 0.0, 1.0),
-  glm::vec4(1.0, 1.0, 0.0, 1.0),
-  glm::vec4(0.0, 1.0, 0.0, 1.0),
-  glm::vec4(0.0, 0.0, 1.0, 1.0),
-  glm::vec4(1.0, 0.0, 1.0, 1.0),
-  glm::vec4(1.0, 1.0, 1.0, 1.0),
-  glm::vec4(0.0, 1.0, 1.0, 1.0)
+  glm::vec4(-1, -1, 1, 1.0),
+  glm::vec4(-1, 1, 1, 1.0),
+  glm::vec4(1, 1, 1, 1.0),
+  glm::vec4(1, -1, 1, 1.0),
+  glm::vec4(-1, -1, -1, 1.0),
+  glm::vec4(-1, 1, -1, 1.0),
+  glm::vec4(1, 1, -1, 1.0),
+  glm::vec4(1, -1, -1, 1.0)
 };
 
 glm::vec2 room_t_coords[4] = {
@@ -128,23 +101,6 @@ void room_colorcube(void)
 
 void init_room()
 {
-  // Load shaders and use the resulting shader program
-  std::string vertex_shader_file("06_vshader.glsl");
-  std::string fragment_shader_file("06_fshader.glsl");
-
-  std::vector<GLuint> shaderList;
-  shaderList.push_back(csX75::LoadShaderGL(GL_VERTEX_SHADER, vertex_shader_file));
-  shaderList.push_back(csX75::LoadShaderGL(GL_FRAGMENT_SHADER, fragment_shader_file));
-
-  shaderProgram = csX75::CreateProgramGL(shaderList);
-  glUseProgram( shaderProgram );
-
-  // getting the attributes from the shader program
-  GLuint vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
-  GLuint vColor = glGetAttribLocation( shaderProgram, "vColor" );
-  GLuint texCoord = glGetAttribLocation( shaderProgram, "texCoord" );
-  roomUModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
-
   // Load Textures
   GLuint tex = LoadTexture("images/all.bmp",256,256);
   glBindTexture(GL_TEXTURE_2D, tex);
@@ -193,7 +149,8 @@ void initBuffersGL(void)
 
   // getting the attributes from the shader program
   vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
-  vColor = glGetAttribLocation( shaderProgram, "vColor" ); 
+  vColor = glGetAttribLocation( shaderProgram, "vColor" );
+  texCoord = glGetAttribLocation( shaderProgram, "texCoord" );
   uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
   useTexture = glGetUniformLocation( shaderProgram, "useTexture");
 
@@ -203,7 +160,7 @@ void initBuffersGL(void)
 
   init_r2d2();
 
-  // init_room();
+  init_room();
   
 }
 
@@ -217,7 +174,6 @@ void renderGL(void)
   c_rotation_matrix = glm::rotate(glm::mat4(1.0f), glm::radians(c_xrot), glm::vec3(1.0f,0.0f,0.0f));
   c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_yrot), glm::vec3(0.0f,1.0f,0.0f));
   c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_zrot), glm::vec3(0.0f,0.0f,1.0f));
-  model_matrix = c_rotation_matrix; 
 
   glm::vec4 c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
   glm::vec4 c_up = glm::vec4(c_up_x,c_up_y,c_up_z, 1.0)*c_rotation_matrix;
@@ -233,23 +189,17 @@ void renderGL(void)
 
   view_matrix = projection_matrix*lookat_matrix;
   matrixStack.push_back(view_matrix);
-  
-  // modelview_matrix = view_matrix*model_matrix;
-  // glUniformMatrix4fv(roomUModelViewMatrix, 1, GL_FALSE, glm::value_ptr(modelview_matrix));
 
-  // glUniformMatrix4fv(roomViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-  // normal_matrix = glm::transpose (glm::inverse(glm::mat3(modelview_matrix)));
-  // glUniformMatrix3fv(roomNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal_matrix));
+  glUniform1i(useTexture, 1);
+  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
 
-  // glBindVertexArray (room_vao);
-  // glDrawArrays(GL_TRIANGLES, 0, room_num_vertices);
+  glBindVertexArray (room_vao);
+  glDrawArrays(GL_TRIANGLES, 0, room_num_vertices);
 
   glUniform1i(useTexture, 0);
 
   base_box->render_tree();
-  
   torso->render_tree();
-
   r2d2_body->render_tree();
 
 }
