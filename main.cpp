@@ -22,7 +22,6 @@
 #include "glm/ext.hpp"
 #include "cylinder.cpp"
 #include "texture.cpp"
-
 #include "opening_box.cpp"
 #include "humanoid.cpp"
 #include "r2d2.cpp"
@@ -37,7 +36,6 @@ glm::mat4 c_rotation_matrix;
 glm::mat4 lookat_matrix;
 
 glm::mat4 model_matrix;
-glm::mat4 view_matrix;
 
 
 void initBuffersGL(void)
@@ -82,15 +80,20 @@ void renderGL(void)
   c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_yrot), glm::vec3(0.0f,1.0f,0.0f));
   c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_zrot), glm::vec3(0.0f,0.0f,1.0f));
 
-  glm::vec4 c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
+  c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
+  // glm::vec4 c_right = glm::vec4(1.0, 0.0, 0.0, 1.0)*c_rotation_matrix;
   glm::vec4 c_up = glm::vec4(c_up_x,c_up_y,c_up_z, 1.0)*c_rotation_matrix;
+
+  // glm::vec3 forward_vector = normalize(cross(glm::vec3(c_pos.x, c_pos.y, c_pos.z), glm::vec3(c_right.x, c_right.y, c_right.z)));
+  // glm::vec3 camera_lookat = glm::vec3(c_pos.x, c_pos.y, c_pos.z) + forward_vector;
+
   //Creating the lookat matrix
   lookat_matrix = glm::lookAt(glm::vec3(c_pos),glm::vec3(0.0),glm::vec3(c_up));
 
   //creating the projection matrix
   if(enable_perspective)
     projection_matrix = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 40.0);
-    // projection_matrix = glm::perspective(glm::radians(90.0),1.0,0.1,10.0);
+  // projection_matrix = glm::perspective(glm::radians(90.0),1.0,0.1,10.0);
   else
     projection_matrix = glm::ortho(-3.0, 3.0, -3.0, 3.0, 1.0, 40.0);
 
@@ -107,6 +110,13 @@ void renderGL(void)
   base_box->render_tree();
   torso->render_tree();
   r2d2_body->render_tree();
+
+  for (int i = 0; i < mouse_count; i++)
+  {
+    glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
+    glBindVertexArray (mouse_clicks_vao[i]);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 3600);
+  }
 
 }
 
@@ -168,6 +178,8 @@ int main(int argc, char** argv)
   //Initialize GL state
   csX75::initGL();
   initBuffersGL();
+
+  glfwSetMouseButtonCallback(window, csX75::mouse_button_callback);
 
   // Loop until the user closes the window
   while (glfwWindowShouldClose(window) == 0)

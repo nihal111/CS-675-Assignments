@@ -1,7 +1,9 @@
 #include "gl_framework.hpp"
 #include "hierarchy_node.hpp"
+#include "camera_animation.cpp"
 
-extern GLfloat c_xrot,c_yrot,c_zrot;
+extern GLfloat c_xrot,c_yrot,c_zrot, c_xpos, c_ypos, c_zpos;
+extern glm::vec4 c_pos;
 extern bool enable_perspective;
 extern csX75::HNode *base_box, *lid, *curr_node;
 extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_lower_arm, *left_hand, *right_hand,
@@ -67,6 +69,30 @@ namespace csX75
       model = R2D2;
       curr_node = r2d2_body;
       std::cout<<"Selected model R2D2"<<std::endl;
+    }
+
+    else if (key == GLFW_KEY_4) {
+      c_xpos += 0.1;
+    }
+
+    else if (key == GLFW_KEY_5) {
+      c_xpos -= 0.1;
+    }
+
+    else if (key == GLFW_KEY_6) {
+      c_ypos += 0.1;
+    }
+
+    else if (key == GLFW_KEY_7) {
+      c_ypos -= 0.1;
+    }
+
+    else if (key == GLFW_KEY_8) {
+      c_zpos += 0.1;
+    }
+
+    else if (key == GLFW_KEY_9) {
+      c_zpos -= 0.1;
     }
 
     else if (key == GLFW_KEY_P)
@@ -205,6 +231,29 @@ namespace csX75
       }
     }
   }
+
+  //!GLFW mouse callback
+  void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+  {
+    double xpos, ypos;
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwGetCursorPos(window, &xpos, &ypos);
+
+    switch(button)
+    {
+      case GLFW_MOUSE_BUTTON_LEFT:
+        if (action == GLFW_PRESS)
+        {
+          glm::vec3 camera_pos = glm::vec3(c_pos.x, c_pos.y, c_pos.z);
+          glm::vec3 look_direction = normalize(glm::vec3(0.0) - glm::vec3(c_pos.x, c_pos.y, c_pos.z));
+          glm::vec3 mouse_position = camera_pos + 2.0*look_direction;
+          add_sphere_points(mouse_position.x, mouse_position.y, mouse_position.z);
+        }
+      default:
+          break;
+    }
+  }
+
 };  
   
 
