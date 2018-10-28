@@ -1,4 +1,6 @@
-
+GLuint room_walls_vbo, room_walls_vao;
+GLuint room_floor_vbo, room_floor_vao;
+GLuint room_roof_vbo, room_roof_vao;
 
 glm::vec4 room_positions[8] = {
   glm::vec4(-20, -10, 15, 1.0),
@@ -127,7 +129,7 @@ void room_roof(void)
   room_roof_tri_idx++;
 }
 
-void init_room_walls()
+void init_room()
 {
   // ---- Create Room walls. Four sides.
 
