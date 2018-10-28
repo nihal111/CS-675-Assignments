@@ -35,6 +35,7 @@
 #include "cupboard.cpp"
 #include "drawer.cpp"
 #include "bed.cpp"
+#include "table.cpp"
 
 GLuint shaderProgram;
 
@@ -79,6 +80,7 @@ void initBuffersGL(void)
   init_drawer();
   init_cupboard();
   init_bed();
+  init_table();
   
 }
 
@@ -115,6 +117,7 @@ void renderGL(void)
   draw_drawer(view_matrix);
   draw_cupboard(view_matrix);
   draw_bed(view_matrix);
+  draw_table(view_matrix);
 
   // ---- Draw the models
   glUniform1i(useTexture, 0);
