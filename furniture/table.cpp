@@ -17,7 +17,7 @@ void init_table_top()
 }
 
 void draw_table_top(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &table_top_vao, "images/wood1.bmp");
+  draw_textured_object(view_matrix, &table_top_vao, "images/wood1.bmp");
 }
 
 // Leg 1
@@ -40,7 +40,7 @@ void init_table_leg1()
 }
 
 void draw_table_leg1(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &table_leg1_vao, "images/wood.bmp");
+  draw_textured_object(view_matrix, &table_leg1_vao, "images/wood.bmp");
 }
 
 // Leg 2
@@ -63,7 +63,7 @@ void init_table_leg2()
 }
 
 void draw_table_leg2(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &table_leg2_vao, "images/wood.bmp");
+  draw_textured_object(view_matrix, &table_leg2_vao, "images/wood.bmp");
 }
 
 // Leg 3
@@ -86,7 +86,7 @@ void init_table_leg3()
 }
 
 void draw_table_leg3(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &table_leg3_vao, "images/wood.bmp");
+  draw_textured_object(view_matrix, &table_leg3_vao, "images/wood.bmp");
 }
 
 // Leg 4
@@ -109,7 +109,7 @@ void init_table_leg4()
 }
 
 void draw_table_leg4(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &table_leg4_vao, "images/wood.bmp");
+  draw_textured_object(view_matrix, &table_leg4_vao, "images/wood.bmp");
 }
 
 

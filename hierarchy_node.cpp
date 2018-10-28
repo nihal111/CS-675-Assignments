@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-extern GLuint vPosition,vColor,uModelViewMatrix,useTexture;
+extern GLuint vPosition,vColor,uModelViewMatrix,useTexture,normalMatrix;
 extern std::vector<glm::mat4> matrixStack;
 
 namespace csX75
@@ -105,6 +105,9 @@ namespace csX75
 
   		glUniform1i(useTexture, 0);
 		glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(*ms_mult));
+		glm::mat3 normal_matrix = glm::transpose (glm::inverse(glm::mat3(*ms_mult)));
+  		glUniformMatrix3fv(normalMatrix, 1, GL_FALSE, glm::value_ptr(normal_matrix));
+
 		glBindVertexArray (vao);
 		glDrawArrays(render_mode, 0, num_vertices);
 

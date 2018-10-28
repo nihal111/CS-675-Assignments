@@ -136,23 +136,6 @@ void init_door()
 }
 
 void draw_door(glm::mat4 view_matrix) {
-  // Draw all but front face
-  GLuint tex = LoadTexture("images/dark_wood.bmp", 100, 100);
-  glBindTexture(GL_TEXTURE_2D, tex);
-
-  glUniform1i(useTexture, 1);
-  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
-  glBindVertexArray (door_vao);
-  glDrawArrays(GL_TRIANGLES, 0, door_num_vertices);
-
-  // Draw front face
-  tex = LoadTexture("images/door.bmp", 100, 300);
-  glBindTexture(GL_TEXTURE_2D, tex);
-
-  glUniform1i(useTexture, 1);
-  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
-  glBindVertexArray (door_front_vao);
-  glDrawArrays(GL_TRIANGLES, 0, door_front_num_vertices);
+  draw_textured_object(view_matrix, &door_vao, "images/dark_wood.bmp", 100, 100, door_num_vertices);
+  draw_textured_object(view_matrix, &door_front_vao, "images/door.bmp", 100, 300, door_front_num_vertices);
 }

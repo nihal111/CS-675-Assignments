@@ -72,13 +72,4 @@ void init_texcub(GLuint* texcub_vao, GLuint* texcub_vbo, glm::vec4* texcub_posit
   glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(texcub_v_positions)) );
 }
 
-void draw_texcub(glm::mat4 view_matrix, GLuint* texcub_vao, const char* filename, int width=256, int height=256) {
-  GLuint tex = LoadTexture(filename, width, height);
-  glBindTexture(GL_TEXTURE_2D, tex);
 
-  glUniform1i(useTexture, 1);
-  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
-  glBindVertexArray (*texcub_vao);
-  glDrawArrays(GL_TRIANGLES, 0, texcub_num_vertices);
-}

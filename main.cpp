@@ -69,8 +69,10 @@ void initBuffersGL(void)
   // getting the attributes from the shader program
   vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
   vColor = glGetAttribLocation( shaderProgram, "vColor" );
+  vNormal = glGetAttribLocation( shaderProgram, "vNormal" );
   texCoord = glGetAttribLocation( shaderProgram, "texCoord" );
   uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
+  normalMatrix =  glGetUniformLocation( shaderProgram, "normalMatrix");
   useTexture = glGetUniformLocation( shaderProgram, "useTexture");
 
   init_opening_box();

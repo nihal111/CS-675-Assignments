@@ -18,7 +18,7 @@ void init_chair_top()
 }
 
 void draw_chair_top(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &chair_top_vao, "images/floor.bmp");
+  draw_textured_object(view_matrix, &chair_top_vao, "images/floor.bmp");
 }
 
 // Leg 1
@@ -41,7 +41,7 @@ void init_chair_leg1()
 }
 
 void draw_chair_leg1(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &chair_leg1_vao, "images/floor.bmp");
+  draw_textured_object(view_matrix, &chair_leg1_vao, "images/floor.bmp");
 }
 
 // Leg 2
@@ -64,7 +64,7 @@ void init_chair_leg2()
 }
 
 void draw_chair_leg2(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &chair_leg2_vao, "images/floor.bmp");
+  draw_textured_object(view_matrix, &chair_leg2_vao, "images/floor.bmp");
 }
 
 // Leg 3
@@ -87,7 +87,7 @@ void init_chair_leg3()
 }
 
 void draw_chair_leg3(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &chair_leg3_vao, "images/floor.bmp");
+  draw_textured_object(view_matrix, &chair_leg3_vao, "images/floor.bmp");
 }
 
 // Leg 4
@@ -110,7 +110,7 @@ void init_chair_leg4()
 }
 
 void draw_chair_leg4(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &chair_leg4_vao, "images/floor.bmp");
+  draw_textured_object(view_matrix, &chair_leg4_vao, "images/floor.bmp");
 }
 
 // Chair back
@@ -133,7 +133,7 @@ void init_chair_back()
 }
 
 void draw_chair_back(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &chair_back_vao, "images/floor.bmp");
+  draw_textured_object(view_matrix, &chair_back_vao, "images/floor.bmp");
 }
 
 

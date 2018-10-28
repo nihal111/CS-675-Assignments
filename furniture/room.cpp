@@ -187,41 +187,8 @@ void init_room()
   glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(room_roof_v_positions)) );
 }
 
-void draw_room_walls(glm::mat4 view_matrix) {
-  GLuint tex = LoadTexture("images/wall.bmp", 256, 256);
-  glBindTexture(GL_TEXTURE_2D, tex);
-
-  glUniform1i(useTexture, 1);
-  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
-  glBindVertexArray (room_walls_vao);
-  glDrawArrays(GL_TRIANGLES, 0, room_walls_num_vertices);
-}
-
-void draw_room_floor(glm::mat4 view_matrix) {
-  GLuint tex = LoadTexture("images/floor.bmp", 256, 256);
-  glBindTexture(GL_TEXTURE_2D, tex);
-
-  glUniform1i(useTexture, 1);
-  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
-  glBindVertexArray (room_floor_vao);
-  glDrawArrays(GL_TRIANGLES, 0, room_floor_num_vertices);
-}
-
-void draw_room_roof(glm::mat4 view_matrix) {
-  GLuint tex = LoadTexture("images/roof.bmp", 256, 256);
-  glBindTexture(GL_TEXTURE_2D, tex);
-
-  glUniform1i(useTexture, 1);
-  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
-  glBindVertexArray (room_roof_vao);
-  glDrawArrays(GL_TRIANGLES, 0, room_roof_num_vertices);
-}
-
 void draw_room(glm::mat4 view_matrix) {
-  draw_room_walls(view_matrix);
-  draw_room_roof(view_matrix);
-  draw_room_floor(view_matrix);
+  draw_textured_object(view_matrix, &room_walls_vao, "images/wall.bmp", 256, 256, room_walls_num_vertices);
+  draw_textured_object(view_matrix, &room_floor_vao, "images/floor.bmp", 256, 256, room_floor_num_vertices);
+  draw_textured_object(view_matrix, &room_roof_vao, "images/roof.bmp", 256, 256, room_roof_num_vertices);
 }

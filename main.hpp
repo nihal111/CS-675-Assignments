@@ -43,8 +43,8 @@ bool solid=true;
 //Enable/Disable perspective view
 bool enable_perspective=true;
 //Shader program attribs
-GLuint vPosition, vColor, texCoord;
-GLuint uModelViewMatrix, useTexture;
+GLuint vPosition, vColor, vNormal, texCoord;
+GLuint uModelViewMatrix, normalMatrix, useTexture;
 
 //global matrix stack for hierarchical modelling
 std::vector<glm::mat4> matrixStack;

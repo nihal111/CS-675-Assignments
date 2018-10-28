@@ -136,23 +136,6 @@ void init_drawer()
 }
 
 void draw_drawer(glm::mat4 view_matrix) {
-  // Draw all but front face
-  GLuint tex = LoadTexture("images/dark_wood.bmp", 100, 100);
-  glBindTexture(GL_TEXTURE_2D, tex);
-
-  glUniform1i(useTexture, 1);
-  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
-  glBindVertexArray (drawer_vao);
-  glDrawArrays(GL_TRIANGLES, 0, drawer_num_vertices);
-
-  // Draw front face
-  tex = LoadTexture("images/drawer_front.bmp", 256, 512);
-  glBindTexture(GL_TEXTURE_2D, tex);
-
-  glUniform1i(useTexture, 1);
-  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
-  glBindVertexArray (drawer_front_vao);
-  glDrawArrays(GL_TRIANGLES, 0, drawer_front_num_vertices);
+  draw_textured_object(view_matrix, &drawer_vao, "images/dark_wood.bmp", 100, 100, drawer_num_vertices);
+  draw_textured_object(view_matrix, &drawer_front_vao, "images/drawer_front.bmp", 256, 512, drawer_front_num_vertices);
 }

@@ -17,7 +17,7 @@ void init_window_sill()
 }
 
 void draw_window_sill(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &window_sill_vao, "images/floor.bmp");
+  draw_textured_object(view_matrix, &window_sill_vao, "images/floor.bmp");
 }
 
 // Leg 1
@@ -40,7 +40,7 @@ void init_window_scene()
 }
 
 void draw_window_scene(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &window_scene_vao, "images/window.bmp", 512, 256);
+  draw_textured_object(view_matrix, &window_scene_vao, "images/window.bmp", 512, 256);
 }
 
 void init_window() {

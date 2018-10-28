@@ -136,23 +136,6 @@ void init_cupboard()
 }
 
 void draw_cupboard(glm::mat4 view_matrix) {
-  // Draw all but front face
-  GLuint tex = LoadTexture("images/light_wood.bmp", 100, 100);
-  glBindTexture(GL_TEXTURE_2D, tex);
-
-  glUniform1i(useTexture, 1);
-  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
-  glBindVertexArray (cupboard_vao);
-  glDrawArrays(GL_TRIANGLES, 0, cupboard_num_vertices);
-
-  // Draw front face
-  tex = LoadTexture("images/cupboard_front.bmp", 256, 384);
-  glBindTexture(GL_TEXTURE_2D, tex);
-
-  glUniform1i(useTexture, 1);
-  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
-  glBindVertexArray (cupboard_front_vao);
-  glDrawArrays(GL_TRIANGLES, 0, cupboard_front_num_vertices);
+  draw_textured_object(view_matrix, &cupboard_vao, "images/light_wood.bmp", 100, 100, cupboard_num_vertices);
+  draw_textured_object(view_matrix, &cupboard_front_vao, "images/cupboard_front.bmp", 256, 384, cupboard_front_num_vertices);
 }

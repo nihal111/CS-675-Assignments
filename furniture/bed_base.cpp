@@ -17,5 +17,5 @@ void init_bed_base()
 }
 
 void draw_bed_base(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &bed_base_vao, "images/dark_wood2.bmp", 100, 100);
+  draw_textured_object(view_matrix, &bed_base_vao, "images/dark_wood2.bmp", 100, 100);
 }
