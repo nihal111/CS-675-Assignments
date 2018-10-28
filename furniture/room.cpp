@@ -13,135 +13,16 @@ glm::vec4 room_positions[8] = {
   glm::vec4(20, -10, -15, 1.0)
 };
 
-const int room_walls_num_vertices = 30;
-int room_walls_tri_idx=0;
-glm::vec4 room_walls_v_positions[room_walls_num_vertices];
-glm::vec4 room_walls_v_colors[room_walls_num_vertices];
-glm::vec4 room_walls_v_normals[room_walls_num_vertices];
-glm::vec2 room_walls_tex_coords[room_walls_num_vertices];
-
-void wall_quad(int a, int b, int c, int d, glm::vec2* tex_coords)
-{
-  room_walls_v_positions[room_walls_tri_idx] = room_positions[a];
-  room_walls_v_normals[room_walls_tri_idx] = room_positions[a];
-  room_walls_tex_coords[room_walls_tri_idx] = tex_coords[0];
-  room_walls_tri_idx++;
-  room_walls_v_positions[room_walls_tri_idx] = room_positions[b];
-  room_walls_v_normals[room_walls_tri_idx] = room_positions[b];
-  room_walls_tex_coords[room_walls_tri_idx] = tex_coords[1];
-  room_walls_tri_idx++;
-  room_walls_v_positions[room_walls_tri_idx] = room_positions[c];
-  room_walls_v_normals[room_walls_tri_idx] = room_positions[c];
-  room_walls_tex_coords[room_walls_tri_idx] = tex_coords[3];
-  room_walls_tri_idx++;
-  room_walls_v_positions[room_walls_tri_idx] = room_positions[a];
-  room_walls_v_normals[room_walls_tri_idx] = room_positions[a];
-  room_walls_tex_coords[room_walls_tri_idx] = tex_coords[0];
-  room_walls_tri_idx++;
-  room_walls_v_positions[room_walls_tri_idx] = room_positions[c]; 
-  room_walls_v_normals[room_walls_tri_idx] = room_positions[c]; 
-  room_walls_tex_coords[room_walls_tri_idx] = tex_coords[3];
-  room_walls_tri_idx++;
-  room_walls_v_positions[room_walls_tri_idx] = room_positions[d]; 
-  room_walls_v_normals[room_walls_tri_idx] = room_positions[d]; 
-  room_walls_tex_coords[room_walls_tri_idx] = tex_coords[2];
-  room_walls_tri_idx++;
-}
-
-glm::vec2 tex_coords[4] = {
+glm::vec2 tex_room[4] = {
   glm::vec2( 0.0, 0.0),
   glm::vec2( 0.0, 5.0),
   glm::vec2( 5.0, 0.0),
   glm::vec2( 5.0, 5.0)
 };
 
-void room_walls(void)
-{ 
-   // Back
-  wall_quad( 1, 0, 3, 2, tex_coords);
-  // Right
-  wall_quad( 2, 3, 7, 6, tex_coords);
-  // Front
-  wall_quad( 4, 5, 6, 7, tex_coords);
-  // Left
-  wall_quad( 5, 4, 0, 1, tex_coords);
-  // // Top
-  // wall_quad( 6, 5, 1, 2, tex_coords);
-  // // Bottom
-  // wall_quad( 3, 0, 4, 7, tex_coords);
-}
-
+const int room_walls_num_vertices = 30;
 const int room_floor_num_vertices = 6;
-
-int room_floor_tri_idx=0;
-glm::vec4 room_floor_v_positions[room_floor_num_vertices];
-glm::vec4 room_floor_v_colors[room_floor_num_vertices];
-glm::vec4 room_floor_v_normals[room_floor_num_vertices];
-glm::vec2 room_floor_tex_coords[room_floor_num_vertices];
-
-void room_floor(void)
-{ 
-  room_floor_v_positions[room_floor_tri_idx] = room_positions[3];
-  room_floor_v_normals[room_floor_tri_idx] = room_positions[3];
-  room_floor_tex_coords[room_floor_tri_idx] = tex_coords[0];
-  room_floor_tri_idx++;
-  room_floor_v_positions[room_floor_tri_idx] = room_positions[0];
-  room_floor_v_normals[room_floor_tri_idx] = room_positions[0];
-  room_floor_tex_coords[room_floor_tri_idx] = tex_coords[1];
-  room_floor_tri_idx++;
-  room_floor_v_positions[room_floor_tri_idx] = room_positions[4];
-  room_floor_v_normals[room_floor_tri_idx] = room_positions[4];
-  room_floor_tex_coords[room_floor_tri_idx] = tex_coords[3];
-  room_floor_tri_idx++;
-  room_floor_v_positions[room_floor_tri_idx] = room_positions[3];
-  room_floor_v_normals[room_floor_tri_idx] = room_positions[3];
-  room_floor_tex_coords[room_floor_tri_idx] = tex_coords[0];
-  room_floor_tri_idx++;
-  room_floor_v_positions[room_floor_tri_idx] = room_positions[4]; 
-  room_floor_v_normals[room_floor_tri_idx] = room_positions[4]; 
-  room_floor_tex_coords[room_floor_tri_idx] = tex_coords[3];
-  room_floor_tri_idx++;
-  room_floor_v_positions[room_floor_tri_idx] = room_positions[7]; 
-  room_floor_v_normals[room_floor_tri_idx] = room_positions[7]; 
-  room_floor_tex_coords[room_floor_tri_idx] = tex_coords[2];
-  room_floor_tri_idx++;
-}
-
 const int room_roof_num_vertices = 6;
-
-int room_roof_tri_idx=0;
-glm::vec4 room_roof_v_positions[room_roof_num_vertices];
-glm::vec4 room_roof_v_colors[room_roof_num_vertices];
-glm::vec4 room_roof_v_normals[room_roof_num_vertices];
-glm::vec2 room_roof_tex_coords[room_roof_num_vertices];
-
-void room_roof(void)
-{ 
-  room_roof_v_positions[room_roof_tri_idx] = room_positions[6];
-  room_roof_v_normals[room_roof_tri_idx] = room_positions[6];
-  room_roof_tex_coords[room_roof_tri_idx] = tex_coords[0];
-  room_roof_tri_idx++;
-  room_roof_v_positions[room_roof_tri_idx] = room_positions[5];
-  room_roof_v_normals[room_roof_tri_idx] = room_positions[5];
-  room_roof_tex_coords[room_roof_tri_idx] = tex_coords[1];
-  room_roof_tri_idx++;
-  room_roof_v_positions[room_roof_tri_idx] = room_positions[1];
-  room_roof_v_normals[room_roof_tri_idx] = room_positions[1];
-  room_roof_tex_coords[room_roof_tri_idx] = tex_coords[3];
-  room_roof_tri_idx++;
-  room_roof_v_positions[room_roof_tri_idx] = room_positions[6];
-  room_roof_v_normals[room_roof_tri_idx] = room_positions[6];
-  room_roof_tex_coords[room_roof_tri_idx] = tex_coords[0];
-  room_roof_tri_idx++;
-  room_roof_v_positions[room_roof_tri_idx] = room_positions[1]; 
-  room_roof_v_normals[room_roof_tri_idx] = room_positions[1]; 
-  room_roof_tex_coords[room_roof_tri_idx] = tex_coords[3];
-  room_roof_tri_idx++;
-  room_roof_v_positions[room_roof_tri_idx] = room_positions[2]; 
-  room_roof_v_normals[room_roof_tri_idx] = room_positions[2]; 
-  room_roof_tex_coords[room_roof_tri_idx] = tex_coords[2];
-  room_roof_tri_idx++;
-}
 
 void init_room()
 {
@@ -153,7 +34,10 @@ void init_room()
   glBindVertexArray (room_walls_vao);
   glBindBuffer (GL_ARRAY_BUFFER, room_walls_vbo);
 
-  room_walls();
+  glm::vec4 room_walls_v_positions[room_walls_num_vertices];
+  glm::vec4 room_walls_v_normals[room_walls_num_vertices];
+  glm::vec2 room_walls_tex_coords[room_walls_num_vertices];
+  sides_quads(room_walls_v_positions, room_walls_v_normals, room_walls_tex_coords, room_positions, tex_room);
 
   glBufferData (GL_ARRAY_BUFFER, sizeof (room_walls_v_positions) + sizeof (room_walls_v_normals) + sizeof(room_walls_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(room_walls_v_positions), room_walls_v_positions );
@@ -177,7 +61,10 @@ void init_room()
   glBindVertexArray (room_floor_vao);
   glBindBuffer (GL_ARRAY_BUFFER, room_floor_vbo);
 
-  room_floor();
+  glm::vec4 room_floor_v_positions[room_floor_num_vertices];
+  glm::vec4 room_floor_v_normals[room_floor_num_vertices];
+  glm::vec2 room_floor_tex_coords[room_floor_num_vertices];
+  bottom_quad(room_floor_v_positions, room_floor_v_normals, room_floor_tex_coords, room_positions, tex_room);
 
   glBufferData (GL_ARRAY_BUFFER, sizeof (room_floor_v_positions) + sizeof (room_floor_v_normals) + sizeof(room_floor_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(room_floor_v_positions), room_floor_v_positions );
@@ -199,7 +86,10 @@ void init_room()
   glBindVertexArray (room_roof_vao);
   glBindBuffer (GL_ARRAY_BUFFER, room_roof_vbo);
 
-  room_roof();
+  glm::vec4 room_roof_v_positions[room_roof_num_vertices];
+  glm::vec4 room_roof_v_normals[room_roof_num_vertices];
+  glm::vec2 room_roof_tex_coords[room_roof_num_vertices];
+  top_quad(room_roof_v_positions, room_roof_v_normals, room_roof_tex_coords, room_positions, tex_room);
 
   glBufferData (GL_ARRAY_BUFFER, sizeof (room_roof_v_positions) + sizeof (room_roof_v_normals) + sizeof(room_roof_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(room_roof_v_positions), room_roof_v_positions );
