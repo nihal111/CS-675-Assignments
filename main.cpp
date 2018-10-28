@@ -133,8 +133,8 @@ void renderGL(void)
   draw_table(view_matrix);
   draw_chair(view_matrix);
   draw_window(view_matrix);
+  draw_lamp(view_matrix);
   draw_wall_light();
-  draw_lamp();
 
   // ---- Draw the models
   base_box->render_tree();
