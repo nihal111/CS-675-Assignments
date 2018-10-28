@@ -75,8 +75,6 @@ glm::vec2 room_floor_tex_coords[room_floor_num_vertices];
 
 void room_floor(void)
 { 
-  // Bottom
-  // quad( 3, 0, 4, 7, tex_coords);
   room_floor_v_positions[room_floor_tri_idx] = room_positions[3];
   room_floor_tex_coords[room_floor_tri_idx] = tex_coords[1];
   room_floor_tri_idx++;
@@ -107,8 +105,6 @@ glm::vec2 room_roof_tex_coords[room_roof_num_vertices];
 
 void room_roof(void)
 { 
-  // Bottom
-  // quad( 3, 0, 4, 7, tex_coords);
   room_roof_v_positions[room_roof_tri_idx] = room_positions[6];
   room_roof_tex_coords[room_roof_tri_idx] = tex_coords[1];
   room_roof_tri_idx++;

@@ -29,6 +29,8 @@
 
 #include "room.cpp"
 #include "door.cpp"
+#include "cupboard.cpp"
+#include "drawer.cpp"
 
 GLuint shaderProgram;
 
@@ -70,6 +72,7 @@ void initBuffersGL(void)
 
   init_room();
   init_door();
+  init_drawer();
   
 }
 
@@ -103,6 +106,7 @@ void renderGL(void)
   // ---- Draw the Room
   draw_room(view_matrix);
   draw_door(view_matrix);
+  draw_drawer(view_matrix);
 
   // ---- Draw the models
   glUniform1i(useTexture, 0);
