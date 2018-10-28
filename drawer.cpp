@@ -80,7 +80,7 @@ void drawer_front(void)
 
 void drawer(void)
 { 
-   // Back
+  // Back
   drawer_quad( 1, 0, 3, 2);
   // Right
   drawer_quad( 2, 3, 7, 6);

@@ -73,6 +73,7 @@ void initBuffersGL(void)
   init_room();
   init_door();
   init_drawer();
+  init_cupboard();
   
 }
 
@@ -107,6 +108,7 @@ void renderGL(void)
   draw_room(view_matrix);
   draw_door(view_matrix);
   draw_drawer(view_matrix);
+  draw_cupboard(view_matrix);
 
   // ---- Draw the models
   glUniform1i(useTexture, 0);
