@@ -2,19 +2,20 @@
 
 #include <iostream>
 
-extern GLuint vPosition,vColor,uModelViewMatrix,useTexture,normalMatrix;
+extern GLuint vPosition,vColor,vNormal,uModelViewMatrix,useTexture,normalMatrix;
 extern std::vector<glm::mat4> matrixStack;
 
 namespace csX75
 {
 
-	HNode::HNode(HNode* a_parent, GLuint num_v, glm::vec4* a_vertices, glm::vec4* a_colours, std::size_t v_size, std::size_t c_size,
+	HNode::HNode(HNode* a_parent, GLuint num_v, glm::vec4* a_vertices, glm::vec4* a_colours, glm::vec4* a_normals, std::size_t v_size, std::size_t c_size, std::size_t n_size,
 				GLfloat _min_rx=-1, GLfloat _max_rx=-1, GLfloat _min_ry=-1, GLfloat _max_ry=-1, GLfloat _min_rz=-1, GLfloat _max_rz=-1,
 				GLenum _render_mode){
 
 		num_vertices = num_v;
 		vertex_buffer_size = v_size;
 		color_buffer_size = c_size;
+		normal_buffer_size = n_size;
 		// initialize vao and vbo of the object;
 
 		min_rx = _min_rx;
@@ -48,6 +49,8 @@ namespace csX75
 		glEnableVertexAttribArray( vColor );
 		glVertexAttribPointer( vColor, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vertex_buffer_size));
 
+		glEnableVertexAttribArray( vNormal );
+		glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vertex_buffer_size + color_buffer_size));
 
 		// set parent
 
