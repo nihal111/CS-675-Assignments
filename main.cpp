@@ -38,6 +38,8 @@
 #include "table.cpp"
 #include "chair.cpp"
 #include "window.cpp"
+#include "wall_light.cpp"
+#include "lamp.cpp"
 
 GLuint shaderProgram;
 
@@ -85,6 +87,8 @@ void initBuffersGL(void)
   init_table();
   init_chair();
   init_window();
+  init_wall_light();
+  init_lamp();
   
 }
 
@@ -124,10 +128,10 @@ void renderGL(void)
   draw_table(view_matrix);
   draw_chair(view_matrix);
   draw_window(view_matrix);
+  draw_wall_light();
+  draw_lamp();
 
   // ---- Draw the models
-  glUniform1i(useTexture, 0);
-
   base_box->render_tree();
   torso->render_tree();
   r2d2_body->render_tree();

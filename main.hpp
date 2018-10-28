@@ -75,7 +75,7 @@ csX75::HNode* right_upper_leg;
 csX75::HNode* right_lower_leg;
 csX75::HNode* right_feet;
 
-// --- R2D2
+// ---- R2D2
 csX75::HNode* r2d2_body;
 csX75::HNode* r2d2_head;
 csX75::HNode* r2d2_left_arm;
@@ -83,13 +83,13 @@ csX75::HNode* r2d2_right_arm;
 csX75::HNode* r2d2_left_hand;
 csX75::HNode* r2d2_right_hand;
 
-
 // ---- Colors
 glm::vec4 color = glm::vec4(0.6, 0.6, 0.6, 1.0);
 glm::vec4 grey = glm::vec4(0.3, 0.3, 0.3, 1.0);
 glm::vec4 white = glm::vec4(0.9, 0.9, 0.9, 1.0);
 glm::vec4 red = glm::vec4(1.0, 0.2, 0.2, 1.0);
 glm::vec4 yellow = glm::vec4(0.8, 0.8, 0.0, 1.0);
+glm::vec4 orange = glm::vec4(0.9, 0.5, 0.1, 1.0);
 glm::vec4 green = glm::vec4(0.2, 0.7, 0.2, 1.0);
 glm::vec4 blue = glm::vec4(0.2, 0.2, 0.7, 1.0);
 glm::vec4 black = glm::vec4(0.2, 0.2, 0.2, 1.0);

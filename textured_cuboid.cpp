@@ -53,8 +53,6 @@ void texcub(glm::vec4* texcub_positions)
 
 void init_texcub(GLuint* texcub_vao, GLuint* texcub_vbo, glm::vec4* texcub_positions)
 {
-  // ---- Create texcub. All but front face.
-
   glGenVertexArrays (1, texcub_vao);
   glGenBuffers (1, texcub_vbo);
 
@@ -75,7 +73,6 @@ void init_texcub(GLuint* texcub_vao, GLuint* texcub_vbo, glm::vec4* texcub_posit
 }
 
 void draw_texcub(glm::mat4 view_matrix, GLuint* texcub_vao, const char* filename, int width=256, int height=256) {
-  // Draw all but front face
   GLuint tex = LoadTexture(filename, width, height);
   glBindTexture(GL_TEXTURE_2D, tex);
 
