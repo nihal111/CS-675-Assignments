@@ -51,9 +51,9 @@ void texcub(glm::vec4* texcub_positions)
   texcub_quad( 4, 5, 6, 7, texcub_positions);
   // Left
   texcub_quad( 5, 4, 0, 1, texcub_positions);
-  // // Top
+  // Top
   texcub_quad( 6, 5, 1, 2, texcub_positions);
-  // // Bottom
+  // Bottom
   texcub_quad( 3, 0, 4, 7, texcub_positions);
 }
 

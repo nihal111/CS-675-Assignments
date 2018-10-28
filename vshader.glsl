@@ -13,6 +13,7 @@ out vec4 color;
 out vec2 tex;
 out vec4 eye;
 out vec3 normal;
+out vec3 surfacePos;
 
 
 void main (void) 
@@ -25,4 +26,5 @@ void main (void)
   } else {
     tex = texCoord;
   }
+  surfacePos = vec3(gl_Position);
 }

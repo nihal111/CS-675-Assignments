@@ -72,6 +72,7 @@ void initBuffersGL(void)
   vNormal = glGetAttribLocation( shaderProgram, "vNormal" );
   texCoord = glGetAttribLocation( shaderProgram, "texCoord" );
   uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
+  viewMatrix = glGetUniformLocation( shaderProgram, "viewMatrix");
   normalMatrix =  glGetUniformLocation( shaderProgram, "normalMatrix");
   useTexture = glGetUniformLocation( shaderProgram, "useTexture");
 
@@ -112,12 +113,14 @@ void renderGL(void)
 
   //creating the projection matrix
   if(enable_perspective)
-    projection_matrix = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 40.0);
+    projection_matrix = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 50.0);
     // projection_matrix = glm::perspective(glm::radians(90.0),1.0,0.1,10.0);
   else
-    projection_matrix = glm::ortho(-3.0, 3.0, -3.0, 3.0, 1.0, 40.0);
+    projection_matrix = glm::ortho(-3.0, 3.0, -3.0, 3.0, 1.0, 50.0);
 
   view_matrix = projection_matrix*lookat_matrix;
+  glUniformMatrix4fv(viewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
+
   matrixStack.push_back(view_matrix);
 
 
