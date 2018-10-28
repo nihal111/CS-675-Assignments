@@ -16,18 +16,30 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include "main.hpp"
-#include "box.cpp"
 #include "cmath"
-#include "ellipsoid.cpp"
 #include "glm/ext.hpp"
+
+#include "box.cpp"
+#include "ellipsoid.cpp"
 #include "cylinder.cpp"
+
 #include "texture.cpp"
+#include "textured_cuboid.cpp"
 
 #include "opening_box.cpp"
 #include "humanoid.cpp"
 #include "r2d2.cpp"
 
-#include "room.cpp"
+#include "furniture/room.cpp"
+#include "furniture/door.cpp"
+#include "furniture/cupboard.cpp"
+#include "furniture/drawer.cpp"
+#include "furniture/bed.cpp"
+#include "furniture/table.cpp"
+#include "furniture/chair.cpp"
+#include "furniture/window.cpp"
+#include "furniture/wall_light.cpp"
+#include "furniture/lamp.cpp"
 
 GLuint shaderProgram;
 
@@ -67,7 +79,16 @@ void initBuffersGL(void)
 
   init_r2d2();
 
-  init_room_walls();
+  init_room();
+  init_door();
+  init_drawer();
+  init_cupboard();
+  init_bed();
+  init_table();
+  init_chair();
+  init_window();
+  init_wall_light();
+  init_lamp();
   
 }
 
@@ -100,10 +121,17 @@ void renderGL(void)
 
   // ---- Draw the Room
   draw_room(view_matrix);
-  
-  // ---- Draw the models
-  glUniform1i(useTexture, 0);
+  draw_door(view_matrix);
+  draw_drawer(view_matrix);
+  draw_cupboard(view_matrix);
+  draw_bed(view_matrix);
+  draw_table(view_matrix);
+  draw_chair(view_matrix);
+  draw_window(view_matrix);
+  draw_wall_light();
+  draw_lamp();
 
+  // ---- Draw the models
   base_box->render_tree();
   torso->render_tree();
   r2d2_body->render_tree();

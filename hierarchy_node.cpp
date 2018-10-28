@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-extern GLuint vPosition,vColor,uModelViewMatrix;
+extern GLuint vPosition,vColor,uModelViewMatrix,useTexture;
 extern std::vector<glm::mat4> matrixStack;
 
 namespace csX75
@@ -102,6 +102,8 @@ namespace csX75
 		//matrixStack multiply
 		glm::mat4* ms_mult = multiply_stack(matrixStack);
 
+
+  		glUniform1i(useTexture, 0);
 		glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(*ms_mult));
 		glBindVertexArray (vao);
 		glDrawArrays(render_mode, 0, num_vertices);

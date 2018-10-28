@@ -1,3 +1,5 @@
+const int c_tesselation=50;
+const int c_num_vertices = c_tesselation * 6;
 
 void cylinder(double radius_x, double radius_y, double height_z, int c_tesselation,
               glm::vec4 c_color, glm::vec4* c_v_positions, glm::vec4* c_v_colors)
@@ -66,10 +68,6 @@ csX75::HNode* get_cylinder(double r1, double r2, double l, glm::vec4 a_color,
                            GLfloat _min_rx=-1, GLfloat _max_rx=-1, 
                            GLfloat _min_ry=-1, GLfloat _max_ry=-1, 
                            GLfloat _min_rz=-1, GLfloat _max_rz=-1) {
-  int c_tesselation=50;
-
-  int c_num_vertices = c_tesselation * 6;
-
   glm::vec4 c_v_positions[c_num_vertices];
   glm::vec4 c_v_colors[c_num_vertices];
   
@@ -81,4 +79,3 @@ csX75::HNode* get_cylinder(double r1, double r2, double l, glm::vec4 a_color,
                   GL_TRIANGLE_STRIP);
   return cylindrical_joint;
 }
-
