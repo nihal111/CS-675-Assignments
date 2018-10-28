@@ -16,12 +16,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include "main.hpp"
-#include "box.cpp"
 #include "cmath"
-#include "ellipsoid.cpp"
 #include "glm/ext.hpp"
+
+#include "box.cpp"
+#include "ellipsoid.cpp"
 #include "cylinder.cpp"
+
 #include "texture.cpp"
+#include "textured_cuboid.cpp"
 
 #include "opening_box.cpp"
 #include "humanoid.cpp"
