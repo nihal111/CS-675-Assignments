@@ -37,6 +37,7 @@
 #include "bed.cpp"
 #include "table.cpp"
 #include "chair.cpp"
+#include "window.cpp"
 
 GLuint shaderProgram;
 
@@ -83,6 +84,7 @@ void initBuffersGL(void)
   init_bed();
   init_table();
   init_chair();
+  init_window();
   
 }
 
@@ -121,6 +123,7 @@ void renderGL(void)
   draw_bed(view_matrix);
   draw_table(view_matrix);
   draw_chair(view_matrix);
+  draw_window(view_matrix);
 
   // ---- Draw the models
   glUniform1i(useTexture, 0);
