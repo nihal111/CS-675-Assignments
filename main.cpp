@@ -30,16 +30,16 @@
 #include "humanoid.cpp"
 #include "r2d2.cpp"
 
-#include "room.cpp"
-#include "door.cpp"
-#include "cupboard.cpp"
-#include "drawer.cpp"
-#include "bed.cpp"
-#include "table.cpp"
-#include "chair.cpp"
-#include "window.cpp"
-#include "wall_light.cpp"
-#include "lamp.cpp"
+#include "furniture/room.cpp"
+#include "furniture/door.cpp"
+#include "furniture/cupboard.cpp"
+#include "furniture/drawer.cpp"
+#include "furniture/bed.cpp"
+#include "furniture/table.cpp"
+#include "furniture/chair.cpp"
+#include "furniture/window.cpp"
+#include "furniture/wall_light.cpp"
+#include "furniture/lamp.cpp"
 
 GLuint shaderProgram;
 
