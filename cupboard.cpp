@@ -21,30 +21,30 @@ glm::vec2 cupboard_tex_coords[cupboard_num_vertices];
 
 glm::vec2 tex_cupboard[4] = {
   glm::vec2( 0.0, 0.0),
-  glm::vec2( 0.0, 5.0),
-  glm::vec2( 5.0, 0.0),
-  glm::vec2( 5.0, 5.0)
+  glm::vec2( 0.0, 1.0),
+  glm::vec2( 1.0, 0.0),
+  glm::vec2( 1.0, 1.0)
 };
 
 void cupboard_quad(int a, int b, int c, int d)
 {
   cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[a];
-  cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[1];
-  cupboard_tri_idx++;
-  cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[b];
   cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[0];
   cupboard_tri_idx++;
-  cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[c];
-  cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[2];
-  cupboard_tri_idx++;
-  cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[a];
+  cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[b];
   cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[1];
   cupboard_tri_idx++;
+  cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[c];
+  cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[3];
+  cupboard_tri_idx++;
+  cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[a];
+  cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[0];
+  cupboard_tri_idx++;
   cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[c]; 
-  cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[2];
+  cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[3];
   cupboard_tri_idx++;
   cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[d]; 
-  cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[3];
+  cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[2];
   cupboard_tri_idx++;
 }
 
@@ -59,22 +59,22 @@ glm::vec2 cupboard_front_tex_coords[cupboard_front_num_vertices];
 void cupboard_front(void)
 {
   cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[4];
-  cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[1];
-  cupboard_front_tri_idx++;
-  cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[5];
   cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[0];
   cupboard_front_tri_idx++;
-  cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[6];
-  cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[2];
-  cupboard_front_tri_idx++;
-  cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[4];
+  cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[5];
   cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[1];
   cupboard_front_tri_idx++;
+  cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[6];
+  cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[3];
+  cupboard_front_tri_idx++;
+  cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[4];
+  cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[0];
+  cupboard_front_tri_idx++;
   cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[6]; 
-  cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[2];
+  cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[3];
   cupboard_front_tri_idx++;
   cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[7]; 
-  cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[3];
+  cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[2];
   cupboard_front_tri_idx++;
 }
 
@@ -137,7 +137,7 @@ void init_cupboard()
 
 void draw_cupboard(glm::mat4 view_matrix) {
   // Draw all but front face
-  GLuint tex = LoadTexture("images/cupboard.bmp", 256, 256);
+  GLuint tex = LoadTexture("images/cupboard.bmp", 100, 100);
   glBindTexture(GL_TEXTURE_2D, tex);
 
   glUniform1i(useTexture, 1);
@@ -147,7 +147,7 @@ void draw_cupboard(glm::mat4 view_matrix) {
   glDrawArrays(GL_TRIANGLES, 0, cupboard_num_vertices);
 
   // Draw front face
-  tex = LoadTexture("images/all1.bmp", 256, 256);
+  tex = LoadTexture("images/cupboard_front.bmp", 256, 384);
   glBindTexture(GL_TEXTURE_2D, tex);
 
   glUniform1i(useTexture, 1);

@@ -21,30 +21,30 @@ glm::vec2 door_tex_coords[door_num_vertices];
 
 glm::vec2 tex_door[4] = {
   glm::vec2( 0.0, 0.0),
-  glm::vec2( 0.0, 5.0),
-  glm::vec2( 5.0, 0.0),
-  glm::vec2( 5.0, 5.0)
+  glm::vec2( 0.0, 1.0),
+  glm::vec2( 1.0, 0.0),
+  glm::vec2( 1.0, 1.0)
 };
 
 void door_quad(int a, int b, int c, int d)
 {
   door_v_positions[door_tri_idx] = door_positions[a];
-  door_tex_coords[door_tri_idx] = tex_door[1];
-  door_tri_idx++;
-  door_v_positions[door_tri_idx] = door_positions[b];
   door_tex_coords[door_tri_idx] = tex_door[0];
   door_tri_idx++;
-  door_v_positions[door_tri_idx] = door_positions[c];
-  door_tex_coords[door_tri_idx] = tex_door[2];
-  door_tri_idx++;
-  door_v_positions[door_tri_idx] = door_positions[a];
+  door_v_positions[door_tri_idx] = door_positions[b];
   door_tex_coords[door_tri_idx] = tex_door[1];
   door_tri_idx++;
+  door_v_positions[door_tri_idx] = door_positions[c];
+  door_tex_coords[door_tri_idx] = tex_door[3];
+  door_tri_idx++;
+  door_v_positions[door_tri_idx] = door_positions[a];
+  door_tex_coords[door_tri_idx] = tex_door[0];
+  door_tri_idx++;
   door_v_positions[door_tri_idx] = door_positions[c]; 
-  door_tex_coords[door_tri_idx] = tex_door[2];
+  door_tex_coords[door_tri_idx] = tex_door[3];
   door_tri_idx++;
   door_v_positions[door_tri_idx] = door_positions[d]; 
-  door_tex_coords[door_tri_idx] = tex_door[3];
+  door_tex_coords[door_tri_idx] = tex_door[2];
   door_tri_idx++;
 }
 
@@ -59,22 +59,22 @@ glm::vec2 door_front_tex_coords[door_front_num_vertices];
 void door_front(void)
 {
   door_front_v_positions[door_front_tri_idx] = door_positions[4];
-  door_front_tex_coords[door_front_tri_idx] = tex_door[1];
-  door_front_tri_idx++;
-  door_front_v_positions[door_front_tri_idx] = door_positions[5];
   door_front_tex_coords[door_front_tri_idx] = tex_door[0];
   door_front_tri_idx++;
-  door_front_v_positions[door_front_tri_idx] = door_positions[6];
-  door_front_tex_coords[door_front_tri_idx] = tex_door[2];
-  door_front_tri_idx++;
-  door_front_v_positions[door_front_tri_idx] = door_positions[4];
+  door_front_v_positions[door_front_tri_idx] = door_positions[5];
   door_front_tex_coords[door_front_tri_idx] = tex_door[1];
   door_front_tri_idx++;
+  door_front_v_positions[door_front_tri_idx] = door_positions[6];
+  door_front_tex_coords[door_front_tri_idx] = tex_door[3];
+  door_front_tri_idx++;
+  door_front_v_positions[door_front_tri_idx] = door_positions[4];
+  door_front_tex_coords[door_front_tri_idx] = tex_door[0];
+  door_front_tri_idx++;
   door_front_v_positions[door_front_tri_idx] = door_positions[6]; 
-  door_front_tex_coords[door_front_tri_idx] = tex_door[2];
+  door_front_tex_coords[door_front_tri_idx] = tex_door[3];
   door_front_tri_idx++;
   door_front_v_positions[door_front_tri_idx] = door_positions[7]; 
-  door_front_tex_coords[door_front_tri_idx] = tex_door[3];
+  door_front_tex_coords[door_front_tri_idx] = tex_door[2];
   door_front_tri_idx++;
 }
 
@@ -137,7 +137,7 @@ void init_door()
 
 void draw_door(glm::mat4 view_matrix) {
   // Draw all but front face
-  GLuint tex = LoadTexture("images/door.bmp", 256, 256);
+  GLuint tex = LoadTexture("images/drawer.bmp", 100, 100);
   glBindTexture(GL_TEXTURE_2D, tex);
 
   glUniform1i(useTexture, 1);
@@ -147,7 +147,7 @@ void draw_door(glm::mat4 view_matrix) {
   glDrawArrays(GL_TRIANGLES, 0, door_num_vertices);
 
   // Draw front face
-  tex = LoadTexture("images/all1.bmp", 256, 256);
+  tex = LoadTexture("images/door.bmp", 100, 300);
   glBindTexture(GL_TEXTURE_2D, tex);
 
   glUniform1i(useTexture, 1);

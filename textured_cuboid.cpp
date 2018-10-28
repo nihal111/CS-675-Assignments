@@ -16,22 +16,22 @@ glm::vec2 tex_texcub[4] = {
 void texcub_quad(int a, int b, int c, int d, glm::vec4* texcub_positions)
 {
   texcub_v_positions[texcub_tri_idx] = texcub_positions[a];
-  texcub_tex_coords[texcub_tri_idx] = tex_texcub[1];
-  texcub_tri_idx++;
-  texcub_v_positions[texcub_tri_idx] = texcub_positions[b];
   texcub_tex_coords[texcub_tri_idx] = tex_texcub[0];
   texcub_tri_idx++;
-  texcub_v_positions[texcub_tri_idx] = texcub_positions[c];
-  texcub_tex_coords[texcub_tri_idx] = tex_texcub[2];
-  texcub_tri_idx++;
-  texcub_v_positions[texcub_tri_idx] = texcub_positions[a];
+  texcub_v_positions[texcub_tri_idx] = texcub_positions[b];
   texcub_tex_coords[texcub_tri_idx] = tex_texcub[1];
   texcub_tri_idx++;
+  texcub_v_positions[texcub_tri_idx] = texcub_positions[c];
+  texcub_tex_coords[texcub_tri_idx] = tex_texcub[3];
+  texcub_tri_idx++;
+  texcub_v_positions[texcub_tri_idx] = texcub_positions[a];
+  texcub_tex_coords[texcub_tri_idx] = tex_texcub[0];
+  texcub_tri_idx++;
   texcub_v_positions[texcub_tri_idx] = texcub_positions[c]; 
-  texcub_tex_coords[texcub_tri_idx] = tex_texcub[2];
+  texcub_tex_coords[texcub_tri_idx] = tex_texcub[3];
   texcub_tri_idx++;
   texcub_v_positions[texcub_tri_idx] = texcub_positions[d]; 
-  texcub_tex_coords[texcub_tri_idx] = tex_texcub[3];
+  texcub_tex_coords[texcub_tri_idx] = tex_texcub[2];
   texcub_tri_idx++;
 }
 

@@ -21,30 +21,30 @@ glm::vec2 drawer_tex_coords[drawer_num_vertices];
 
 glm::vec2 tex_drawer[4] = {
   glm::vec2( 0.0, 0.0),
-  glm::vec2( 0.0, 5.0),
-  glm::vec2( 5.0, 0.0),
-  glm::vec2( 5.0, 5.0)
+  glm::vec2( 0.0, 1.0),
+  glm::vec2( 1.0, 0.0),
+  glm::vec2( 1.0, 1.0)
 };
 
 void drawer_quad(int a, int b, int c, int d)
 {
   drawer_v_positions[drawer_tri_idx] = drawer_positions[a];
-  drawer_tex_coords[drawer_tri_idx] = tex_drawer[1];
-  drawer_tri_idx++;
-  drawer_v_positions[drawer_tri_idx] = drawer_positions[b];
   drawer_tex_coords[drawer_tri_idx] = tex_drawer[0];
   drawer_tri_idx++;
-  drawer_v_positions[drawer_tri_idx] = drawer_positions[c];
-  drawer_tex_coords[drawer_tri_idx] = tex_drawer[2];
-  drawer_tri_idx++;
-  drawer_v_positions[drawer_tri_idx] = drawer_positions[a];
+  drawer_v_positions[drawer_tri_idx] = drawer_positions[b];
   drawer_tex_coords[drawer_tri_idx] = tex_drawer[1];
   drawer_tri_idx++;
+  drawer_v_positions[drawer_tri_idx] = drawer_positions[c];
+  drawer_tex_coords[drawer_tri_idx] = tex_drawer[3];
+  drawer_tri_idx++;
+  drawer_v_positions[drawer_tri_idx] = drawer_positions[a];
+  drawer_tex_coords[drawer_tri_idx] = tex_drawer[0];
+  drawer_tri_idx++;
   drawer_v_positions[drawer_tri_idx] = drawer_positions[c]; 
-  drawer_tex_coords[drawer_tri_idx] = tex_drawer[2];
+  drawer_tex_coords[drawer_tri_idx] = tex_drawer[3];
   drawer_tri_idx++;
   drawer_v_positions[drawer_tri_idx] = drawer_positions[d]; 
-  drawer_tex_coords[drawer_tri_idx] = tex_drawer[3];
+  drawer_tex_coords[drawer_tri_idx] = tex_drawer[2];
   drawer_tri_idx++;
 }
 
@@ -59,22 +59,22 @@ glm::vec2 drawer_front_tex_coords[drawer_front_num_vertices];
 void drawer_front(void)
 {
   drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[4];
-  drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[1];
-  drawer_front_tri_idx++;
-  drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[5];
   drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[0];
   drawer_front_tri_idx++;
-  drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[6];
-  drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[2];
-  drawer_front_tri_idx++;
-  drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[4];
+  drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[5];
   drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[1];
   drawer_front_tri_idx++;
+  drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[6];
+  drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[3];
+  drawer_front_tri_idx++;
+  drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[4];
+  drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[0];
+  drawer_front_tri_idx++;
   drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[6]; 
-  drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[2];
+  drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[3];
   drawer_front_tri_idx++;
   drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[7]; 
-  drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[3];
+  drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[2];
   drawer_front_tri_idx++;
 }
 
@@ -137,7 +137,7 @@ void init_drawer()
 
 void draw_drawer(glm::mat4 view_matrix) {
   // Draw all but front face
-  GLuint tex = LoadTexture("images/drawer.bmp", 256, 256);
+  GLuint tex = LoadTexture("images/drawer.bmp", 100, 100);
   glBindTexture(GL_TEXTURE_2D, tex);
 
   glUniform1i(useTexture, 1);
@@ -147,7 +147,7 @@ void draw_drawer(glm::mat4 view_matrix) {
   glDrawArrays(GL_TRIANGLES, 0, drawer_num_vertices);
 
   // Draw front face
-  tex = LoadTexture("images/all1.bmp", 256, 256);
+  tex = LoadTexture("images/drawer_front.bmp", 256, 512);
   glBindTexture(GL_TEXTURE_2D, tex);
 
   glUniform1i(useTexture, 1);
