@@ -82,3 +82,14 @@ https://www.deviantart.com/devin-busha/art/Wood-Study-3-147242468
 Roof-
 http://www.tutorialsforblender3d.com/Walls/Page8
 
+Wood-
+http://cgright.com/show.php?id=137&select=texture
+https://www.the3rdsequence.com/texturedb/texture/13/dark+parquet/
+
+Cupboard-
+https://openclipart.org/detail/191268/closeddoorcloset
+https://clipartimage.com/clipart/18956-drawers-clipart.html
+https://dumielauxepices.net/furniture-clipart/furniture-clipart-cupboard
+
+Door-
+https://clipartpng.com/?2397,brown-door-png-clipart

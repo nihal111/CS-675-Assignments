@@ -137,7 +137,7 @@ void init_drawer()
 
 void draw_drawer(glm::mat4 view_matrix) {
   // Draw all but front face
-  GLuint tex = LoadTexture("images/drawer.bmp", 100, 100);
+  GLuint tex = LoadTexture("images/dark_wood.bmp", 100, 100);
   glBindTexture(GL_TEXTURE_2D, tex);
 
   glUniform1i(useTexture, 1);

@@ -40,7 +40,7 @@ void init_window_scene()
 }
 
 void draw_window_scene(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &window_scene_vao, "images/all1.bmp");
+  draw_texcub(view_matrix, &window_scene_vao, "images/window.bmp", 512, 256);
 }
 
 void init_window() {

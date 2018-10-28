@@ -137,7 +137,7 @@ void init_cupboard()
 
 void draw_cupboard(glm::mat4 view_matrix) {
   // Draw all but front face
-  GLuint tex = LoadTexture("images/cupboard.bmp", 100, 100);
+  GLuint tex = LoadTexture("images/light_wood.bmp", 100, 100);
   glBindTexture(GL_TEXTURE_2D, tex);
 
   glUniform1i(useTexture, 1);

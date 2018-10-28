@@ -8,9 +8,9 @@ glm::vec2 texcub_tex_coords[texcub_num_vertices];
 
 glm::vec2 tex_texcub[4] = {
   glm::vec2( 0.0, 0.0),
-  glm::vec2( 0.0, 5.0),
-  glm::vec2( 5.0, 0.0),
-  glm::vec2( 5.0, 5.0)
+  glm::vec2( 0.0, 1.0),
+  glm::vec2( 1.0, 0.0),
+  glm::vec2( 1.0, 1.0)
 };
 
 void texcub_quad(int a, int b, int c, int d, glm::vec4* texcub_positions)
@@ -74,9 +74,9 @@ void init_texcub(GLuint* texcub_vao, GLuint* texcub_vbo, glm::vec4* texcub_posit
   glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(texcub_v_positions)) );
 }
 
-void draw_texcub(glm::mat4 view_matrix, GLuint* texcub_vao, const char* filename) {
+void draw_texcub(glm::mat4 view_matrix, GLuint* texcub_vao, const char* filename, int width=256, int height=256) {
   // Draw all but front face
-  GLuint tex = LoadTexture(filename, 256, 256);
+  GLuint tex = LoadTexture(filename, width, height);
   glBindTexture(GL_TEXTURE_2D, tex);
 
   glUniform1i(useTexture, 1);
