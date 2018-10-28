@@ -29,21 +29,27 @@ glm::vec2 tex_door[4] = {
 void door_quad(int a, int b, int c, int d)
 {
   door_v_positions[door_tri_idx] = door_positions[a];
+  door_v_normals[door_tri_idx] = door_positions[a];
   door_tex_coords[door_tri_idx] = tex_door[0];
   door_tri_idx++;
   door_v_positions[door_tri_idx] = door_positions[b];
+  door_v_normals[door_tri_idx] = door_positions[b];
   door_tex_coords[door_tri_idx] = tex_door[1];
   door_tri_idx++;
   door_v_positions[door_tri_idx] = door_positions[c];
+  door_v_normals[door_tri_idx] = door_positions[c];
   door_tex_coords[door_tri_idx] = tex_door[3];
   door_tri_idx++;
   door_v_positions[door_tri_idx] = door_positions[a];
+  door_v_normals[door_tri_idx] = door_positions[a];
   door_tex_coords[door_tri_idx] = tex_door[0];
   door_tri_idx++;
   door_v_positions[door_tri_idx] = door_positions[c]; 
+  door_v_normals[door_tri_idx] = door_positions[c]; 
   door_tex_coords[door_tri_idx] = tex_door[3];
   door_tri_idx++;
   door_v_positions[door_tri_idx] = door_positions[d]; 
+  door_v_normals[door_tri_idx] = door_positions[d]; 
   door_tex_coords[door_tri_idx] = tex_door[2];
   door_tri_idx++;
 }
@@ -59,21 +65,27 @@ glm::vec2 door_front_tex_coords[door_front_num_vertices];
 void door_front(void)
 {
   door_front_v_positions[door_front_tri_idx] = door_positions[4];
+  door_front_v_normals[door_front_tri_idx] = door_positions[4];
   door_front_tex_coords[door_front_tri_idx] = tex_door[0];
   door_front_tri_idx++;
   door_front_v_positions[door_front_tri_idx] = door_positions[5];
+  door_front_v_normals[door_front_tri_idx] = door_positions[5];
   door_front_tex_coords[door_front_tri_idx] = tex_door[1];
   door_front_tri_idx++;
   door_front_v_positions[door_front_tri_idx] = door_positions[6];
+  door_front_v_normals[door_front_tri_idx] = door_positions[6];
   door_front_tex_coords[door_front_tri_idx] = tex_door[3];
   door_front_tri_idx++;
   door_front_v_positions[door_front_tri_idx] = door_positions[4];
+  door_front_v_normals[door_front_tri_idx] = door_positions[4];
   door_front_tex_coords[door_front_tri_idx] = tex_door[0];
   door_front_tri_idx++;
   door_front_v_positions[door_front_tri_idx] = door_positions[6]; 
+  door_front_v_normals[door_front_tri_idx] = door_positions[6]; 
   door_front_tex_coords[door_front_tri_idx] = tex_door[3];
   door_front_tri_idx++;
   door_front_v_positions[door_front_tri_idx] = door_positions[7]; 
+  door_front_v_normals[door_front_tri_idx] = door_positions[7]; 
   door_front_tex_coords[door_front_tri_idx] = tex_door[2];
   door_front_tri_idx++;
 }
@@ -106,14 +118,17 @@ void init_door()
 
   door();
 
-  glBufferData (GL_ARRAY_BUFFER, sizeof (door_v_positions) + sizeof(door_tex_coords), NULL, GL_STATIC_DRAW);
+  glBufferData (GL_ARRAY_BUFFER, sizeof (door_v_positions) + sizeof(door_v_normals) + sizeof(door_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(door_v_positions), door_v_positions );
-  glBufferSubData( GL_ARRAY_BUFFER, sizeof(door_v_positions), sizeof(door_tex_coords), door_tex_coords);
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(door_v_positions), sizeof(door_v_normals), door_v_normals );
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(door_v_positions) + sizeof(door_v_normals), sizeof(door_tex_coords), door_tex_coords);
 
   glEnableVertexAttribArray( vPosition );
   glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
+  glEnableVertexAttribArray( vNormal );
+  glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(door_v_positions)) );
   glEnableVertexAttribArray( texCoord );
-  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(door_v_positions)) );
+  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(door_v_positions) + sizeof(door_v_normals)) );
 
   // ---- Create door. Front face.
 
@@ -125,14 +140,17 @@ void init_door()
 
   door_front();
 
-  glBufferData (GL_ARRAY_BUFFER, sizeof (door_front_v_positions) + sizeof(door_front_tex_coords), NULL, GL_STATIC_DRAW);
+  glBufferData (GL_ARRAY_BUFFER, sizeof (door_front_v_positions) + sizeof(door_v_normals) + sizeof(door_front_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(door_front_v_positions), door_front_v_positions );
-  glBufferSubData( GL_ARRAY_BUFFER, sizeof(door_front_v_positions), sizeof(door_front_tex_coords), door_front_tex_coords);
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(door_front_v_positions), sizeof(door_front_v_normals), door_front_v_normals );
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(door_front_v_positions) + sizeof(door_front_v_normals), sizeof(door_front_tex_coords), door_front_tex_coords);
 
   glEnableVertexAttribArray( vPosition );
   glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
+  glEnableVertexAttribArray( vNormal );
+  glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(door_front_v_positions)) );
   glEnableVertexAttribArray( texCoord );
-  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(door_front_v_positions)) );
+  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(door_front_v_positions) + sizeof(door_front_v_normals)) );
 }
 
 void draw_door(glm::mat4 view_matrix) {

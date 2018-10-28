@@ -23,21 +23,27 @@ glm::vec2 room_walls_tex_coords[room_walls_num_vertices];
 void wall_quad(int a, int b, int c, int d, glm::vec2* tex_coords)
 {
   room_walls_v_positions[room_walls_tri_idx] = room_positions[a];
+  room_walls_v_normals[room_walls_tri_idx] = room_positions[a];
   room_walls_tex_coords[room_walls_tri_idx] = tex_coords[0];
   room_walls_tri_idx++;
   room_walls_v_positions[room_walls_tri_idx] = room_positions[b];
+  room_walls_v_normals[room_walls_tri_idx] = room_positions[b];
   room_walls_tex_coords[room_walls_tri_idx] = tex_coords[1];
   room_walls_tri_idx++;
   room_walls_v_positions[room_walls_tri_idx] = room_positions[c];
+  room_walls_v_normals[room_walls_tri_idx] = room_positions[c];
   room_walls_tex_coords[room_walls_tri_idx] = tex_coords[3];
   room_walls_tri_idx++;
   room_walls_v_positions[room_walls_tri_idx] = room_positions[a];
+  room_walls_v_normals[room_walls_tri_idx] = room_positions[a];
   room_walls_tex_coords[room_walls_tri_idx] = tex_coords[0];
   room_walls_tri_idx++;
   room_walls_v_positions[room_walls_tri_idx] = room_positions[c]; 
+  room_walls_v_normals[room_walls_tri_idx] = room_positions[c]; 
   room_walls_tex_coords[room_walls_tri_idx] = tex_coords[3];
   room_walls_tri_idx++;
   room_walls_v_positions[room_walls_tri_idx] = room_positions[d]; 
+  room_walls_v_normals[room_walls_tri_idx] = room_positions[d]; 
   room_walls_tex_coords[room_walls_tri_idx] = tex_coords[2];
   room_walls_tri_idx++;
 }
@@ -76,21 +82,27 @@ glm::vec2 room_floor_tex_coords[room_floor_num_vertices];
 void room_floor(void)
 { 
   room_floor_v_positions[room_floor_tri_idx] = room_positions[3];
+  room_floor_v_normals[room_floor_tri_idx] = room_positions[3];
   room_floor_tex_coords[room_floor_tri_idx] = tex_coords[0];
   room_floor_tri_idx++;
   room_floor_v_positions[room_floor_tri_idx] = room_positions[0];
+  room_floor_v_normals[room_floor_tri_idx] = room_positions[0];
   room_floor_tex_coords[room_floor_tri_idx] = tex_coords[1];
   room_floor_tri_idx++;
   room_floor_v_positions[room_floor_tri_idx] = room_positions[4];
+  room_floor_v_normals[room_floor_tri_idx] = room_positions[4];
   room_floor_tex_coords[room_floor_tri_idx] = tex_coords[3];
   room_floor_tri_idx++;
   room_floor_v_positions[room_floor_tri_idx] = room_positions[3];
+  room_floor_v_normals[room_floor_tri_idx] = room_positions[3];
   room_floor_tex_coords[room_floor_tri_idx] = tex_coords[0];
   room_floor_tri_idx++;
   room_floor_v_positions[room_floor_tri_idx] = room_positions[4]; 
+  room_floor_v_normals[room_floor_tri_idx] = room_positions[4]; 
   room_floor_tex_coords[room_floor_tri_idx] = tex_coords[3];
   room_floor_tri_idx++;
   room_floor_v_positions[room_floor_tri_idx] = room_positions[7]; 
+  room_floor_v_normals[room_floor_tri_idx] = room_positions[7]; 
   room_floor_tex_coords[room_floor_tri_idx] = tex_coords[2];
   room_floor_tri_idx++;
 }
@@ -106,21 +118,27 @@ glm::vec2 room_roof_tex_coords[room_roof_num_vertices];
 void room_roof(void)
 { 
   room_roof_v_positions[room_roof_tri_idx] = room_positions[6];
+  room_roof_v_normals[room_roof_tri_idx] = room_positions[6];
   room_roof_tex_coords[room_roof_tri_idx] = tex_coords[0];
   room_roof_tri_idx++;
   room_roof_v_positions[room_roof_tri_idx] = room_positions[5];
+  room_roof_v_normals[room_roof_tri_idx] = room_positions[5];
   room_roof_tex_coords[room_roof_tri_idx] = tex_coords[1];
   room_roof_tri_idx++;
   room_roof_v_positions[room_roof_tri_idx] = room_positions[1];
+  room_roof_v_normals[room_roof_tri_idx] = room_positions[1];
   room_roof_tex_coords[room_roof_tri_idx] = tex_coords[3];
   room_roof_tri_idx++;
   room_roof_v_positions[room_roof_tri_idx] = room_positions[6];
+  room_roof_v_normals[room_roof_tri_idx] = room_positions[6];
   room_roof_tex_coords[room_roof_tri_idx] = tex_coords[0];
   room_roof_tri_idx++;
   room_roof_v_positions[room_roof_tri_idx] = room_positions[1]; 
+  room_roof_v_normals[room_roof_tri_idx] = room_positions[1]; 
   room_roof_tex_coords[room_roof_tri_idx] = tex_coords[3];
   room_roof_tri_idx++;
   room_roof_v_positions[room_roof_tri_idx] = room_positions[2]; 
+  room_roof_v_normals[room_roof_tri_idx] = room_positions[2]; 
   room_roof_tex_coords[room_roof_tri_idx] = tex_coords[2];
   room_roof_tri_idx++;
 }
@@ -137,14 +155,17 @@ void init_room()
 
   room_walls();
 
-  glBufferData (GL_ARRAY_BUFFER, sizeof (room_walls_v_positions) + sizeof(room_walls_tex_coords), NULL, GL_STATIC_DRAW);
+  glBufferData (GL_ARRAY_BUFFER, sizeof (room_walls_v_positions) + sizeof (room_walls_v_normals) + sizeof(room_walls_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(room_walls_v_positions), room_walls_v_positions );
-  glBufferSubData( GL_ARRAY_BUFFER, sizeof(room_walls_v_positions), sizeof(room_walls_tex_coords), room_walls_tex_coords);
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(room_walls_v_positions), sizeof(room_walls_v_normals), room_walls_v_normals );
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(room_walls_v_positions) + sizeof(room_walls_v_normals), sizeof(room_walls_tex_coords), room_walls_tex_coords);
 
   glEnableVertexAttribArray( vPosition );
   glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
+  glEnableVertexAttribArray( vNormal );
+  glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(room_walls_v_positions)) );
   glEnableVertexAttribArray( texCoord );
-  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(room_walls_v_positions)) );
+  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(room_walls_v_positions) + sizeof(room_walls_v_normals)) );
 
 
 
@@ -158,14 +179,17 @@ void init_room()
 
   room_floor();
 
-  glBufferData (GL_ARRAY_BUFFER, sizeof (room_floor_v_positions) + sizeof(room_floor_tex_coords), NULL, GL_STATIC_DRAW);
+  glBufferData (GL_ARRAY_BUFFER, sizeof (room_floor_v_positions) + sizeof (room_floor_v_normals) + sizeof(room_floor_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(room_floor_v_positions), room_floor_v_positions );
-  glBufferSubData( GL_ARRAY_BUFFER, sizeof(room_floor_v_positions), sizeof(room_floor_tex_coords), room_floor_tex_coords);
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(room_floor_v_positions), sizeof(room_floor_v_normals), room_floor_v_normals );
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(room_floor_v_positions) + sizeof(room_floor_v_normals), sizeof(room_floor_tex_coords), room_floor_tex_coords);
 
   glEnableVertexAttribArray( vPosition );
   glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
+  glEnableVertexAttribArray( vNormal );
+  glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(room_floor_v_positions)) );
   glEnableVertexAttribArray( texCoord );
-  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(room_floor_v_positions)) );
+  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(room_floor_v_positions) + sizeof(room_floor_v_normals)) );
 
 
   // ---- Create Room Roof. Top of the Cube
@@ -177,14 +201,17 @@ void init_room()
 
   room_roof();
 
-  glBufferData (GL_ARRAY_BUFFER, sizeof (room_roof_v_positions) + sizeof(room_roof_tex_coords), NULL, GL_STATIC_DRAW);
+  glBufferData (GL_ARRAY_BUFFER, sizeof (room_roof_v_positions) + sizeof (room_roof_v_normals) + sizeof(room_roof_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(room_roof_v_positions), room_roof_v_positions );
-  glBufferSubData( GL_ARRAY_BUFFER, sizeof(room_roof_v_positions), sizeof(room_roof_tex_coords), room_roof_tex_coords);
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(room_roof_v_positions), sizeof(room_roof_v_normals), room_roof_v_normals );
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(room_roof_v_positions) + sizeof(room_roof_v_normals), sizeof(room_roof_tex_coords), room_roof_tex_coords);
 
   glEnableVertexAttribArray( vPosition );
   glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
+  glEnableVertexAttribArray( vNormal );
+  glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(room_roof_v_positions)) );
   glEnableVertexAttribArray( texCoord );
-  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(room_roof_v_positions)) );
+  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(room_roof_v_positions) + sizeof(room_roof_v_normals)) );
 }
 
 void draw_room(glm::mat4 view_matrix) {

@@ -29,21 +29,27 @@ glm::vec2 tex_drawer[4] = {
 void drawer_quad(int a, int b, int c, int d)
 {
   drawer_v_positions[drawer_tri_idx] = drawer_positions[a];
+  drawer_v_normals[drawer_tri_idx] = drawer_positions[a];
   drawer_tex_coords[drawer_tri_idx] = tex_drawer[0];
   drawer_tri_idx++;
   drawer_v_positions[drawer_tri_idx] = drawer_positions[b];
+  drawer_v_normals[drawer_tri_idx] = drawer_positions[b];
   drawer_tex_coords[drawer_tri_idx] = tex_drawer[1];
   drawer_tri_idx++;
   drawer_v_positions[drawer_tri_idx] = drawer_positions[c];
+  drawer_v_normals[drawer_tri_idx] = drawer_positions[c];
   drawer_tex_coords[drawer_tri_idx] = tex_drawer[3];
   drawer_tri_idx++;
   drawer_v_positions[drawer_tri_idx] = drawer_positions[a];
+  drawer_v_normals[drawer_tri_idx] = drawer_positions[a];
   drawer_tex_coords[drawer_tri_idx] = tex_drawer[0];
   drawer_tri_idx++;
   drawer_v_positions[drawer_tri_idx] = drawer_positions[c]; 
+  drawer_v_normals[drawer_tri_idx] = drawer_positions[c]; 
   drawer_tex_coords[drawer_tri_idx] = tex_drawer[3];
   drawer_tri_idx++;
   drawer_v_positions[drawer_tri_idx] = drawer_positions[d]; 
+  drawer_v_normals[drawer_tri_idx] = drawer_positions[d]; 
   drawer_tex_coords[drawer_tri_idx] = tex_drawer[2];
   drawer_tri_idx++;
 }
@@ -59,21 +65,27 @@ glm::vec2 drawer_front_tex_coords[drawer_front_num_vertices];
 void drawer_front(void)
 {
   drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[4];
+  drawer_front_v_normals[drawer_front_tri_idx] = drawer_positions[4];
   drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[0];
   drawer_front_tri_idx++;
   drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[5];
+  drawer_front_v_normals[drawer_front_tri_idx] = drawer_positions[5];
   drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[1];
   drawer_front_tri_idx++;
   drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[6];
+  drawer_front_v_normals[drawer_front_tri_idx] = drawer_positions[6];
   drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[3];
   drawer_front_tri_idx++;
   drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[4];
+  drawer_front_v_normals[drawer_front_tri_idx] = drawer_positions[4];
   drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[0];
   drawer_front_tri_idx++;
   drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[6]; 
+  drawer_front_v_normals[drawer_front_tri_idx] = drawer_positions[6]; 
   drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[3];
   drawer_front_tri_idx++;
   drawer_front_v_positions[drawer_front_tri_idx] = drawer_positions[7]; 
+  drawer_front_v_normals[drawer_front_tri_idx] = drawer_positions[7]; 
   drawer_front_tex_coords[drawer_front_tri_idx] = tex_drawer[2];
   drawer_front_tri_idx++;
 }
@@ -106,14 +118,17 @@ void init_drawer()
 
   drawer();
 
-  glBufferData (GL_ARRAY_BUFFER, sizeof (drawer_v_positions) + sizeof(drawer_tex_coords), NULL, GL_STATIC_DRAW);
+  glBufferData (GL_ARRAY_BUFFER, sizeof (drawer_v_positions) + sizeof(drawer_v_normals) + sizeof(drawer_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(drawer_v_positions), drawer_v_positions );
-  glBufferSubData( GL_ARRAY_BUFFER, sizeof(drawer_v_positions), sizeof(drawer_tex_coords), drawer_tex_coords);
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(drawer_v_positions), sizeof(drawer_v_positions), drawer_v_normals );
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(drawer_v_positions) + sizeof(drawer_v_normals), sizeof(drawer_tex_coords), drawer_tex_coords);
 
   glEnableVertexAttribArray( vPosition );
   glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
+  glEnableVertexAttribArray( vNormal );
+  glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(drawer_v_positions)) );
   glEnableVertexAttribArray( texCoord );
-  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(drawer_v_positions)) );
+  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(drawer_v_positions) + sizeof(drawer_v_normals)) );
 
   // ---- Create drawer. Front face.
 
@@ -125,14 +140,17 @@ void init_drawer()
 
   drawer_front();
 
-  glBufferData (GL_ARRAY_BUFFER, sizeof (drawer_front_v_positions) + sizeof(drawer_front_tex_coords), NULL, GL_STATIC_DRAW);
+  glBufferData (GL_ARRAY_BUFFER, sizeof (drawer_front_v_positions) + sizeof(drawer_front_v_normals) + sizeof(drawer_front_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(drawer_front_v_positions), drawer_front_v_positions );
-  glBufferSubData( GL_ARRAY_BUFFER, sizeof(drawer_front_v_positions), sizeof(drawer_front_tex_coords), drawer_front_tex_coords);
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(drawer_front_v_positions), sizeof(drawer_front_v_normals), drawer_front_v_normals );
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(drawer_front_v_positions) + sizeof(drawer_front_v_normals), sizeof(drawer_front_tex_coords), drawer_front_tex_coords);
 
   glEnableVertexAttribArray( vPosition );
   glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
+  glEnableVertexAttribArray( vNormal );
+  glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(drawer_front_v_positions)) );
   glEnableVertexAttribArray( texCoord );
-  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(drawer_front_v_positions)) );
+  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(drawer_front_v_positions) + sizeof(drawer_front_v_normals)) );
 }
 
 void draw_drawer(glm::mat4 view_matrix) {

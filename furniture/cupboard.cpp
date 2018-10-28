@@ -29,21 +29,27 @@ glm::vec2 tex_cupboard[4] = {
 void cupboard_quad(int a, int b, int c, int d)
 {
   cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[a];
+  cupboard_v_normals[cupboard_tri_idx] = cupboard_positions[a];
   cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[0];
   cupboard_tri_idx++;
   cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[b];
+  cupboard_v_normals[cupboard_tri_idx] = cupboard_positions[b];
   cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[1];
   cupboard_tri_idx++;
   cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[c];
+  cupboard_v_normals[cupboard_tri_idx] = cupboard_positions[c];
   cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[3];
   cupboard_tri_idx++;
   cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[a];
+  cupboard_v_normals[cupboard_tri_idx] = cupboard_positions[a];
   cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[0];
   cupboard_tri_idx++;
   cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[c]; 
+  cupboard_v_normals[cupboard_tri_idx] = cupboard_positions[c]; 
   cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[3];
   cupboard_tri_idx++;
   cupboard_v_positions[cupboard_tri_idx] = cupboard_positions[d]; 
+  cupboard_v_normals[cupboard_tri_idx] = cupboard_positions[d]; 
   cupboard_tex_coords[cupboard_tri_idx] = tex_cupboard[2];
   cupboard_tri_idx++;
 }
@@ -59,21 +65,27 @@ glm::vec2 cupboard_front_tex_coords[cupboard_front_num_vertices];
 void cupboard_front(void)
 {
   cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[4];
+  cupboard_front_v_normals[cupboard_front_tri_idx] = cupboard_positions[4];
   cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[0];
   cupboard_front_tri_idx++;
   cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[5];
+  cupboard_front_v_normals[cupboard_front_tri_idx] = cupboard_positions[5];
   cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[1];
   cupboard_front_tri_idx++;
   cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[6];
+  cupboard_front_v_normals[cupboard_front_tri_idx] = cupboard_positions[6];
   cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[3];
   cupboard_front_tri_idx++;
   cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[4];
+  cupboard_front_v_normals[cupboard_front_tri_idx] = cupboard_positions[4];
   cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[0];
   cupboard_front_tri_idx++;
   cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[6]; 
+  cupboard_front_v_normals[cupboard_front_tri_idx] = cupboard_positions[6]; 
   cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[3];
   cupboard_front_tri_idx++;
   cupboard_front_v_positions[cupboard_front_tri_idx] = cupboard_positions[7]; 
+  cupboard_front_v_normals[cupboard_front_tri_idx] = cupboard_positions[7]; 
   cupboard_front_tex_coords[cupboard_front_tri_idx] = tex_cupboard[2];
   cupboard_front_tri_idx++;
 }
@@ -106,14 +118,17 @@ void init_cupboard()
 
   cupboard();
 
-  glBufferData (GL_ARRAY_BUFFER, sizeof (cupboard_v_positions) + sizeof(cupboard_tex_coords), NULL, GL_STATIC_DRAW);
+  glBufferData (GL_ARRAY_BUFFER, sizeof (cupboard_v_positions) + sizeof(cupboard_v_normals) + sizeof(cupboard_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(cupboard_v_positions), cupboard_v_positions );
-  glBufferSubData( GL_ARRAY_BUFFER, sizeof(cupboard_v_positions), sizeof(cupboard_tex_coords), cupboard_tex_coords);
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(cupboard_v_positions), sizeof(cupboard_v_normals), cupboard_v_normals );
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(cupboard_v_positions) + sizeof(cupboard_v_normals), sizeof(cupboard_tex_coords), cupboard_tex_coords);
 
   glEnableVertexAttribArray( vPosition );
   glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
+  glEnableVertexAttribArray( vNormal );
+  glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(cupboard_v_positions)) );
   glEnableVertexAttribArray( texCoord );
-  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(cupboard_v_positions)) );
+  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(cupboard_v_positions) + sizeof(cupboard_v_normals)) );
 
   // ---- Create cupboard. Front face.
 
@@ -125,14 +140,17 @@ void init_cupboard()
 
   cupboard_front();
 
-  glBufferData (GL_ARRAY_BUFFER, sizeof (cupboard_front_v_positions) + sizeof(cupboard_front_tex_coords), NULL, GL_STATIC_DRAW);
+  glBufferData (GL_ARRAY_BUFFER, sizeof (cupboard_front_v_positions) + sizeof(cupboard_front_v_normals) + sizeof(cupboard_front_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(cupboard_front_v_positions), cupboard_front_v_positions );
-  glBufferSubData( GL_ARRAY_BUFFER, sizeof(cupboard_front_v_positions), sizeof(cupboard_front_tex_coords), cupboard_front_tex_coords);
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(cupboard_front_v_positions), sizeof(cupboard_front_v_normals), cupboard_front_v_positions );
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(cupboard_front_v_positions) + sizeof(cupboard_front_v_normals), sizeof(cupboard_front_tex_coords), cupboard_front_tex_coords);
 
   glEnableVertexAttribArray( vPosition );
   glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
+  glEnableVertexAttribArray( vNormal );
+  glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(cupboard_front_v_positions)) );
   glEnableVertexAttribArray( texCoord );
-  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(cupboard_front_v_positions)) );
+  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(cupboard_front_v_positions) + sizeof(cupboard_front_v_normals)) );
 }
 
 void draw_cupboard(glm::mat4 view_matrix) {

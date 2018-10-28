@@ -16,21 +16,27 @@ glm::vec2 tex_texcub[4] = {
 void texcub_quad(int a, int b, int c, int d, glm::vec4* texcub_positions)
 {
   texcub_v_positions[texcub_tri_idx] = texcub_positions[a];
+  texcub_v_normals[texcub_tri_idx] = texcub_positions[a];
   texcub_tex_coords[texcub_tri_idx] = tex_texcub[0];
   texcub_tri_idx++;
   texcub_v_positions[texcub_tri_idx] = texcub_positions[b];
+  texcub_v_normals[texcub_tri_idx] = texcub_positions[b];
   texcub_tex_coords[texcub_tri_idx] = tex_texcub[1];
   texcub_tri_idx++;
   texcub_v_positions[texcub_tri_idx] = texcub_positions[c];
+  texcub_v_normals[texcub_tri_idx] = texcub_positions[c];
   texcub_tex_coords[texcub_tri_idx] = tex_texcub[3];
   texcub_tri_idx++;
   texcub_v_positions[texcub_tri_idx] = texcub_positions[a];
+  texcub_v_normals[texcub_tri_idx] = texcub_positions[a];
   texcub_tex_coords[texcub_tri_idx] = tex_texcub[0];
   texcub_tri_idx++;
   texcub_v_positions[texcub_tri_idx] = texcub_positions[c]; 
+  texcub_v_normals[texcub_tri_idx] = texcub_positions[c]; 
   texcub_tex_coords[texcub_tri_idx] = tex_texcub[3];
   texcub_tri_idx++;
   texcub_v_positions[texcub_tri_idx] = texcub_positions[d]; 
+  texcub_v_normals[texcub_tri_idx] = texcub_positions[d]; 
   texcub_tex_coords[texcub_tri_idx] = tex_texcub[2];
   texcub_tri_idx++;
 }
@@ -62,14 +68,17 @@ void init_texcub(GLuint* texcub_vao, GLuint* texcub_vbo, glm::vec4* texcub_posit
   texcub_tri_idx=0;
   texcub(texcub_positions);
 
-  glBufferData (GL_ARRAY_BUFFER, sizeof (texcub_v_positions) + sizeof(texcub_tex_coords), NULL, GL_STATIC_DRAW);
+  glBufferData (GL_ARRAY_BUFFER, sizeof (texcub_v_positions) + sizeof(texcub_v_normals) + sizeof(texcub_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(texcub_v_positions), texcub_v_positions );
-  glBufferSubData( GL_ARRAY_BUFFER, sizeof(texcub_v_positions), sizeof(texcub_tex_coords), texcub_tex_coords);
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(texcub_v_positions), sizeof(texcub_v_normals), texcub_v_normals );
+  glBufferSubData( GL_ARRAY_BUFFER, sizeof(texcub_v_positions) + sizeof(texcub_v_normals), sizeof(texcub_tex_coords), texcub_tex_coords);
 
   glEnableVertexAttribArray( vPosition );
   glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
+  glEnableVertexAttribArray( vNormal );
+  glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(texcub_v_positions)) );
   glEnableVertexAttribArray( texCoord );
-  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(texcub_v_positions)) );
+  glVertexAttribPointer( texCoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(texcub_v_positions) + sizeof(texcub_v_normals)) );
 }
 
 

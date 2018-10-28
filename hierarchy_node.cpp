@@ -38,19 +38,20 @@ namespace csX75
 		glBindBuffer (GL_ARRAY_BUFFER, vbo);
 
 		
-		glBufferData (GL_ARRAY_BUFFER, vertex_buffer_size + color_buffer_size, NULL, GL_STATIC_DRAW);
+		glBufferData (GL_ARRAY_BUFFER, vertex_buffer_size + normal_buffer_size + color_buffer_size, NULL, GL_STATIC_DRAW);
 		glBufferSubData( GL_ARRAY_BUFFER, 0, vertex_buffer_size, a_vertices );
-		glBufferSubData( GL_ARRAY_BUFFER, vertex_buffer_size, color_buffer_size, a_colours );
+		glBufferSubData( GL_ARRAY_BUFFER, vertex_buffer_size, normal_buffer_size, a_normals );
+		glBufferSubData( GL_ARRAY_BUFFER, vertex_buffer_size + normal_buffer_size, color_buffer_size, a_colours );
 
 		//setup the vertex array as per the shader
 		glEnableVertexAttribArray( vPosition );
 		glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
+		
+		glEnableVertexAttribArray( vNormal );
+		glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vertex_buffer_size));
 
 		glEnableVertexAttribArray( vColor );
-		glVertexAttribPointer( vColor, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vertex_buffer_size));
-
-		glEnableVertexAttribArray( vNormal );
-		glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vertex_buffer_size + color_buffer_size));
+		glVertexAttribPointer( vColor, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vertex_buffer_size + normal_buffer_size));
 
 		// set parent
 
