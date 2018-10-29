@@ -26,7 +26,7 @@ const int numberOfLights = 2;
 lightSource lights[numberOfLights];
 
 lightSource light0 = lightSource(
-	vec4(-18,5,13, 0.0),
+	vec4(-18, 2, 13, 0.0),
 	vec3(1.0, 1.0, 1.0),
 	0.005,
 	true

@@ -25,6 +25,7 @@ void init_r2d2()
 
   // -------------- BODY
   r2d2_body = get_cylinder(0.1, 0.1, 0.3, white);
+  r2d2_body->set_parent(base_box);
   r2d2_body->change_parameters(2.0,0.0,0.0,  // translation
                                0.0,0.0,0.0);   // rotation
 

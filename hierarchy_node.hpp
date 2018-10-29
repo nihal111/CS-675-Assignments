@@ -28,7 +28,11 @@ namespace csX75	 {
 
 		std::size_t vertex_buffer_size;
 		std::size_t color_buffer_size;
+		std::size_t tex_coords_buffer_size;
 		std::size_t normal_buffer_size;
+
+		const char * texture_file;
+		int width, height;
 
 		GLuint num_vertices;
 		GLuint vao,vbo;
@@ -44,6 +48,9 @@ namespace csX75	 {
 
 	  public:
 		HNode (HNode*, GLuint, glm::vec4*,  glm::vec4*, glm::vec4*, std::size_t, std::size_t, std::size_t,
+			GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, GLenum=GL_TRIANGLES);
+		HNode (HNode*, GLuint, glm::vec4*,  glm::vec2*, glm::vec4*, std::size_t, std::size_t, std::size_t,
+			const char*, int, int,
 			GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, GLenum=GL_TRIANGLES);
 		//HNode (HNode* , glm::vec4*,  glm::vec4*,GLfloat,GLfloat,GLfloat,GLfloat,GLfloat,GLfloat);
 

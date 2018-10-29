@@ -1,4 +1,3 @@
-#include "glm/ext.hpp"
 // quad generates two triangles for each face and assigns colors to the vertices
 int box_quad(int a, int b, int c, int d, glm::vec4* box_vertices, glm::vec4 color, int tri_idx, 
   glm::vec4* box_positions, glm::vec4* box_colors, glm::vec4* box_normals)

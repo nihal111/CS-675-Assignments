@@ -19,12 +19,12 @@
 #include "cmath"
 #include "glm/ext.hpp"
 
+#include "texture.cpp"
 #include "quad.cpp"
+
 #include "box.cpp"
 #include "ellipsoid.cpp"
 #include "cylinder.cpp"
-
-#include "texture.cpp"
 
 #include "opening_box.cpp"
 #include "humanoid.cpp"
@@ -81,9 +81,7 @@ void initBuffersGL(void)
 
 
   init_opening_box();
-
   init_humanoid();
-
   init_r2d2();
 
   init_room();
@@ -142,8 +140,6 @@ void renderGL(void)
 
   // ---- Draw the models
   base_box->render_tree();
-  torso->render_tree();
-  r2d2_body->render_tree();
 
 }
 
