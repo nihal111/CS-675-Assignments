@@ -3,6 +3,11 @@
 
 extern GLfloat c_xrot,c_yrot,c_zrot;
 extern GLfloat c_xpos,c_ypos,c_zpos;
+
+extern GLuint light0ON, light1ON;
+int light0 = 0;
+int light1 = 0;
+
 extern bool enable_perspective;
 extern csX75::HNode *base_box, *lid, *curr_node;
 extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_lower_arm, *left_hand, *right_hand,
@@ -68,6 +73,16 @@ namespace csX75
       model = R2D2;
       curr_node = r2d2_body;
       std::cout<<"Selected model R2D2"<<std::endl;
+    }
+
+    else if (key == GLFW_KEY_9 && action == GLFW_PRESS) {
+      light0 = 1 - light0;
+      glUniform1i(light0ON, light0);
+    }
+
+    else if (key == GLFW_KEY_0 && action == GLFW_PRESS) {
+      light1 = 1 - light1;
+      glUniform1i(light1ON, light1);
     }
 
     else if (key == GLFW_KEY_P)

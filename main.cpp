@@ -76,6 +76,10 @@ void initBuffersGL(void)
   normalMatrix =  glGetUniformLocation( shaderProgram, "normalMatrix");
   useTexture = glGetUniformLocation( shaderProgram, "useTexture");
 
+  light0ON = glGetUniformLocation( shaderProgram, "light0ON");
+  light1ON = glGetUniformLocation( shaderProgram, "light1ON");
+
+
   init_opening_box();
 
   init_humanoid();
