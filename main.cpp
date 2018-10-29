@@ -81,9 +81,7 @@ void initBuffersGL(void)
 
 
   init_opening_box();
-
   init_humanoid();
-
   init_r2d2();
 
   init_room();
@@ -142,8 +140,6 @@ void renderGL(void)
 
   // ---- Draw the models
   base_box->render_tree();
-  torso->render_tree();
-  r2d2_body->render_tree();
 
 }
 

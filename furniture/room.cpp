@@ -37,7 +37,7 @@ void init_room()
   glm::vec4 room_walls_v_positions[room_walls_num_vertices];
   glm::vec4 room_walls_v_normals[room_walls_num_vertices];
   glm::vec2 room_walls_tex_coords[room_walls_num_vertices];
-  sides_quads(room_walls_v_positions, room_walls_v_normals, room_walls_tex_coords, room_positions, tex_room);
+  sides_quads(room_walls_v_positions, room_walls_v_normals, room_walls_tex_coords, room_positions, tex_room, -1);
 
   glBufferData (GL_ARRAY_BUFFER, sizeof (room_walls_v_positions) + sizeof (room_walls_v_normals) + sizeof(room_walls_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(room_walls_v_positions), room_walls_v_positions );
@@ -64,7 +64,7 @@ void init_room()
   glm::vec4 room_floor_v_positions[room_floor_num_vertices];
   glm::vec4 room_floor_v_normals[room_floor_num_vertices];
   glm::vec2 room_floor_tex_coords[room_floor_num_vertices];
-  bottom_quad(room_floor_v_positions, room_floor_v_normals, room_floor_tex_coords, room_positions, tex_room);
+  bottom_quad(room_floor_v_positions, room_floor_v_normals, room_floor_tex_coords, room_positions, tex_room, -1);
 
   glBufferData (GL_ARRAY_BUFFER, sizeof (room_floor_v_positions) + sizeof (room_floor_v_normals) + sizeof(room_floor_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(room_floor_v_positions), room_floor_v_positions );
@@ -89,7 +89,7 @@ void init_room()
   glm::vec4 room_roof_v_positions[room_roof_num_vertices];
   glm::vec4 room_roof_v_normals[room_roof_num_vertices];
   glm::vec2 room_roof_tex_coords[room_roof_num_vertices];
-  top_quad(room_roof_v_positions, room_roof_v_normals, room_roof_tex_coords, room_positions, tex_room);
+  top_quad(room_roof_v_positions, room_roof_v_normals, room_roof_tex_coords, room_positions, tex_room, -1);
 
   glBufferData (GL_ARRAY_BUFFER, sizeof (room_roof_v_positions) + sizeof (room_roof_v_normals) + sizeof(room_roof_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(room_roof_v_positions), room_roof_v_positions );

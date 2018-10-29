@@ -3,32 +3,32 @@ void create_quad(int a, int b, int c, int d,
                glm::vec4* v_positions, glm::vec4* v_normals,
                glm::vec2* tex_coords,
                glm::vec4* positions, glm::vec2* tex, 
-               int& tri_idx, glm::vec4 center)
+               int& tri_idx, glm::vec4 center, int invert)
 {
   glm::vec4 face_center = (positions[a] + positions[b] +
                           positions[c] + positions[d]) * (1.0f/4);
   v_positions[tri_idx] = positions[a];
-  v_normals[tri_idx] = face_center - center;
+  v_normals[tri_idx] = 1.0f*invert*(face_center - center);
   tex_coords[tri_idx] = tex[0];
   tri_idx++;
   v_positions[tri_idx] = positions[b];
-  v_normals[tri_idx] = face_center - center;
+  v_normals[tri_idx] = 1.0f*invert*(face_center - center);
   tex_coords[tri_idx] = tex[1];
   tri_idx++;
   v_positions[tri_idx] = positions[c];
-  v_normals[tri_idx] = face_center - center;
+  v_normals[tri_idx] = 1.0f*invert*(face_center - center);
   tex_coords[tri_idx] = tex[3];
   tri_idx++;
   v_positions[tri_idx] = positions[a];
-  v_normals[tri_idx] = face_center - center;
+  v_normals[tri_idx] = 1.0f*invert*(face_center - center);
   tex_coords[tri_idx] = tex[0];
   tri_idx++;
   v_positions[tri_idx] = positions[c]; 
-  v_normals[tri_idx] = face_center - center; 
+  v_normals[tri_idx] = 1.0f*invert*(face_center - center) ;
   tex_coords[tri_idx] = tex[3];
   tri_idx++;
   v_positions[tri_idx] = positions[d]; 
-  v_normals[tri_idx] = face_center - center;
+  v_normals[tri_idx] = 1.0f*invert*(face_center - center);
   tex_coords[tri_idx] = tex[2];
   tri_idx++;
 }
@@ -42,101 +42,101 @@ glm::vec4 find_center(glm::vec4* positions)
   return center * (1.0f/8);
 }
 
-void front_quad(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv)
+void front_quad(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv, int invert_normals=1)
 { 
   int tri_idx=0;
   glm::vec4 center = find_center(positions);
-  create_quad( 4, 5, 6, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 4, 5, 6, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
 }
 
-void top_quad(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv)
+void top_quad(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv, int invert_normals=1)
 { 
   int tri_idx=0;
   glm::vec4 center = find_center(positions);
-  create_quad( 6, 5, 1, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 6, 5, 1, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
 }
 
-void bottom_quad(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv)
+void bottom_quad(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv, int invert_normals=1)
 { 
   int tri_idx=0;
   glm::vec4 center = find_center(positions);
-  create_quad( 3, 0, 4, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 3, 0, 4, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
 }
 
-void all_but_front_quads(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv)
+void all_but_front_quads(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv, int invert_normals=1)
 { 
   int tri_idx=0;
   glm::vec4 center = find_center(positions);
 
   // Back
-  create_quad( 1, 0, 3, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 1, 0, 3, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Right
-  create_quad( 2, 3, 7, 6, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 2, 3, 7, 6, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Front
-  // create_quad( 4, 5, 6, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  // create_quad( 4, 5, 6, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Left
-  create_quad( 5, 4, 0, 1, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 5, 4, 0, 1, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Top
-  create_quad( 6, 5, 1, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 6, 5, 1, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Bottom
-  create_quad( 3, 0, 4, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 3, 0, 4, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
 }
 
-void all_but_top_quads(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv)
+void all_but_top_quads(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv, int invert_normals=1)
 { 
   int tri_idx=0;
   glm::vec4 center = find_center(positions);
 
   // Back
-  create_quad( 1, 0, 3, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 1, 0, 3, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Right
-  create_quad( 2, 3, 7, 6, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 2, 3, 7, 6, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Front
-  create_quad( 4, 5, 6, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 4, 5, 6, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Left
-  create_quad( 5, 4, 0, 1, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 5, 4, 0, 1, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Top
-  // create_quad( 6, 5, 1, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  // create_quad( 6, 5, 1, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Bottom
-  create_quad( 3, 0, 4, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 3, 0, 4, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
 }
 
-void sides_quads(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv)
+void sides_quads(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv, int invert_normals=1)
 { 
   int tri_idx=0;
   glm::vec4 center = find_center(positions);
 
   // Back
-  create_quad( 1, 0, 3, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 1, 0, 3, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Right
-  create_quad( 2, 3, 7, 6, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 2, 3, 7, 6, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Front
-  create_quad( 4, 5, 6, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 4, 5, 6, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Left
-  create_quad( 5, 4, 0, 1, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 5, 4, 0, 1, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // // Top
-  // create_quad( 6, 5, 1, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  // create_quad( 6, 5, 1, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // // Bottom
-  // create_quad( 3, 0, 4, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  // create_quad( 3, 0, 4, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
 }
 
-void all_quads(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv)
+void all_quads(glm::vec4* v_positions, glm::vec4* v_normals, glm::vec2* tex_coords, glm::vec4* positions, glm::vec2* tex_uv, int invert_normals=1)
 { 
   int tri_idx=0;
   glm::vec4 center = find_center(positions);
 
   // Back
-  create_quad( 1, 0, 3, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 1, 0, 3, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Right
-  create_quad( 2, 3, 7, 6, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 2, 3, 7, 6, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Front
-  create_quad( 4, 5, 6, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 4, 5, 6, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Left
-  create_quad( 5, 4, 0, 1, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 5, 4, 0, 1, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Top
-  create_quad( 6, 5, 1, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 6, 5, 1, 2, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
   // Bottom
-  create_quad( 3, 0, 4, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center);
+  create_quad( 3, 0, 4, 7, v_positions, v_normals, tex_coords, positions, tex_uv, tri_idx, center, invert_normals);
 }
 
 
