@@ -33,6 +33,7 @@ void draw_lamp(glm::mat4 view_matrix) {
 	draw_textured_object(view_matrix, &lamp_head_vao, "images/lamp.bmp", 100, 100);
 }
 
-void switch_lamp_light(int l) {
-	glUniform1i(light0ON, l);
+void switch_lamp_light(float l) {
+	int light = (l > 0.5) ? 1 : 0;
+	glUniform1i(light0ON, light);
 }

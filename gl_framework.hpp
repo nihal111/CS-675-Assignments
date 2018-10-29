@@ -22,8 +22,8 @@ namespace csX75
   void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };
 
-void switch_lamp_light(int l);
-void switch_wall_light(int l);
+void switch_lamp_light(float l);
+void switch_wall_light(float l);
 
 void box_state(float angle);
 

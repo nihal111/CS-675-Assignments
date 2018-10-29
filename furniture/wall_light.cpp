@@ -18,6 +18,7 @@ void draw_wall_light() {
 	wall_light_base->render_tree();
 }
 
-void switch_wall_light(int l) {
-	glUniform1i(light1ON, l);
+void switch_wall_light(float l) {
+	int light = (l > 0.5) ? 1 : 0;
+	glUniform1i(light1ON, light);
 }

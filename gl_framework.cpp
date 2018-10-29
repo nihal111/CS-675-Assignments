@@ -142,7 +142,7 @@ namespace csX75
       recorder();
     }
     else if (key == GLFW_KEY_F && action == GLFW_PRESS) {
-      playback();
+      playback_init();
     }
 
     else if (model == MUSIC_BOX) {
