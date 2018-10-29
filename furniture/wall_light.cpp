@@ -1,6 +1,7 @@
 csX75::HNode* wall_light_base;
 csX75::HNode* wall_light_bulb;
 
+extern GLuint light1ON;
 
 void init_wall_light() {
 	wall_light_base = get_cylinder(0.5, 0.5, 2, black);
@@ -15,4 +16,8 @@ void init_wall_light() {
 
 void draw_wall_light() {
 	wall_light_base->render_tree();
+}
+
+void switch_wall_light(int l) {
+	glUniform1i(light1ON, l);
 }

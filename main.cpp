@@ -106,7 +106,6 @@ void renderGL(void)
     playback_update();
   }
 
-
   matrixStack.clear();
 
   //Creating the lookat and the up vectors for the camera

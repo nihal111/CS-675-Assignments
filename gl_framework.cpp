@@ -80,12 +80,12 @@ namespace csX75
 
     else if (key == GLFW_KEY_9 && action == GLFW_PRESS) {
       light0 = 1 - light0;
-      glUniform1i(light0ON, light0);
+      switch_lamp_light(light0);
     }
 
     else if (key == GLFW_KEY_0 && action == GLFW_PRESS) {
       light1 = 1 - light1;
-      glUniform1i(light1ON, light1);
+      switch_wall_light(light1);
     }
 
     else if (key == GLFW_KEY_P)

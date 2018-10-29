@@ -22,6 +22,11 @@ namespace csX75
   void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };
 
+void switch_lamp_light(int l);
+void switch_wall_light(int l);
+
+void playback();
+void update();
 void playback_update();
 
 #endif
