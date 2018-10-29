@@ -9,8 +9,6 @@ extern GLfloat c_xpos,c_ypos,c_zpos;
 extern GLuint light0ON, light1ON;
 extern int light0, light1;
 
-float platform_elev = -0.45;
-
 extern bool enable_perspective;
 extern csX75::HNode *base_box, *lid, *platform, *curr_node;
 extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_lower_arm, *left_hand, *right_hand,
@@ -96,23 +94,17 @@ namespace csX75
     else if (key == GLFW_KEY_RIGHT)
       curr_node->inc_ry();
     else if (key == GLFW_KEY_UP) {
-      curr_node->dec_rx();
       if (curr_node == lid) {
-        if (platform_elev < 0.45) {
-          platform_elev += (1.0/180.0);
-          platform->change_parameters(0.0,platform_elev,0.0,
-                         0.0,0.0,0.0);
-        }
+        box_state(lid->get_rx() - 1);
+      } else {
+        curr_node->dec_rx();
       }
     }
     else if (key == GLFW_KEY_DOWN) {
-      curr_node->inc_rx();
       if (curr_node == lid) {
-        if (platform_elev > -0.45) {
-          platform_elev -= (1.0/180.0);
-          platform->change_parameters(0.0,platform_elev,0.0,
-                         0.0,0.0,0.0);
-        }
+        box_state(lid->get_rx() + 1);
+      } else {
+        curr_node->inc_rx();
       }
     }
     else if (key == GLFW_KEY_PAGE_UP)

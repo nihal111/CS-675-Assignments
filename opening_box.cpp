@@ -87,3 +87,11 @@ void init_opening_box(void)
   curr_node = lid;
 
 }
+
+void box_state(float angle) {
+  if (angle > 0 || angle < -180)
+    return;
+  lid->set_rx(angle);
+  float platform_elev = -0.45 - 0.9 * angle/180.0;
+  platform->set_ty(platform_elev);
+}

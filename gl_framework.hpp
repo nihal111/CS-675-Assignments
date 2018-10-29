@@ -25,6 +25,8 @@ namespace csX75
 void switch_lamp_light(int l);
 void switch_wall_light(int l);
 
+void box_state(float angle);
+
 void playback();
 void update();
 void playback_update();

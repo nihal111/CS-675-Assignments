@@ -23,11 +23,16 @@ void playback() {
 }
 
 void update() {
-	int a,b;
-	if (infile >> a >> b) {
-		cout<<a<<" "<<b<<endl;
-		switch_lamp_light(a);
-		switch_wall_light(b);
+	int light0, light1, lid_angle;
+	if (infile 
+		>> light0 
+		>> light1
+		>> lid_angle
+	   ) {
+		// cout<<light0<<" "<<light1<<" "<<lid_angle<<endl;
+		switch_lamp_light(light0);
+		switch_wall_light(light1);
+		box_state(lid_angle);
 	} else {
 		playback_running = false;
 	}
