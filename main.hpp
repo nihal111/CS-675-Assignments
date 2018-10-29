@@ -57,6 +57,7 @@ csX75::HNode* curr_node;
 // ---- Opening Box
 csX75::HNode* lid;
 csX75::HNode* base_box;
+csX75::HNode* platform;
 
 // ---- Humanoid
 csX75::HNode* torso;

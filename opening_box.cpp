@@ -9,15 +9,26 @@ glm::vec4 opening_box_base_vertices[8] = {
   glm::vec4(1.0, -0.5, -0.5, 1.0)
 };
 
+glm::vec4 opening_box_platform_vertices[8] = {
+  glm::vec4(-0.99, -0.05, 0.49, 1.0),
+  glm::vec4(-0.99, 0.05, 0.49, 1.0),
+  glm::vec4(0.99, 0.05, 0.49, 1.0),
+  glm::vec4(0.99, -0.05, 0.49, 1.0),
+  glm::vec4(-0.99, -0.05, -0.49, 1.0),
+  glm::vec4(-0.99, 0.05, -0.49, 1.0),
+  glm::vec4(0.99, 0.05, -0.49, 1.0),
+  glm::vec4(0.99, -0.05, -0.49, 1.0)
+};
+
 glm::vec4 opening_box_lid_vertices[8] = {
-  glm::vec4(-1.0, -0.01, 1.0, 1.0),
+  glm::vec4(-1.0, -0.05, 1.0, 1.0),
   glm::vec4(-1.0, 0.0, 1.0, 1.0),
   glm::vec4(1.0, 0.0, 1.0, 1.0), 
-  glm::vec4(1.0, -0.01, 1.0, 1.0),
-  glm::vec4(-1.0, -0.01, 0.0, 1.0),
+  glm::vec4(1.0, -0.05, 1.0, 1.0),
+  glm::vec4(-1.0, -0.05, 0.0, 1.0),
   glm::vec4(-1.0, 0.0, 0.0, 1.0),
   glm::vec4(1.0, 0.0, 0.0, 1.0), 
-  glm::vec4(1.0, -0.01, 0.0, 1.0)
+  glm::vec4(1.0, -0.05, 0.0, 1.0)
 };
 
 glm::vec2 tex_box[4] = {
@@ -29,6 +40,7 @@ glm::vec2 tex_box[4] = {
 
 const int base_box_num_vertices = 30;
 const int lid_num_vertices = 36;
+const int platform_num_vertices = 36;
 
 
 void init_opening_box(void)
@@ -58,6 +70,20 @@ void init_opening_box(void)
                   -180.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
   lid->change_parameters(0.0,0.5,-0.5,  // translation
                          0.0,0.0,0.0);   // rotation
+
+  glm::vec4 opening_box_platform_positions[platform_num_vertices];
+  glm::vec2 opening_box_platform_tex_coords[platform_num_vertices];
+  glm::vec4 opening_box_platform_normals[platform_num_vertices];
+
+  all_quads(opening_box_platform_positions, opening_box_platform_normals, opening_box_platform_tex_coords, opening_box_platform_vertices, tex_box);
+
+  platform = new csX75::HNode(base_box, platform_num_vertices, opening_box_platform_positions, opening_box_platform_tex_coords, opening_box_platform_normals,
+                  sizeof(opening_box_platform_positions), sizeof(opening_box_platform_tex_coords), sizeof(opening_box_platform_normals),
+                  "images/light_wood.bmp", 100, 100, 
+                  -180.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+  platform->change_parameters(0.0,-0.45,0.0,  // translation
+                         0.0,0.0,0.0);   // rotation
+
   curr_node = lid;
 
 }
