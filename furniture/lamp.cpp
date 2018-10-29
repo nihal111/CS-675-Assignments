@@ -24,7 +24,7 @@ void init_lamp() {
 	lamp_neck->change_parameters(0,0.1,0,
 	                        0.0,0.0,0.0);
 
-	init_texcub(&lamp_head_vao, &lamp_head_vbo, lamp_head_positions);
+	init_texcub(&lamp_head_vao, &lamp_head_vbo, lamp_head_positions, -1);
 }
 
 void draw_lamp(glm::mat4 view_matrix) {
