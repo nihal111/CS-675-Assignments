@@ -87,9 +87,16 @@ csX75::HNode* r2d2_left_hand;
 csX75::HNode* r2d2_right_hand;
 
 
-// ---- Points
+// ---- Mouse Points
 GLuint mouse_clicks_vbo[50], mouse_clicks_vao[50];
 int mouse_count = 0;
+
+// Interpolated points of mouse curve
+int num_interpolated_points = 101;
+GLuint mouse_curve_vbo, mouse_curve_vao;
+
+// ----- Control points are in place.
+bool animation_started = false;
 
 // ---- Colors
 glm::vec4 color = glm::vec4(0.6, 0.6, 0.6, 1.0);

@@ -4,6 +4,9 @@
 
 extern GLfloat c_xrot,c_yrot,c_zrot, c_xpos, c_ypos, c_zpos;
 extern glm::vec4 c_pos;
+extern glm::mat4 projection_matrix, view_matrix;
+extern bool animation_started;
+
 extern bool enable_perspective;
 extern csX75::HNode *base_box, *lid, *curr_node;
 extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_lower_arm, *left_hand, *right_hand,
@@ -11,6 +14,8 @@ extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_l
                     *torso, *neck, *head;
 extern csX75::HNode *r2d2_body, *r2d2_head, *r2d2_left_arm, *r2d2_right_arm, *r2d2_left_hand, *r2d2_right_hand;
 
+
+glm::mat4 inverse_view_matrix = inverse(projection_matrix*view_matrix);
 namespace csX75
 {
   enum Model
@@ -21,6 +26,7 @@ namespace csX75
   };
 
   Model model = MUSIC_BOX;
+  
 
   //! Initialize GL State
   void initGL(void)
@@ -93,6 +99,20 @@ namespace csX75
 
     else if (key == GLFW_KEY_9) {
       c_zpos -= 0.1;
+    }
+
+    else if (key == GLFW_KEY_0 && !animation_started) {
+      animation_started = true;
+      glm::vec4* points = get_bezier_points();
+      draw_bezier_curve(points);
+
+      for (int i = 0; i < 100000; i++)
+      {
+          // c_zpos = points[i].z;
+          // c_ypos = points[i].y;
+          // c_xpos = points[i].x;
+          c_xpos += 0.001;
+      }
     }
 
     else if (key == GLFW_KEY_P)
@@ -232,6 +252,7 @@ namespace csX75
     }
   }
 
+// https://stackoverflow.com/questions/7692988/opengl-math-projecting-screen-space-to-world-space-coords
   //!GLFW mouse callback
   void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
   {
@@ -244,9 +265,51 @@ namespace csX75
       case GLFW_MOUSE_BUTTON_LEFT:
         if (action == GLFW_PRESS)
         {
+
+          // double modelview[16];
+          // double projection[16];
+          // GLint viewport[4];
+
+          // glGetDoublev(GL_MODELVIEW_MATRIX,modelview);
+          // glGetDoublev(GL_PROJECTION_MATRIX,projection);
+          // glGetIntegerv(GL_VIEWPORT,viewport);
+
+          // GLfloat winx, winy, winz; 
+
+          // winx = (float) xpos;                  // Holds The Mouse X Coordinate
+          // winy = (float) ypos;                  // Holds The Mouse Y Coordinate
+          // winy = (float)viewport[3] - winy;
+
+          // glReadPixels(winx, winy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winz);
+
+          // float in[4];
+
+          // in[0]=(winx-(float)viewport[0])/(float)viewport[2]*2.0-1.0;
+          // in[1]=(winy-(float)viewport[1])/(float)viewport[3]*2.0-1.0;
+          // in[2]=2.0*winz-1.0;
+          // in[3]=1.0;
+
+          // glm::vec4 mouse_coordinates = glm::vec4(in[0], -in[1], in[2], in[3]);
+          // glm::vec4 mouse_world_coordinates = inverse_view_matrix*mouse_coordinates;
+
+
           glm::vec3 camera_pos = glm::vec3(c_pos.x, c_pos.y, c_pos.z);
           glm::vec3 look_direction = normalize(glm::vec3(0.0) - glm::vec3(c_pos.x, c_pos.y, c_pos.z));
           glm::vec3 mouse_position = camera_pos + 2.0*look_direction;
+
+          // double mouse_z = 1.0;
+          // double mouse_x = (xpos - 512.0)/512.0;
+          // double mouse_y = -((ypos - 512.0)/512.0);
+
+          // glm::vec4 mouse_coordinates = glm::vec4(mouse_x, mouse_y, mouse_z, 1.0);
+
+          // glm::vec4 mouse_world_coordinates = mouse_coordinates*inverse_view_matrix;
+
+          // mouse_world_coordinates.w = 1.0/mouse_world_coordinates.w;
+          // mouse_world_coordinates.x *= mouse_world_coordinates.w;
+          // mouse_world_coordinates.y *= mouse_world_coordinates.w;
+          // mouse_world_coordinates.z *= mouse_world_coordinates.w;
+
           add_sphere_points(mouse_position.x, mouse_position.y, mouse_position.z);
         }
       default:

@@ -141,12 +141,22 @@ void renderGL(void)
   torso->render_tree();
   r2d2_body->render_tree();
 
+  // ---- Draw the mouse clicks.
   for (int i = 0; i < mouse_count; i++)
   {
     glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
     glBindVertexArray (mouse_clicks_vao[i]);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 3600);
   }
+
+  // Draw the interpolated cuve once the points are in place.
+  if (animation_started)
+  {
+    glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
+    glBindVertexArray (mouse_curve_vao);
+    glDrawArrays(GL_LINES, 0, num_interpolated_points);
+  }
+
 
 }
 
