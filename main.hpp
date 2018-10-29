@@ -48,6 +48,13 @@ GLuint vPosition, vColor, vNormal, texCoord;
 GLuint uModelViewMatrix, viewMatrix, normalMatrix, useTexture;
 GLuint light0ON, light1ON;
 
+int light0 = 0;
+int light1 = 0;
+
+// Playback related
+bool playback_running = false;
+
+
 //global matrix stack for hierarchical modelling
 std::vector<glm::mat4> matrixStack;
 

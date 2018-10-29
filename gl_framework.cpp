@@ -1,12 +1,13 @@
 #include "gl_framework.hpp"
 #include "hierarchy_node.hpp"
+#include "recorder.cpp"
+#include "playback.cpp"
 
 extern GLfloat c_xrot,c_yrot,c_zrot;
 extern GLfloat c_xpos,c_ypos,c_zpos;
 
 extern GLuint light0ON, light1ON;
-int light0 = 0;
-int light1 = 0;
+extern int light0, light1;
 
 float platform_elev = -0.45;
 
@@ -144,6 +145,13 @@ namespace csX75
       c_zrot -= 1.0;
     else if (key == GLFW_KEY_E)
       c_zrot += 1.0;
+
+    else if (key == GLFW_KEY_R && action == GLFW_PRESS) {
+      recorder();
+    }
+    else if (key == GLFW_KEY_F && action == GLFW_PRESS) {
+      playback();
+    }
 
     else if (model == MUSIC_BOX) {
       if (key == GLFW_KEY_L) {
