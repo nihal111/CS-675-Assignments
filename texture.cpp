@@ -57,3 +57,19 @@ void FreeTexture( GLuint texture )
 {
   glDeleteTextures( 1, &texture ); // delete the texture
 }
+
+void draw_textured_object(glm::mat4 view_matrix, GLuint* texcub_vao, 
+                          const char* filename, 
+                          int width=256, int height=256,
+                          int texcub_num_vertices=36) {
+  GLuint tex = LoadTexture(filename, width, height);
+  glBindTexture(GL_TEXTURE_2D, tex);
+
+  glUniform1i(useTexture, 1);
+  glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
+  glm::mat3 normal_matrix = glm::transpose (glm::inverse(glm::mat3(view_matrix)));
+  glUniformMatrix3fv(normalMatrix, 1, GL_FALSE, glm::value_ptr(normal_matrix));
+
+  glBindVertexArray (*texcub_vao);
+  glDrawArrays(GL_TRIANGLES, 0, texcub_num_vertices);
+}

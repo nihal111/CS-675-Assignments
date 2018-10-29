@@ -19,12 +19,12 @@
 #include "cmath"
 #include "glm/ext.hpp"
 
+#include "quad.cpp"
 #include "box.cpp"
 #include "ellipsoid.cpp"
 #include "cylinder.cpp"
 
 #include "texture.cpp"
-#include "textured_cuboid.cpp"
 
 #include "opening_box.cpp"
 #include "humanoid.cpp"
@@ -69,9 +69,16 @@ void initBuffersGL(void)
   // getting the attributes from the shader program
   vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
   vColor = glGetAttribLocation( shaderProgram, "vColor" );
+  vNormal = glGetAttribLocation( shaderProgram, "vNormal" );
   texCoord = glGetAttribLocation( shaderProgram, "texCoord" );
   uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
+  viewMatrix = glGetUniformLocation( shaderProgram, "viewMatrix");
+  normalMatrix =  glGetUniformLocation( shaderProgram, "normalMatrix");
   useTexture = glGetUniformLocation( shaderProgram, "useTexture");
+
+  light0ON = glGetUniformLocation( shaderProgram, "light0ON");
+  light1ON = glGetUniformLocation( shaderProgram, "light1ON");
+
 
   init_opening_box();
 
@@ -110,12 +117,14 @@ void renderGL(void)
 
   //creating the projection matrix
   if(enable_perspective)
-    projection_matrix = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 40.0);
+    projection_matrix = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 50.0);
     // projection_matrix = glm::perspective(glm::radians(90.0),1.0,0.1,10.0);
   else
-    projection_matrix = glm::ortho(-3.0, 3.0, -3.0, 3.0, 1.0, 40.0);
+    projection_matrix = glm::ortho(-3.0, 3.0, -3.0, 3.0, 1.0, 50.0);
 
   view_matrix = projection_matrix*lookat_matrix;
+  glUniformMatrix4fv(viewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
+
   matrixStack.push_back(view_matrix);
 
 
@@ -128,8 +137,8 @@ void renderGL(void)
   draw_table(view_matrix);
   draw_chair(view_matrix);
   draw_window(view_matrix);
+  draw_lamp(view_matrix);
   draw_wall_light();
-  draw_lamp();
 
   // ---- Draw the models
   base_box->render_tree();

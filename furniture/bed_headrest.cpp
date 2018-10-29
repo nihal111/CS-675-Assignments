@@ -17,5 +17,5 @@ void init_bed_headrest()
 }
 
 void draw_bed_headrest(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &bed_headrest_vao, "images/dark_wood2.bmp", 100, 100);
+  draw_textured_object(view_matrix, &bed_headrest_vao, "images/dark_wood2.bmp", 100, 100);
 }

@@ -17,5 +17,5 @@ void init_bed_mattress()
 }
 
 void draw_bed_mattress(glm::mat4 view_matrix) {
-  draw_texcub(view_matrix, &bed_mattress_vao, "images/mattress.bmp", 100, 100);
+  draw_textured_object(view_matrix, &bed_mattress_vao, "images/mattress.bmp", 100, 100);
 }

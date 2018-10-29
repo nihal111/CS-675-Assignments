@@ -2,6 +2,12 @@
 #include "hierarchy_node.hpp"
 
 extern GLfloat c_xrot,c_yrot,c_zrot;
+extern GLfloat c_xpos,c_ypos,c_zpos;
+
+extern GLuint light0ON, light1ON;
+int light0 = 0;
+int light1 = 0;
+
 extern bool enable_perspective;
 extern csX75::HNode *base_box, *lid, *curr_node;
 extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_lower_arm, *left_hand, *right_hand,
@@ -69,6 +75,16 @@ namespace csX75
       std::cout<<"Selected model R2D2"<<std::endl;
     }
 
+    else if (key == GLFW_KEY_9 && action == GLFW_PRESS) {
+      light0 = 1 - light0;
+      glUniform1i(light0ON, light0);
+    }
+
+    else if (key == GLFW_KEY_0 && action == GLFW_PRESS) {
+      light1 = 1 - light1;
+      glUniform1i(light1ON, light1);
+    }
+
     else if (key == GLFW_KEY_P)
       enable_perspective = !enable_perspective;   
 
@@ -84,6 +100,19 @@ namespace csX75
       curr_node->dec_rz();
     else if (key == GLFW_KEY_PAGE_DOWN)
       curr_node->inc_rz();
+
+    // else if (key == GLFW_KEY_LEFT)
+    //   c_xpos += 1.0;
+    // else if (key == GLFW_KEY_RIGHT)
+    //   c_xpos -= 1.0;
+    // else if (key == GLFW_KEY_UP)
+    //   c_zpos += 1.0;
+    // else if (key == GLFW_KEY_DOWN)
+    //   c_zpos -= 1.0;
+    // else if (key == GLFW_KEY_PAGE_UP)
+    //   c_ypos += 1.0;
+    // else if (key == GLFW_KEY_PAGE_DOWN)
+    //   c_ypos -= 1.0;
 
     else if (key == GLFW_KEY_A)
       c_yrot -= 1.0;

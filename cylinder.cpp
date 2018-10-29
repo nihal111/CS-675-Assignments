@@ -2,7 +2,8 @@ const int c_tesselation=50;
 const int c_num_vertices = c_tesselation * 6;
 
 void cylinder(double radius_x, double radius_y, double height_z, int c_tesselation,
-              glm::vec4 c_color, glm::vec4* c_v_positions, glm::vec4* c_v_colors)
+              glm::vec4 c_color, glm::vec4* c_v_positions, glm::vec4* c_v_colors,
+              glm::vec4* c_v_normals)
 {
   int c_tri_idx = 0;
   double hl = height_z;
@@ -18,9 +19,11 @@ void cylinder(double radius_x, double radius_y, double height_z, int c_tesselati
     glm::vec4 pt_up(x, hl, y, 1.0);
 
     c_v_colors[c_tri_idx] = c_color; c_v_positions[c_tri_idx] = pt_down; 
+    c_v_normals[c_tri_idx] = pt_down; 
     c_tri_idx++;
 
     c_v_colors[c_tri_idx] = c_color; c_v_positions[c_tri_idx] = pt_up; 
+    c_v_normals[c_tri_idx] = pt_up;
     c_tri_idx++;
 
     a += step;
@@ -36,9 +39,11 @@ void cylinder(double radius_x, double radius_y, double height_z, int c_tesselati
     glm::vec4 center(0.0, hl, 0.0, 1.0);
 
     c_v_colors[c_tri_idx] = c_color; c_v_positions[c_tri_idx] = pt; 
+    c_v_normals[c_tri_idx] = pt;
     c_tri_idx++;
 
     c_v_colors[c_tri_idx] = c_color; c_v_positions[c_tri_idx] = center; 
+    c_v_normals[c_tri_idx] = center;
     c_tri_idx++;
 
     a -= step;
@@ -54,9 +59,11 @@ void cylinder(double radius_x, double radius_y, double height_z, int c_tesselati
     glm::vec4 center(0.0, 0.0, y, 1.0);
 
     c_v_colors[c_tri_idx] = c_color; c_v_positions[c_tri_idx] = pt; 
+    c_v_normals[c_tri_idx] = pt;
     c_tri_idx++;
 
     c_v_colors[c_tri_idx] = c_color; c_v_positions[c_tri_idx] = center; 
+    c_v_normals[c_tri_idx] = center;
     c_tri_idx++;
 
     a += step;
@@ -70,11 +77,13 @@ csX75::HNode* get_cylinder(double r1, double r2, double l, glm::vec4 a_color,
                            GLfloat _min_rz=-1, GLfloat _max_rz=-1) {
   glm::vec4 c_v_positions[c_num_vertices];
   glm::vec4 c_v_colors[c_num_vertices];
+  glm::vec4 c_v_normals[c_num_vertices];
   
-  cylinder(r1, r2, l, c_tesselation, a_color, c_v_positions, c_v_colors);
+  cylinder(r1, r2, l, c_tesselation, a_color, c_v_positions, c_v_colors, c_v_normals);
 
-  csX75::HNode* cylindrical_joint = new csX75::HNode(NULL, c_num_vertices, c_v_positions, c_v_colors, 
-                  sizeof(c_v_positions), sizeof(c_v_colors), 
+  csX75::HNode* cylindrical_joint = new csX75::HNode(NULL, c_num_vertices, c_v_positions,
+                  c_v_colors, c_v_normals,
+                  sizeof(c_v_positions), sizeof(c_v_colors), sizeof(c_v_normals),
                   _min_rx, _max_rx, _min_ry, _max_ry, _min_rz, _max_rz,
                   GL_TRIANGLE_STRIP);
   return cylindrical_joint;

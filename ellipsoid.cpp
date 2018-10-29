@@ -55,8 +55,9 @@ csX75::HNode* get_ellipsoid(double radius_x, double radius_y, double radius_z, g
 
   sphere(radius_x, radius_y, radius_z, Lats, Longs, a_color, e_v_positions, e_v_colors, e_v_normals);
 
-  csX75::HNode* ellipsoid = new csX75::HNode(NULL, num_vertices, e_v_positions, e_v_colors, 
-                  sizeof(e_v_positions), sizeof(e_v_colors), 
+  csX75::HNode* ellipsoid = new csX75::HNode(NULL, num_vertices, e_v_positions,
+                  e_v_colors, e_v_normals,
+                  sizeof(e_v_positions), sizeof(e_v_colors), sizeof(e_v_normals),
                   _min_rx, _max_rx, _min_ry, _max_ry, _min_rz, _max_rz,
                   GL_TRIANGLE_STRIP);
   return ellipsoid;

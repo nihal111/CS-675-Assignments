@@ -65,6 +65,9 @@ This assignment is our own original work and has not been copied from anywhere e
 
 3. _Cylinder_: The methodology for drawing a cylinder can be found [here](https://www.gamedev.net/forums/topic/359467-draw-cylinder-with-triangle-strips/)
 
+4. _Lighting_: 
+https://www.tomdalling.com/blog/modern-opengl/07-more-lighting-ambient-specular-attenuation-gamma/
+https://en.wikibooks.org/wiki/GLSL_Programming/GLUT/Multiple_Lights
 
 #### Textures
 Wall-
