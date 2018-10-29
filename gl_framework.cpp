@@ -1,7 +1,6 @@
 #include "gl_framework.hpp"
 #include "hierarchy_node.hpp"
 #include "recorder.cpp"
-#include "playback.cpp"
 
 extern GLfloat c_xrot,c_yrot,c_zrot;
 extern GLfloat c_xpos,c_ypos,c_zpos;
@@ -15,6 +14,8 @@ extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_l
                     *left_upper_leg, *left_lower_leg, *right_upper_leg, *right_lower_leg, *left_feet, *right_feet, 
                     *torso, *neck, *head;
 extern csX75::HNode *r2d2_body, *r2d2_head, *r2d2_left_arm, *r2d2_right_arm, *r2d2_left_hand, *r2d2_right_hand;
+
+#include "playback.cpp"
 
 namespace csX75
 {
@@ -125,18 +126,31 @@ namespace csX75
     // else if (key == GLFW_KEY_PAGE_DOWN)
     //   c_ypos -= 1.0;
 
-    else if (key == GLFW_KEY_A)
-      c_yrot -= 1.0;
-    else if (key == GLFW_KEY_D)
-      c_yrot += 1.0;
-    else if (key == GLFW_KEY_W)
-      c_xrot -= 1.0;
-    else if (key == GLFW_KEY_S)
-      c_xrot += 1.0;        
-    else if (key == GLFW_KEY_Q)
-      c_zrot -= 1.0;
-    else if (key == GLFW_KEY_E)
-      c_zrot += 1.0;
+    else if (key == GLFW_KEY_W && action == GLFW_PRESS)
+      curr_node->set_tz(curr_node->get_tz() - 0.1);
+    else if (key == GLFW_KEY_S && action == GLFW_PRESS)
+      curr_node->set_tz(curr_node->get_tz() + 0.1);
+    else if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+      curr_node->set_ty(curr_node->get_ty() + 0.1);
+    else if (key == GLFW_KEY_E && action == GLFW_PRESS)
+      curr_node->set_ty(curr_node->get_ty() - 0.1);
+    else if (key == GLFW_KEY_A && action == GLFW_PRESS)
+      curr_node->set_tx(curr_node->get_tx() - 0.1);
+    else if (key == GLFW_KEY_D && action == GLFW_PRESS)
+      curr_node->set_tx(curr_node->get_tx() + 0.1);
+
+    // else if (key == GLFW_KEY_A)
+    //   c_yrot -= 1.0;
+    // else if (key == GLFW_KEY_D)
+    //   c_yrot += 1.0;
+    // else if (key == GLFW_KEY_W)
+    //   c_xrot -= 1.0;
+    // else if (key == GLFW_KEY_S)
+    //   c_xrot += 1.0;        
+    // else if (key == GLFW_KEY_Q)
+    //   c_zrot -= 1.0;
+    // else if (key == GLFW_KEY_E)
+    //   c_zrot += 1.0;
 
     else if (key == GLFW_KEY_R && action == GLFW_PRESS) {
       recorder();

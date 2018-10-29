@@ -132,16 +132,16 @@ void renderGL(void)
 
 
   // ---- Draw the Room
-  draw_room(view_matrix);
-  draw_door(view_matrix);
-  draw_drawer(view_matrix);
-  draw_cupboard(view_matrix);
-  draw_bed(view_matrix);
-  draw_table(view_matrix);
-  draw_chair(view_matrix);
-  draw_window(view_matrix);
-  draw_lamp(view_matrix);
-  draw_wall_light();
+  // draw_room(view_matrix);
+  // draw_door(view_matrix);
+  // draw_drawer(view_matrix);
+  // draw_cupboard(view_matrix);
+  // draw_bed(view_matrix);
+  // draw_table(view_matrix);
+  // draw_chair(view_matrix);
+  // draw_window(view_matrix);
+  // draw_lamp(view_matrix);
+  // draw_wall_light();
 
   // ---- Draw the models
   base_box->render_tree();
