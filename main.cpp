@@ -19,12 +19,12 @@
 #include "cmath"
 #include "glm/ext.hpp"
 
+#include "texture.cpp"
 #include "quad.cpp"
+
 #include "box.cpp"
 #include "ellipsoid.cpp"
 #include "cylinder.cpp"
-
-#include "texture.cpp"
 
 #include "opening_box.cpp"
 #include "humanoid.cpp"
