@@ -9,11 +9,15 @@ glm::vec4 opening_box_base_vertices[8] = {
   glm::vec4(1.0, -0.5, -0.5, 1.0)
 };
 
-glm::vec4 opening_box_lid_vertices[4] = {
-  glm::vec4(-1.0, 0.0, 1.0, 1.0),
-  glm::vec4(1.0, 0.0, 1.0, 1.0),
-  glm::vec4(-1.0, 0.0, 0.0, 1.0),
-  glm::vec4(1.0, 0.0, 0.0, 1.0)
+glm::vec4 opening_box_lid_vertices[8] = {
+  glm::vec4(-1.0, 0.0, 1.0, 1.0), //placeholder
+  glm::vec4(-1.0, 0.0, 1.0, 1.0), //1
+  glm::vec4(1.0, 0.0, 1.0, 1.0),  //2
+  glm::vec4(-1.0, 0.0, 1.0, 1.0), //placeholder
+  glm::vec4(-1.0, 0.0, 1.0, 1.0), //placeholder
+  glm::vec4(-1.0, 0.0, 0.0, 1.0), //5
+  glm::vec4(1.0, 0.0, 0.0, 1.0),  //6
+  glm::vec4(-1.0, 0.0, 1.0, 1.0)  //placeholder
 };
 
 glm::vec2 tex_box[4] = {
