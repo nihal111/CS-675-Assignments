@@ -49,7 +49,7 @@ glm::mat4 c_rotation_matrix;
 glm::mat4 lookat_matrix;
 
 glm::mat4 model_matrix;
-glm::mat4 view_matrix;
+int camera_pos_count = 0;
 
 
 void initBuffersGL(void)
@@ -108,10 +108,11 @@ void renderGL(void)
   c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_yrot), glm::vec3(0.0f,1.0f,0.0f));
   c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_zrot), glm::vec3(0.0f,0.0f,1.0f));
 
-  glm::vec4 c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
+  c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
   glm::vec4 c_up = glm::vec4(c_up_x,c_up_y,c_up_z, 1.0)*c_rotation_matrix;
+
   //Creating the lookat matrix
-  lookat_matrix = glm::lookAt(glm::vec3(c_pos),glm::vec3(0.0),glm::vec3(c_up));
+  lookat_matrix = glm::lookAt(glm::vec3(c_pos),glm::vec3(-15.0, -3.49, 7.0),glm::vec3(c_up));
 
   //creating the projection matrix
   if(enable_perspective)
@@ -141,6 +142,36 @@ void renderGL(void)
   // ---- Draw the models
   base_box->render_tree();
 
+  // ---- Draw the mouse clicks.
+  if (!camera_animation_start)
+  {
+    for (int i = 0; i < mouse_count; i++)
+    {
+      glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
+      glBindVertexArray (mouse_clicks_vao[i]);
+      glDrawArrays(GL_TRIANGLE_STRIP, 0, 3600);
+    }
+  }
+
+  // ----Draw the interpolated cuve once the points are in place.
+  if (points_in_place && !camera_animation_start)
+  {
+    glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
+    glBindVertexArray (mouse_curve_vao);
+    glDrawArrays(GL_LINES, 0, num_interpolated_points);
+  }
+
+  // Start the camera animation.
+  if (camera_animation_start)
+  {
+    if (camera_pos_count < num_interpolated_points - 1)
+    {
+      c_xpos = mouse_curve_points[camera_pos_count].x;
+      c_ypos = mouse_curve_points[camera_pos_count].y;
+      c_zpos = mouse_curve_points[camera_pos_count].z;
+      camera_pos_count += 1;
+    }
+  }
 }
 
 int main(int argc, char** argv)
@@ -201,6 +232,8 @@ int main(int argc, char** argv)
   //Initialize GL state
   csX75::initGL();
   initBuffersGL();
+
+  glfwSetMouseButtonCallback(window, csX75::mouse_button_callback);
 
   // Loop until the user closes the window
   while (glfwWindowShouldClose(window) == 0)

@@ -33,6 +33,7 @@ GLfloat xpos=0.0,ypos=0.0,zpos=0.0;
 // Rotation Parameters
 GLfloat xrot=0.0,yrot=0.0,zrot=0.0;*/
 // Camera position and rotation Parameters
+glm::vec4 c_pos;
 GLfloat c_xpos = 0.0, c_ypos = 0.0, c_zpos = 5.0;
 GLfloat c_up_x = 0.0, c_up_y = 1.0, c_up_z = 0.0;
 GLfloat c_xrot=0.0,c_yrot=0.0,c_zrot=0.0;
@@ -47,6 +48,8 @@ bool enable_perspective=true;
 GLuint vPosition, vColor, vNormal, texCoord;
 GLuint uModelViewMatrix, viewMatrix, normalMatrix, useTexture;
 GLuint light0ON, light1ON;
+
+glm::mat4 view_matrix;
 
 //global matrix stack for hierarchical modelling
 std::vector<glm::mat4> matrixStack;
@@ -84,6 +87,20 @@ csX75::HNode* r2d2_left_arm;
 csX75::HNode* r2d2_right_arm;
 csX75::HNode* r2d2_left_hand;
 csX75::HNode* r2d2_right_hand;
+
+
+// ---- Mouse Points
+GLuint mouse_clicks_vbo[50], mouse_clicks_vao[50];
+int mouse_count = 0;
+
+// Interpolated points of mouse curve
+int num_interpolated_points = 301;
+GLuint mouse_curve_vbo, mouse_curve_vao;
+glm::vec4* mouse_curve_points;
+
+// ----- Control points are in place.
+bool camera_animation_start = false;
+bool points_in_place = false;
 
 // ---- Colors
 glm::vec4 color = glm::vec4(0.6, 0.6, 0.6, 1.0);

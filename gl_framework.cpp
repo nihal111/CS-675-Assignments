@@ -1,8 +1,13 @@
 #include "gl_framework.hpp"
 #include "hierarchy_node.hpp"
+#include "camera_animation.cpp"
 
-extern GLfloat c_xrot,c_yrot,c_zrot;
-extern GLfloat c_xpos,c_ypos,c_zpos;
+extern GLfloat c_xrot,c_yrot,c_zrot, c_xpos, c_ypos, c_zpos;
+extern glm::vec4 c_pos;
+extern glm::mat4 projection_matrix, view_matrix;
+extern bool camera_animation_start;
+extern bool points_in_place;
+extern glm::vec4* mouse_curve_points;
 
 extern GLuint light0ON, light1ON;
 int light0 = 0;
@@ -15,6 +20,8 @@ extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_l
                     *torso, *neck, *head;
 extern csX75::HNode *r2d2_body, *r2d2_head, *r2d2_left_arm, *r2d2_right_arm, *r2d2_left_hand, *r2d2_right_hand;
 
+
+glm::mat4 inverse_view_matrix = inverse(projection_matrix*view_matrix);
 namespace csX75
 {
   enum Model
@@ -25,6 +32,7 @@ namespace csX75
   };
 
   Model model = MUSIC_BOX;
+  
 
   //! Initialize GL State
   void initGL(void)
@@ -75,14 +83,55 @@ namespace csX75
       std::cout<<"Selected model R2D2"<<std::endl;
     }
 
-    else if (key == GLFW_KEY_9 && action == GLFW_PRESS) {
+    else if (key == GLFW_KEY_TAB && action == GLFW_PRESS) {
       light0 = 1 - light0;
       glUniform1i(light0ON, light0);
     }
 
-    else if (key == GLFW_KEY_0 && action == GLFW_PRESS) {
+    else if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
       light1 = 1 - light1;
       glUniform1i(light1ON, light1);
+    }
+
+    else if (key == GLFW_KEY_4) {
+      c_xpos += 0.1;
+    }
+
+    else if (key == GLFW_KEY_5) {
+      c_xpos -= 0.1;
+    }
+
+    else if (key == GLFW_KEY_6) {
+      c_ypos += 0.1;
+    }
+
+    else if (key == GLFW_KEY_7) {
+      c_ypos -= 0.1;
+    }
+
+    else if (key == GLFW_KEY_8) {
+      c_zpos += 0.1;
+    }
+
+    else if (key == GLFW_KEY_9) {
+      c_zpos -= 0.1;
+    }
+
+    else if (key == GLFW_KEY_0 && !points_in_place) {
+      points_in_place = true;
+      mouse_curve_points = get_bezier_points();
+      draw_bezier_curve(mouse_curve_points);
+    }
+
+    else if (key == GLFW_KEY_ENTER) {
+      if (points_in_place)
+      {
+        camera_animation_start = true;
+      }
+      else
+      {
+        std::cout<<"Please construct the camera path first"<<std::endl;
+      }
     }
 
     else if (key == GLFW_KEY_P)
@@ -234,6 +283,31 @@ namespace csX75
       }
     }
   }
+
+// https://stackoverflow.com/questions/7692988/opengl-math-projecting-screen-space-to-world-space-coords
+  //!GLFW mouse callback
+  void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+  {
+    double xpos, ypos;
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwGetCursorPos(window, &xpos, &ypos);
+
+    switch(button)
+    {
+      case GLFW_MOUSE_BUTTON_LEFT:
+        if (action == GLFW_PRESS)
+        {
+          glm::vec3 camera_pos = glm::vec3(c_pos.x, c_pos.y, c_pos.z);
+          glm::vec3 look_direction = normalize(glm::vec3(0.0) - glm::vec3(c_pos.x, c_pos.y, c_pos.z));
+          glm::vec3 mouse_position = camera_pos + 2.0*look_direction;
+
+          add_sphere_points(mouse_position.x, mouse_position.y, mouse_position.z);
+        }
+      default:
+          break;
+    }
+  }
+
 };  
   
 
