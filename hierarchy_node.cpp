@@ -250,6 +250,65 @@ namespace csX75
 	}
 
 
+	// Getters
+
+	float HNode::get_rx() {
+		return rx;
+	}
+
+	float HNode::get_ry() {
+		return ry;
+	}
+
+	float HNode::get_rz() {
+		return rz;
+	}
+
+	float HNode::get_tx() {
+		return tx;
+	}
+
+	float HNode::get_ty() {
+		return ty;
+	}
+
+	float HNode::get_tz() {
+		return tz;
+	}
+
+	// Setters
+
+	void HNode::set_rx(float k) {
+		rx = k;
+		update_matrices();
+	}
+
+	void HNode::set_ry(float k) {
+		ry = k;
+		update_matrices();
+	}
+
+	void HNode::set_rz(float k) {
+		rz = k;
+		update_matrices();
+	}
+
+	void HNode::set_tx(float k) {
+		tx = k;
+		update_matrices();
+	}
+
+	void HNode::set_ty(float k) {
+		ty = k;
+		update_matrices();
+	}
+
+	void HNode::set_tz(float k) {
+		tz = k;
+		update_matrices();
+	}
+
+
 	glm::mat4* multiply_stack(std::vector<glm::mat4> matStack){
 		glm::mat4* mult;
 		mult = new glm::mat4(1.0f);

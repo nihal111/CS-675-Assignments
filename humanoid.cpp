@@ -36,19 +36,19 @@ void init_humanoid()
 
   // -------------- TORSO
   torso = get_cylinder(0.1, 0.03, 0.30, dark_blue);
-  torso->set_parent(base_box);
-  torso->change_parameters(-2.0,0.0,0.0,  // translation
+  torso->set_parent(platform);
+  torso->change_parameters(-0.7,0.46,0.0,  // translation
                             0.0,0.0,0.0);
 
   //--------------- ARMS
 
   left_upper_arm = get_cylinder(0.04, 0.04, 0.2, dark_blue,
-                          -80.0,80.0,
-                          -90.0,90.0,
-                          0.0,180.0);
+                          -1,-1,
+                          -1,-1,
+                          -1,-1);
   left_upper_arm->set_parent(torso);
-  left_upper_arm->change_parameters(-0.1,0.26,0.0,  // translation
-                               0.0,0.0,90.0);   // rotation
+  left_upper_arm->change_parameters(-0.08,0.26,0.0,  // translation
+                               90.0,30.0,90.0);   // rotation
 
 
   left_lower_arm = get_cylinder(0.04, 0.04, 0.2, light_blue,
@@ -56,8 +56,8 @@ void init_humanoid()
                           0.0,160.0,
                           0.0,0.0);
   left_lower_arm->set_parent(left_upper_arm);
-  left_lower_arm->change_parameters(0.0,0.2,0.0,  // translation
-                               0.0,0.0,0.0);   // rotation
+  left_lower_arm->change_parameters(0.0,0.16,0.0,  // translation
+                               70.0,0.0,0.0);   // rotation
 
   left_hand = get_box(left_hand_vertices, skin,
                           -80.0,80.0,
@@ -68,12 +68,12 @@ void init_humanoid()
                                0.0,0.0, -90);   // rotation
 
   right_upper_arm = get_cylinder(0.04, 0.04, 0.2, dark_blue,
-                          -80.0,80.0,
-                          -90.0,90.0,
-                          -180.0,0.0);
+                          -1,-1,
+                          -1,-1,
+                          -1,-1);
   right_upper_arm->set_parent(torso);
-  right_upper_arm->change_parameters(0.1,0.26,0.0,  // translation
-                               0.0,0.0,-90.0);   // rotation
+  right_upper_arm->change_parameters(0.08,0.26,0.0,  // translation
+                               90.0,-30.0,-90.0);   // rotation
 
 
   right_lower_arm = get_cylinder(0.04, 0.04, 0.2, light_blue,
@@ -81,8 +81,8 @@ void init_humanoid()
                           0.0,160.0,
                           0.0,0.0);
   right_lower_arm->set_parent(right_upper_arm);
-  right_lower_arm->change_parameters(0.0,0.2,0.0,  // translation
-                               0.0,0.0,0.0);   // rotation
+  right_lower_arm->change_parameters(0.0,0.16,0.0,  // translation
+                               70.0,0.0,0.0);   // rotation
 
   right_hand = get_box(right_hand_vertices, skin,
                           -80.0,80.0,

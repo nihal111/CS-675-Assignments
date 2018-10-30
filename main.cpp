@@ -15,6 +15,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+
 #include "main.hpp"
 #include "cmath"
 #include "glm/ext.hpp"
@@ -100,6 +101,10 @@ void initBuffersGL(void)
 void renderGL(void)
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  if (playback_running) {
+    playback_update();
+  }
 
   matrixStack.clear();
 
@@ -195,7 +200,7 @@ int main(int argc, char** argv)
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); 
 
   //! Create a windowed mode window and its OpenGL context
-  window = glfwCreateWindow(1024, 1024, "CS475/CS675 Tutorial 7: Hierarchical Modelling", NULL, NULL);
+  window = glfwCreateWindow(800, 800, "CS475/CS675 Tutorial 7: Hierarchical Modelling", NULL, NULL);
   if (!window)
     {
       glfwTerminate();

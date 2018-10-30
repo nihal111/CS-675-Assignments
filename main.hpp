@@ -35,6 +35,10 @@ GLfloat xrot=0.0,yrot=0.0,zrot=0.0;*/
 // Camera position and rotation Parameters
 glm::vec4 c_pos;
 GLfloat c_xpos = 0.0, c_ypos = 0.0, c_zpos = 5.0;
+
+// Best box viewing angle
+// GLfloat c_xpos = -11.5, c_ypos = -1.0, c_zpos = 7.0;
+
 GLfloat c_up_x = 0.0, c_up_y = 1.0, c_up_z = 0.0;
 GLfloat c_xrot=0.0,c_yrot=0.0,c_zrot=0.0;
 
@@ -50,6 +54,11 @@ GLuint uModelViewMatrix, viewMatrix, normalMatrix, useTexture;
 GLuint light0ON, light1ON;
 
 glm::mat4 view_matrix;
+int light0 = 0;
+int light1 = 0;
+
+// Playback related
+bool playback_running = false;
 
 //global matrix stack for hierarchical modelling
 std::vector<glm::mat4> matrixStack;
@@ -60,6 +69,7 @@ csX75::HNode* curr_node;
 // ---- Opening Box
 csX75::HNode* lid;
 csX75::HNode* base_box;
+csX75::HNode* platform;
 
 // ---- Humanoid
 csX75::HNode* torso;

@@ -59,12 +59,27 @@ namespace csX75	 {
 		void render();
 		void change_parameters(GLfloat,GLfloat,GLfloat,GLfloat,GLfloat,GLfloat);
 		void render_tree();
+		
 		void inc_rx();
 		void inc_ry();
 		void inc_rz();
 		void dec_rx();
 		void dec_ry();
 		void dec_rz();
+
+		float get_tx();
+		float get_ty();
+		float get_tz();
+		float get_rx();
+		float get_ry();
+		float get_rz();
+
+		void set_tx(float);
+		void set_ty(float);
+		void set_tz(float);
+		void set_rx(float);
+		void set_ry(float);
+		void set_rz(float);
 	};
 
 	glm::mat4* multiply_stack(std::vector <glm::mat4> );
