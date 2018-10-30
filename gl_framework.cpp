@@ -5,7 +5,9 @@
 extern GLfloat c_xrot,c_yrot,c_zrot, c_xpos, c_ypos, c_zpos;
 extern glm::vec4 c_pos;
 extern glm::mat4 projection_matrix, view_matrix;
-extern bool animation_started;
+extern bool camera_animation_start;
+extern bool points_in_place;
+extern glm::vec4* mouse_curve_points;
 
 extern bool enable_perspective;
 extern csX75::HNode *base_box, *lid, *curr_node;
@@ -101,18 +103,14 @@ namespace csX75
       c_zpos -= 0.1;
     }
 
-    else if (key == GLFW_KEY_0 && !animation_started) {
-      animation_started = true;
-      glm::vec4* points = get_bezier_points();
-      draw_bezier_curve(points);
+    else if (key == GLFW_KEY_0 && !points_in_place) {
+      points_in_place = true;
+      mouse_curve_points = get_bezier_points();
+      draw_bezier_curve(mouse_curve_points);
+    }
 
-      for (int i = 0; i < 100000; i++)
-      {
-          // c_zpos = points[i].z;
-          // c_ypos = points[i].y;
-          // c_xpos = points[i].x;
-          c_xpos += 0.001;
-      }
+    else if (key == GLFW_KEY_ENTER) {
+      camera_animation_start = true;
     }
 
     else if (key == GLFW_KEY_P)

@@ -50,6 +50,7 @@ glm::mat4 c_rotation_matrix;
 glm::mat4 lookat_matrix;
 
 glm::mat4 model_matrix;
+int camera_pos_count = 0;
 
 
 void initBuffersGL(void)
@@ -149,12 +150,24 @@ void renderGL(void)
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 3600);
   }
 
-  // Draw the interpolated cuve once the points are in place.
-  if (animation_started)
+  // ----Draw the interpolated cuve once the points are in place.
+  if (points_in_place)
   {
     glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
     glBindVertexArray (mouse_curve_vao);
     glDrawArrays(GL_LINES, 0, num_interpolated_points);
+  }
+
+  // Start the camera animation.
+  if (camera_animation_start)
+  {
+    if (camera_pos_count < num_interpolated_points - 1)
+    {
+      c_xpos = mouse_curve_points[camera_pos_count].x;
+      c_ypos = mouse_curve_points[camera_pos_count].y;
+      c_zpos = mouse_curve_points[camera_pos_count].z;
+      camera_pos_count += 1;
+    }
   }
 
 
