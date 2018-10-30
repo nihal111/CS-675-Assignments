@@ -26,7 +26,7 @@ void init_r2d2()
   // -------------- BODY
   r2d2_body = get_cylinder(0.1, 0.1, 0.3, white);
   r2d2_body->set_parent(platform);
-  r2d2_body->change_parameters(0.7,0.0,0.0,  // translation
+  r2d2_body->change_parameters(0.7,0.2,0.0,  // translation
                                0.0,0.0,0.0);   // rotation
 
   r2d2_head = get_ellipsoid(0.1, 0.1, 0.1, light_blue);

@@ -87,7 +87,7 @@ namespace csX75
       switch_wall_light(light1);
     }
 
-    else if (key == GLFW_KEY_P)
+    else if (key == GLFW_KEY_P && action == GLFW_PRESS)
       enable_perspective = !enable_perspective;   
 
     else if (key == GLFW_KEY_LEFT)
@@ -126,31 +126,31 @@ namespace csX75
     // else if (key == GLFW_KEY_PAGE_DOWN)
     //   c_ypos -= 1.0;
 
-    else if (key == GLFW_KEY_W && action == GLFW_PRESS)
-      curr_node->set_tz(curr_node->get_tz() - 0.1);
-    else if (key == GLFW_KEY_S && action == GLFW_PRESS)
-      curr_node->set_tz(curr_node->get_tz() + 0.1);
-    else if (key == GLFW_KEY_Q && action == GLFW_PRESS)
-      curr_node->set_ty(curr_node->get_ty() + 0.1);
-    else if (key == GLFW_KEY_E && action == GLFW_PRESS)
-      curr_node->set_ty(curr_node->get_ty() - 0.1);
-    else if (key == GLFW_KEY_A && action == GLFW_PRESS)
-      curr_node->set_tx(curr_node->get_tx() - 0.1);
-    else if (key == GLFW_KEY_D && action == GLFW_PRESS)
-      curr_node->set_tx(curr_node->get_tx() + 0.1);
+    // else if (key == GLFW_KEY_W && action == GLFW_PRESS)
+    //   curr_node->set_tz(curr_node->get_tz() - 0.1);
+    // else if (key == GLFW_KEY_S && action == GLFW_PRESS)
+    //   curr_node->set_tz(curr_node->get_tz() + 0.1);
+    // else if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+    //   curr_node->set_ty(curr_node->get_ty() + 0.1);
+    // else if (key == GLFW_KEY_E && action == GLFW_PRESS)
+    //   curr_node->set_ty(curr_node->get_ty() - 0.1);
+    // else if (key == GLFW_KEY_A && action == GLFW_PRESS)
+    //   curr_node->set_tx(curr_node->get_tx() - 0.1);
+    // else if (key == GLFW_KEY_D && action == GLFW_PRESS)
+    //   curr_node->set_tx(curr_node->get_tx() + 0.1);
 
-    // else if (key == GLFW_KEY_A)
-    //   c_yrot -= 1.0;
-    // else if (key == GLFW_KEY_D)
-    //   c_yrot += 1.0;
-    // else if (key == GLFW_KEY_W)
-    //   c_xrot -= 1.0;
-    // else if (key == GLFW_KEY_S)
-    //   c_xrot += 1.0;        
-    // else if (key == GLFW_KEY_Q)
-    //   c_zrot -= 1.0;
-    // else if (key == GLFW_KEY_E)
-    //   c_zrot += 1.0;
+    else if (key == GLFW_KEY_A)
+      c_yrot -= 1.0;
+    else if (key == GLFW_KEY_D)
+      c_yrot += 1.0;
+    else if (key == GLFW_KEY_W)
+      c_xrot -= 1.0;
+    else if (key == GLFW_KEY_S)
+      c_xrot += 1.0;        
+    else if (key == GLFW_KEY_Q)
+      c_zrot -= 1.0;
+    else if (key == GLFW_KEY_E)
+      c_zrot += 1.0;
 
     else if (key == GLFW_KEY_R && action == GLFW_PRESS) {
       recorder();

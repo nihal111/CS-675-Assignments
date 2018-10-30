@@ -13,6 +13,7 @@ extern csX75::HNode *r2d2_body, *r2d2_head, *r2d2_left_arm, *r2d2_right_arm, *r2
 void recorder() {
 	ofstream myfile;
 	myfile.open ("keyframes.txt", ios::out | ios::app);
+	cout<<"Recording position"<<endl;
 	myfile << light0 					<< " " 
 		   << light1 					<< " "
 		   << lid->get_rx()				<< " "
@@ -24,72 +25,42 @@ void recorder() {
 		   << torso->get_ry() 			<< " "
 		   << torso->get_rz() 			<< " "
 
-		   << left_upper_arm->get_tx()	<< " "
-		   << left_upper_arm->get_ty()	<< " "
-		   << left_upper_arm->get_tz()	<< " "
 		   << left_upper_arm->get_rx()	<< " "
 		   << left_upper_arm->get_ry()	<< " "
 		   << left_upper_arm->get_rz()	<< " "
 
-		   << left_lower_arm->get_tx()	<< " "
-		   << left_lower_arm->get_ty()	<< " "
-		   << left_lower_arm->get_tz()	<< " "
 		   << left_lower_arm->get_rx()	<< " "
 		   << left_lower_arm->get_ry()	<< " "
 		   << left_lower_arm->get_rz()	<< " "
 
-		   << right_upper_arm->get_tx()	<< " "
-		   << right_upper_arm->get_ty()	<< " "
-		   << right_upper_arm->get_tz()	<< " "
 		   << right_upper_arm->get_rx()	<< " "
 		   << right_upper_arm->get_ry()	<< " "
 		   << right_upper_arm->get_rz()	<< " "
 
-		   << right_lower_arm->get_tx()	<< " "
-		   << right_lower_arm->get_ty()	<< " "
-		   << right_lower_arm->get_tz()	<< " "
 		   << right_lower_arm->get_rx()	<< " "
 		   << right_lower_arm->get_ry()	<< " "
 		   << right_lower_arm->get_rz()	<< " "
 
-		   << left_upper_leg->get_tx()	<< " "
-		   << left_upper_leg->get_ty()	<< " "
-		   << left_upper_leg->get_tz()	<< " "
 		   << left_upper_leg->get_rx()	<< " "
 		   << left_upper_leg->get_ry()	<< " "
 		   << left_upper_leg->get_rz()	<< " "
 
-		   << left_lower_leg->get_tx()	<< " "
-		   << left_lower_leg->get_ty()	<< " "
-		   << left_lower_leg->get_tz()	<< " "
 		   << left_lower_leg->get_rx()	<< " "
 		   << left_lower_leg->get_ry()	<< " "
 		   << left_lower_leg->get_rz()	<< " "
 
-		   << right_upper_leg->get_tx()	<< " "
-		   << right_upper_leg->get_ty()	<< " "
-		   << right_upper_leg->get_tz()	<< " "
 		   << right_upper_leg->get_rx()	<< " "
 		   << right_upper_leg->get_ry()	<< " "
 		   << right_upper_leg->get_rz()	<< " "
 
-		   << right_lower_leg->get_tx()	<< " "
-		   << right_lower_leg->get_ty()	<< " "
-		   << right_lower_leg->get_tz()	<< " "
 		   << right_lower_leg->get_rx()	<< " "
 		   << right_lower_leg->get_ry()	<< " "
 		   << right_lower_leg->get_rz()	<< " "
 
-		   << r2d2_left_arm->get_tx()	<< " "
-		   << r2d2_left_arm->get_ty()	<< " "
-		   << r2d2_left_arm->get_tz()	<< " "
 		   << r2d2_left_arm->get_rx()	<< " "
 		   << r2d2_left_arm->get_ry()	<< " "
 		   << r2d2_left_arm->get_rz()	<< " "
 
-		   << r2d2_right_arm->get_tx()	<< " "
-		   << r2d2_right_arm->get_ty()	<< " "
-		   << r2d2_right_arm->get_tz()	<< " "
 		   << r2d2_right_arm->get_rx()	<< " "
 		   << r2d2_right_arm->get_ry()	<< " "
 		   << r2d2_right_arm->get_rz()	<< " "
