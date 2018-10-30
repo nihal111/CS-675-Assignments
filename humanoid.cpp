@@ -48,7 +48,7 @@ void init_humanoid()
                           -1,-1);
   left_upper_arm->set_parent(torso);
   left_upper_arm->change_parameters(-0.08,0.26,0.0,  // translation
-                               120.0,30.0,120.0);   // rotation
+                               90.0,30.0,90.0);   // rotation
 
 
   left_lower_arm = get_cylinder(0.04, 0.04, 0.2, light_blue,
@@ -68,9 +68,9 @@ void init_humanoid()
                                0.0,0.0, -90);   // rotation
 
   right_upper_arm = get_cylinder(0.04, 0.04, 0.2, dark_blue,
-                          -90.0,90.0,
-                          -90.0,90.0,
-                          -180.0,0.0);
+                          -1,-1,
+                          -1,-1,
+                          -1,-1);
   right_upper_arm->set_parent(torso);
   right_upper_arm->change_parameters(0.08,0.26,0.0,  // translation
                                90.0,-30.0,-90.0);   // rotation
