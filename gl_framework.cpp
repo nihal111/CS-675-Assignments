@@ -110,7 +110,14 @@ namespace csX75
     }
 
     else if (key == GLFW_KEY_ENTER) {
-      camera_animation_start = true;
+      if (points_in_place)
+      {
+        camera_animation_start = true;
+      }
+      else
+      {
+        std::cout<<"Please construct the camera path first"<<std::endl;
+      }
     }
 
     else if (key == GLFW_KEY_P)
@@ -263,50 +270,9 @@ namespace csX75
       case GLFW_MOUSE_BUTTON_LEFT:
         if (action == GLFW_PRESS)
         {
-
-          // double modelview[16];
-          // double projection[16];
-          // GLint viewport[4];
-
-          // glGetDoublev(GL_MODELVIEW_MATRIX,modelview);
-          // glGetDoublev(GL_PROJECTION_MATRIX,projection);
-          // glGetIntegerv(GL_VIEWPORT,viewport);
-
-          // GLfloat winx, winy, winz; 
-
-          // winx = (float) xpos;                  // Holds The Mouse X Coordinate
-          // winy = (float) ypos;                  // Holds The Mouse Y Coordinate
-          // winy = (float)viewport[3] - winy;
-
-          // glReadPixels(winx, winy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winz);
-
-          // float in[4];
-
-          // in[0]=(winx-(float)viewport[0])/(float)viewport[2]*2.0-1.0;
-          // in[1]=(winy-(float)viewport[1])/(float)viewport[3]*2.0-1.0;
-          // in[2]=2.0*winz-1.0;
-          // in[3]=1.0;
-
-          // glm::vec4 mouse_coordinates = glm::vec4(in[0], -in[1], in[2], in[3]);
-          // glm::vec4 mouse_world_coordinates = inverse_view_matrix*mouse_coordinates;
-
-
           glm::vec3 camera_pos = glm::vec3(c_pos.x, c_pos.y, c_pos.z);
           glm::vec3 look_direction = normalize(glm::vec3(0.0) - glm::vec3(c_pos.x, c_pos.y, c_pos.z));
           glm::vec3 mouse_position = camera_pos + 2.0*look_direction;
-
-          // double mouse_z = 1.0;
-          // double mouse_x = (xpos - 512.0)/512.0;
-          // double mouse_y = -((ypos - 512.0)/512.0);
-
-          // glm::vec4 mouse_coordinates = glm::vec4(mouse_x, mouse_y, mouse_z, 1.0);
-
-          // glm::vec4 mouse_world_coordinates = mouse_coordinates*inverse_view_matrix;
-
-          // mouse_world_coordinates.w = 1.0/mouse_world_coordinates.w;
-          // mouse_world_coordinates.x *= mouse_world_coordinates.w;
-          // mouse_world_coordinates.y *= mouse_world_coordinates.w;
-          // mouse_world_coordinates.z *= mouse_world_coordinates.w;
 
           add_sphere_points(mouse_position.x, mouse_position.y, mouse_position.z);
         }

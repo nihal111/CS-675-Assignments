@@ -105,11 +105,7 @@ void renderGL(void)
   c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_zrot), glm::vec3(0.0f,0.0f,1.0f));
 
   c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
-  // glm::vec4 c_right = glm::vec4(1.0, 0.0, 0.0, 1.0)*c_rotation_matrix;
   glm::vec4 c_up = glm::vec4(c_up_x,c_up_y,c_up_z, 1.0)*c_rotation_matrix;
-
-  // glm::vec3 forward_vector = normalize(cross(glm::vec3(c_pos.x, c_pos.y, c_pos.z), glm::vec3(c_right.x, c_right.y, c_right.z)));
-  // glm::vec3 camera_lookat = glm::vec3(c_pos.x, c_pos.y, c_pos.z) + forward_vector;
 
   //Creating the lookat matrix
   lookat_matrix = glm::lookAt(glm::vec3(c_pos),glm::vec3(0.0),glm::vec3(c_up));
