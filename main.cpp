@@ -126,7 +126,7 @@ void renderGL(void)
   }
 
   //Creating the lookat matrix
-  lookat_matrix = glm::lookAt(glm::vec3(c_pos),glm::vec3(-15.0, -3.49, 7.0),glm::vec3(c_up));
+  lookat_matrix = glm::lookAt(glm::vec3(c_pos),base_box_position,glm::vec3(c_up));
 
   //creating the projection matrix
   if(enable_perspective)

@@ -23,7 +23,6 @@ extern csX75::HNode *r2d2_body, *r2d2_head, *r2d2_left_arm, *r2d2_right_arm, *r2
 
 
 glm::mat4 inverse_view_matrix = inverse(projection_matrix*view_matrix);
-glm::vec3 look_direction = normalize(base_box_position - glm::vec3(c_pos.x, c_pos.y, c_pos.z));
 namespace csX75
 {
   enum Model
@@ -300,6 +299,7 @@ namespace csX75
         if (action == GLFW_PRESS)
         {
           glm::vec3 camera_pos = glm::vec3(c_pos.x, c_pos.y, c_pos.z);
+          glm::vec3 look_direction = normalize(base_box_position - camera_pos);
           glm::vec3 mouse_position = camera_pos + 2.0*look_direction;
 
           add_sphere_points(mouse_position.x, mouse_position.y, mouse_position.z);
