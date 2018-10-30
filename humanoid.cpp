@@ -37,7 +37,7 @@ void init_humanoid()
   // -------------- TORSO
   torso = get_cylinder(0.1, 0.03, 0.30, dark_blue);
   torso->set_parent(platform);
-  torso->change_parameters(-0.5,0.46,0.0,  // translation
+  torso->change_parameters(-0.7,0.46,0.0,  // translation
                             0.0,0.0,0.0);
 
   //--------------- ARMS
