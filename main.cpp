@@ -108,8 +108,22 @@ void renderGL(void)
   c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_yrot), glm::vec3(0.0f,1.0f,0.0f));
   c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_zrot), glm::vec3(0.0f,0.0f,1.0f));
 
-  c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
   glm::vec4 c_up = glm::vec4(c_up_x,c_up_y,c_up_z, 1.0)*c_rotation_matrix;
+
+  if (!camera_animation_start)
+  {
+    c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
+  }
+
+   // Start the camera animation.
+  if (camera_animation_start)
+  {
+    if (camera_pos_count < num_interpolated_points - 1)
+    {
+      c_pos = mouse_curve_points[camera_pos_count];
+      camera_pos_count += 1;
+    }
+  }
 
   //Creating the lookat matrix
   lookat_matrix = glm::lookAt(glm::vec3(c_pos),glm::vec3(-15.0, -3.49, 7.0),glm::vec3(c_up));
@@ -159,18 +173,6 @@ void renderGL(void)
     glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
     glBindVertexArray (mouse_curve_vao);
     glDrawArrays(GL_LINES, 0, num_interpolated_points);
-  }
-
-  // Start the camera animation.
-  if (camera_animation_start)
-  {
-    if (camera_pos_count < num_interpolated_points - 1)
-    {
-      c_xpos = mouse_curve_points[camera_pos_count].x;
-      c_ypos = mouse_curve_points[camera_pos_count].y;
-      c_zpos = mouse_curve_points[camera_pos_count].z;
-      camera_pos_count += 1;
-    }
   }
 }
 

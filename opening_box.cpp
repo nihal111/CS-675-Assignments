@@ -43,7 +43,7 @@ void init_opening_box(void)
     						  sizeof(opening_box_base_positions), sizeof(opening_box_base_tex_coords), sizeof(opening_box_base_normals),
     						  "images/dark_wood2.bmp", 100, 100, 
                   -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f);
-  base_box->change_parameters(-15,-3.49,7,  // translation
+  base_box->change_parameters(base_box_position.x,base_box_position.y,base_box_position.z,  // translation
                          0.0,90.0,0.0);   // rotation
 
   glm::vec4 opening_box_lid_positions[lid_num_vertices];

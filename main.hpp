@@ -60,6 +60,7 @@ csX75::HNode* curr_node;
 // ---- Opening Box
 csX75::HNode* lid;
 csX75::HNode* base_box;
+glm::vec3 base_box_position = glm::vec3(-15.0, -3.49, 7.0);
 
 // ---- Humanoid
 csX75::HNode* torso;
