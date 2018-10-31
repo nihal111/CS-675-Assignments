@@ -24,4 +24,14 @@ namespace csX75
   void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 };
 
+void switch_lamp_light(float l);
+void switch_wall_light(float l);
+
+void box_state(float angle);
+
+void playback();
+void update();
+void playback_update();
+int camera_pos_update(int camera_pos_count);
+
 #endif

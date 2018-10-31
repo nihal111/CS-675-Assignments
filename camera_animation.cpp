@@ -127,7 +127,7 @@ glm::vec4 * get_bezier_points()
         glm::vec3 point = glm::vec3(0.0);
         for (int i = 0; i < mouse_count; i++)
         {
-            point = point + mouse_click_coordinates[i]*bezier_curve_coef[i]*pow(t, i)*pow(1-t, n-i);
+            point = point + mouse_click_coordinates[i]*float(bezier_curve_coef[i]*pow(t, i)*pow(1-t, n-i));
         }
         glm::vec4 vec4_point = glm::vec4(point.x, point.y, point.z, 1.0);
         points[c] = vec4_point;

@@ -1,28 +1,28 @@
 #include "gl_framework.hpp"
 #include "hierarchy_node.hpp"
 #include "camera_animation.cpp"
+#include "recorder.cpp"
 
 extern GLfloat c_xrot,c_yrot,c_zrot, c_xpos, c_ypos, c_zpos;
 extern glm::vec4 c_pos;
 extern glm::mat4 projection_matrix, view_matrix;
-extern bool camera_animation_start;
+
 extern bool points_in_place;
 extern glm::vec4* mouse_curve_points;
 extern glm::vec3 base_box_position;
 
 extern GLuint light0ON, light1ON;
-int light0 = 0;
-int light1 = 0;
+extern int light0, light1;
 
 extern bool enable_perspective;
-extern csX75::HNode *base_box, *lid, *curr_node;
+extern csX75::HNode *base_box, *lid, *platform, *curr_node;
 extern csX75::HNode *left_upper_arm, *left_lower_arm, *right_upper_arm, *right_lower_arm, *left_hand, *right_hand,
                     *left_upper_leg, *left_lower_leg, *right_upper_leg, *right_lower_leg, *left_feet, *right_feet, 
                     *torso, *neck, *head;
 extern csX75::HNode *r2d2_body, *r2d2_head, *r2d2_left_arm, *r2d2_right_arm, *r2d2_left_hand, *r2d2_right_hand;
 
+#include "playback.cpp"
 
-glm::mat4 inverse_view_matrix = inverse(projection_matrix*view_matrix);
 namespace csX75
 {
   enum Model
@@ -86,12 +86,12 @@ namespace csX75
 
     else if (key == GLFW_KEY_TAB && action == GLFW_PRESS) {
       light0 = 1 - light0;
-      glUniform1i(light0ON, light0);
+      switch_lamp_light(light0);
     }
 
     else if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
       light1 = 1 - light1;
-      glUniform1i(light1ON, light1);
+      switch_wall_light(light1);
     }
 
     else if (key == GLFW_KEY_4) {
@@ -127,7 +127,7 @@ namespace csX75
     else if (key == GLFW_KEY_ENTER) {
       if (points_in_place)
       {
-        camera_animation_start = true;
+        camera_playback_init();
       }
       else
       {
@@ -135,17 +135,27 @@ namespace csX75
       }
     }
 
-    else if (key == GLFW_KEY_P)
+    else if (key == GLFW_KEY_P && action == GLFW_PRESS)
       enable_perspective = !enable_perspective;   
 
     else if (key == GLFW_KEY_LEFT)
       curr_node->dec_ry();
     else if (key == GLFW_KEY_RIGHT)
       curr_node->inc_ry();
-    else if (key == GLFW_KEY_UP)
-      curr_node->dec_rx();
-    else if (key == GLFW_KEY_DOWN)
-      curr_node->inc_rx();
+    else if (key == GLFW_KEY_UP) {
+      if (curr_node == lid) {
+        box_state(lid->get_rx() - 1);
+      } else {
+        curr_node->dec_rx();
+      }
+    }
+    else if (key == GLFW_KEY_DOWN) {
+      if (curr_node == lid) {
+        box_state(lid->get_rx() + 1);
+      } else {
+        curr_node->inc_rx();
+      }
+    }
     else if (key == GLFW_KEY_PAGE_UP)
       curr_node->dec_rz();
     else if (key == GLFW_KEY_PAGE_DOWN)
@@ -164,6 +174,19 @@ namespace csX75
     // else if (key == GLFW_KEY_PAGE_DOWN)
     //   c_ypos -= 1.0;
 
+    // else if (key == GLFW_KEY_W && action == GLFW_PRESS)
+    //   curr_node->set_tz(curr_node->get_tz() - 0.1);
+    // else if (key == GLFW_KEY_S && action == GLFW_PRESS)
+    //   curr_node->set_tz(curr_node->get_tz() + 0.1);
+    // else if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+    //   curr_node->set_ty(curr_node->get_ty() + 0.1);
+    // else if (key == GLFW_KEY_E && action == GLFW_PRESS)
+    //   curr_node->set_ty(curr_node->get_ty() - 0.1);
+    // else if (key == GLFW_KEY_A && action == GLFW_PRESS)
+    //   curr_node->set_tx(curr_node->get_tx() - 0.1);
+    // else if (key == GLFW_KEY_D && action == GLFW_PRESS)
+    //   curr_node->set_tx(curr_node->get_tx() + 0.1);
+
     else if (key == GLFW_KEY_A)
       c_yrot -= 1.0;
     else if (key == GLFW_KEY_D)
@@ -176,6 +199,13 @@ namespace csX75
       c_zrot -= 1.0;
     else if (key == GLFW_KEY_E)
       c_zrot += 1.0;
+
+    else if (key == GLFW_KEY_R && action == GLFW_PRESS) {
+      recorder();
+    }
+    else if (key == GLFW_KEY_F && action == GLFW_PRESS) {
+      playback_init();
+    }
 
     else if (model == MUSIC_BOX) {
       if (key == GLFW_KEY_L) {
@@ -285,7 +315,6 @@ namespace csX75
     }
   }
 
-// https://stackoverflow.com/questions/7692988/opengl-math-projecting-screen-space-to-world-space-coords
   //!GLFW mouse callback
   void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
   {

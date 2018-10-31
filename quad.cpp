@@ -149,7 +149,7 @@ glm::vec2 tex_texcub[4] = {
   glm::vec2( 1.0, 1.0)
 };
 
-void init_texcub(GLuint* texcub_vao, GLuint* texcub_vbo, glm::vec4* texcub_positions)
+void init_texcub(GLuint* texcub_vao, GLuint* texcub_vbo, glm::vec4* texcub_positions, int invert_normals=1)
 {
   glGenVertexArrays (1, texcub_vao);
   glGenBuffers (1, texcub_vbo);
@@ -160,7 +160,7 @@ void init_texcub(GLuint* texcub_vao, GLuint* texcub_vbo, glm::vec4* texcub_posit
   glm::vec4 texcub_v_positions[texcub_num_vertices];
   glm::vec4 texcub_v_normals[texcub_num_vertices];
   glm::vec2 texcub_tex_coords[texcub_num_vertices];
-  all_quads(texcub_v_positions, texcub_v_normals, texcub_tex_coords, texcub_positions, tex_texcub);
+  all_quads(texcub_v_positions, texcub_v_normals, texcub_tex_coords, texcub_positions, tex_texcub, invert_normals);
 
   glBufferData (GL_ARRAY_BUFFER, sizeof (texcub_v_positions) + sizeof(texcub_v_normals) + sizeof(texcub_tex_coords), NULL, GL_STATIC_DRAW);
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(texcub_v_positions), texcub_v_positions );

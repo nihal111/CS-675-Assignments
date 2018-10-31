@@ -2,6 +2,7 @@ csX75::HNode* lamp_base;
 csX75::HNode* lamp_neck;
 
 GLuint lamp_head_vbo, lamp_head_vao;
+extern GLuint light0ON;
 
 glm::vec4 lamp_head_positions[8] = {
   glm::vec4(-19, -2, 14, 1.0),
@@ -24,10 +25,15 @@ void init_lamp() {
 	lamp_neck->change_parameters(0,0.1,0,
 	                        0.0,0.0,0.0);
 
-	init_texcub(&lamp_head_vao, &lamp_head_vbo, lamp_head_positions);
+	init_texcub(&lamp_head_vao, &lamp_head_vbo, lamp_head_positions, -1);
 }
 
 void draw_lamp(glm::mat4 view_matrix) {
 	lamp_base->render_tree();
 	draw_textured_object(view_matrix, &lamp_head_vao, "images/lamp.bmp", 100, 100);
+}
+
+void switch_lamp_light(float l) {
+	int light = (l > 0.5) ? 1 : 0;
+	glUniform1i(light0ON, light);
 }
