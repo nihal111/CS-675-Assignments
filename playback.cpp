@@ -17,8 +17,8 @@ double ctimeSinceStart = 0.0;
 double cdeltaTime = 0, cnowTime = 0, clastTime = 0;
 int cframes = 0;
 
-int FPS = 25;
-int cFPS = 55;
+int FPS = 20;
+int cFPS = 20;
 
 double keyframeResolution = 1.0;
 bool terminateOnNext = false;

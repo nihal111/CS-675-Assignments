@@ -110,14 +110,16 @@ int factorial(int n)
 }
 
 glm::vec4 * get_bezier_points()
-{
+{   
+    mouse_click_coordinates[mouse_count] = glm::vec3(-11.5, -1.0, 7.0);
+    mouse_count++;
     int n = mouse_count - 1;
     for (int i = 0; i < mouse_count; i++)
     {
         bezier_curve_coef[i] = factorial(n)/(factorial(i)*factorial(n-i));
     }
 
-    static glm::vec4 points[101];
+    static glm::vec4 points[201];
     
     int c = 0;
 
@@ -147,7 +149,7 @@ void draw_bezier_curve(glm::vec4* curve_points)
     glBindVertexArray (mouse_curve_vao);
     glBindBuffer (GL_ARRAY_BUFFER, mouse_curve_vbo);
 
-    glm::vec4 curve_colors[101];
+    glm::vec4 curve_colors[201];
     for (int i = 0; i < num_interpolated_points; i++)
     {
         curve_colors[i] = blue;

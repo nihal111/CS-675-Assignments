@@ -34,7 +34,10 @@ GLfloat xpos=0.0,ypos=0.0,zpos=0.0;
 GLfloat xrot=0.0,yrot=0.0,zrot=0.0;*/
 // Camera position and rotation Parameters
 glm::vec4 c_pos;
-GLfloat c_xpos = 0.0, c_ypos = 0.0, c_zpos = 5.0;
+// glm::vec4 c_pos = glm::vec4(-11.5, -1.0, 7.0, 1.0); // For box animation.
+GLfloat c_xpos = 14.0, c_ypos = -3.49, c_zpos = -15.0; // For starting position.
+bool direct_box_animation = false;
+bool box_playback_initialized = false;
 
 // Best box viewing angle
 // GLfloat c_xpos = -11.5, c_ypos = -1.0, c_zpos = 7.0;
@@ -99,13 +102,12 @@ csX75::HNode* r2d2_right_arm;
 csX75::HNode* r2d2_left_hand;
 csX75::HNode* r2d2_right_hand;
 
-
 // ---- Mouse Points
 GLuint mouse_clicks_vbo[50], mouse_clicks_vao[50];
 int mouse_count = 0;
 
 // Interpolated points of mouse curve
-int num_interpolated_points = 101;
+int num_interpolated_points = 201;
 GLuint mouse_curve_vbo, mouse_curve_vao;
 glm::vec4* mouse_curve_points;
 

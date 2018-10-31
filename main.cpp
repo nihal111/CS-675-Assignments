@@ -54,7 +54,8 @@ glm::mat4 lookat_matrix;
 glm::mat4 model_matrix;
 
 int camera_pos_count = 0;
-int frame_number = 0;
+int frame_number = 1;
+bool no_update = false;
 
 void initBuffersGL(void)
 {
@@ -115,8 +116,9 @@ void renderGL(void)
   glm::vec4 c_up = glm::vec4(c_up_x,c_up_y,c_up_z, 1.0)*c_rotation_matrix;
 
    // Start the camera animation.
-  if (camera_animation_start)
+  if (camera_animation_start && !direct_box_animation)
   {
+    no_update = true;
     if (camera_pos_count < num_interpolated_points - 1)
     {
       camera_pos_count = camera_pos_update(camera_pos_count);
@@ -130,16 +132,24 @@ void renderGL(void)
       camera_animation_start = false;
     }
   }
-  else if (playback_running)
+  else if (playback_running || direct_box_animation)
   {
+    if (direct_box_animation && !box_playback_initialized)
+    {
+      playback_init();
+      box_playback_initialized = true;
+    }
     playback_update();
     lookat_matrix = glm::lookAt(glm::vec3(c_pos),base_box_position,glm::vec3(c_up));
   }
   else
   {
-    c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
-    //Creating the lookat matrix
-    lookat_matrix = glm::lookAt(glm::vec3(c_pos),glm::vec3(0.0),glm::vec3(c_up));
+    if (!no_update)
+    {
+      c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
+      //Creating the lookat matrix
+      lookat_matrix = glm::lookAt(glm::vec3(c_pos),glm::vec3(0.0),glm::vec3(c_up));
+    }
   }
 
   //creating the projection matrix
@@ -194,6 +204,9 @@ void renderGL(void)
     // Store the frames as the animation starts.
     save("frames/" + std::to_string(frame_number) + ".tga");
     frame_number++;
+
+    // Combine TGA files to generate video.
+    // ffmpeg -r 20 -f image2 -s 1920x1080 -i %d.tga -vcodec libx264 -crf 25  -pix_fmt yuv420p test.mp4
   }
 }
 
