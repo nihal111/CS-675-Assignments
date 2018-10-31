@@ -6,6 +6,7 @@ extern int light0, light1;
 extern bool playback_running;
 extern bool camera_animation_start;
 extern glm::vec4 c_pos;
+extern bool animation_update;
 
 double timeSinceStart = 0.0;
 double deltaTime = 0, nowTime = 0, lastTime = 0;
@@ -17,7 +18,7 @@ double cdeltaTime = 0, cnowTime = 0, clastTime = 0;
 int cframes = 0;
 
 int FPS = 25;
-int cFPS = 30;
+int cFPS = 55;
 
 double keyframeResolution = 1.0;
 bool terminateOnNext = false;
@@ -439,12 +440,14 @@ int camera_pos_update(int camera_pos_count) {
 	cnowTime = glfwGetTime();
 	cdeltaTime += (cnowTime - clastTime) * cFPS;
 	clastTime = cnowTime;
+	animation_update = false;
 
 	// Only update at defined FPS
 	while (cdeltaTime >= 1.0) {
 		c_pos = mouse_curve_points[camera_pos_count];
 		camera_pos_count++;
 		cdeltaTime--;
+		animation_update = true;
 	}
 
 	cframes++;
@@ -464,12 +467,14 @@ void playback_update() {
 	nowTime = glfwGetTime();
 	deltaTime += (nowTime - lastTime) * FPS;
 	lastTime = nowTime;
+	animation_update = false;
 
 	// Only update at defined FPS
 	while (deltaTime >= 1.0) {
 		update();
 		updates++;
 		deltaTime--;
+		animation_update = true;
 	}
 
 	frames++;

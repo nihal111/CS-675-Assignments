@@ -42,6 +42,8 @@
 #include "furniture/wall_light.cpp"
 #include "furniture/lamp.cpp"
 
+#include "save_animation.cpp"
+
 GLuint shaderProgram;
 
 glm::mat4 rotation_matrix;
@@ -52,7 +54,7 @@ glm::mat4 lookat_matrix;
 glm::mat4 model_matrix;
 
 int camera_pos_count = 0;
-
+int frame_number = 0;
 
 void initBuffersGL(void)
 {
@@ -103,10 +105,6 @@ void renderGL(void)
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  if (playback_running) {
-    playback_update();
-  }
-
   matrixStack.clear();
 
   //Creating the lookat and the up vectors for the camera
@@ -116,22 +114,33 @@ void renderGL(void)
 
   glm::vec4 c_up = glm::vec4(c_up_x,c_up_y,c_up_z, 1.0)*c_rotation_matrix;
 
-  if (!camera_animation_start)
-  {
-    c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
-  }
-
    // Start the camera animation.
   if (camera_animation_start)
   {
     if (camera_pos_count < num_interpolated_points - 1)
     {
       camera_pos_count = camera_pos_update(camera_pos_count);
+      //Creating the lookat matrix
+      lookat_matrix = glm::lookAt(glm::vec3(c_pos),base_box_position,glm::vec3(c_up));
+    }
+    else
+    {
+      playback_init();
+      // Stop the camera animation.
+      camera_animation_start = false;
     }
   }
-
-  //Creating the lookat matrix
-  lookat_matrix = glm::lookAt(glm::vec3(c_pos),base_box_position,glm::vec3(c_up));
+  else if (playback_running)
+  {
+    playback_update();
+    lookat_matrix = glm::lookAt(glm::vec3(c_pos),base_box_position,glm::vec3(c_up));
+  }
+  else
+  {
+    c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
+    //Creating the lookat matrix
+    lookat_matrix = glm::lookAt(glm::vec3(c_pos),glm::vec3(0.0),glm::vec3(c_up));
+  }
 
   //creating the projection matrix
   if(enable_perspective)
@@ -162,7 +171,7 @@ void renderGL(void)
   base_box->render_tree();
 
   // ---- Draw the mouse clicks.
-  if (!camera_animation_start)
+  if (!camera_animation_start && !playback_running)
   {
     for (int i = 0; i < mouse_count; i++)
     {
@@ -173,11 +182,18 @@ void renderGL(void)
   }
 
   // ----Draw the interpolated cuve once the points are in place.
-  if (points_in_place && !camera_animation_start)
+  if (points_in_place && !camera_animation_start && !playback_running)
   {
     glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
     glBindVertexArray (mouse_curve_vao);
     glDrawArrays(GL_LINES, 0, num_interpolated_points);
+  }
+
+  if ((camera_animation_start || playback_running) && animation_update)
+  {
+    // Store the frames as the animation starts.
+    save("frames/" + std::to_string(frame_number) + ".tga");
+    frame_number++;
   }
 }
 

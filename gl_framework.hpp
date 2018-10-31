@@ -32,6 +32,7 @@ void box_state(float angle);
 void playback();
 void update();
 void playback_update();
+void playback_init();
 int camera_pos_update(int camera_pos_count);
 
 #endif

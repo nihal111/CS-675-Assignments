@@ -328,7 +328,7 @@ namespace csX75
         if (action == GLFW_PRESS)
         {
           glm::vec3 camera_pos = glm::vec3(c_pos.x, c_pos.y, c_pos.z);
-          glm::vec3 look_direction = normalize(base_box_position - camera_pos);
+          glm::vec3 look_direction = normalize(glm::vec3(0.0) - camera_pos);
           glm::vec3 mouse_position = camera_pos + 2.0*look_direction;
 
           add_sphere_points(mouse_position.x, mouse_position.y, mouse_position.z);
