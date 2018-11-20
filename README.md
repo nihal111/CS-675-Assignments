@@ -77,6 +77,7 @@ Here is the movie we made - [Graphics Assignment Movie Box][1]
 
 [1]: https://www.youtube.com/watch?v=xFk834AydTE
 
+## Declaration
 Nihal Singh - 150040015 
 
 Arunabh Ghosh - 150070006
@@ -127,3 +128,6 @@ https://dumielauxepices.net/furniture-clipart/furniture-clipart-cupboard
 
 Door-
 https://clipartpng.com/?2397,brown-door-png-clipart
+
+#### Sountrack
+The song used in the movie is [Alan Walker - Spectre [NCS Release]](https://www.youtube.com/watch?v=AOeY-nDp7hI).
