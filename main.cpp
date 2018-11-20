@@ -118,13 +118,10 @@ void renderGL(void)
    // Start the camera animation.
   if (camera_animation_start && !direct_box_animation)
   {
+    glm::vec4 c_up = glm::vec4(c_up_x,c_up_y,c_up_z, 1.0);
     no_update = true;
     if (camera_pos_count < num_interpolated_points - 2)
     {
-      if (camera_pos_count == num_interpolated_points - 2)
-      {
-        std::cout<<glm::to_string(mouse_curve_points[camera_pos_count])<<std::endl;
-      }
       camera_pos_count = camera_pos_update(camera_pos_count);
       //Creating the lookat matrix
       lookat_matrix = glm::lookAt(glm::vec3(c_pos),base_box_position,glm::vec3(c_up));

@@ -162,22 +162,11 @@ void draw_bezier_curve(glm::vec4* curve_points)
     m_curve_points[n-1] = curve_points[num_interpolated_points - 1];
     int c = 1;
 
-    // for (int i = 1; i < num_interpolated_points; i = i + 2)
-    // {
-    //     std::cout<<glm::to_string(curve_points[i])<<std::endl;
-    // }
-
-
     for (int i = 1; i < n - 1; i = i + 2)
     {
         m_curve_points[i] = curve_points[c];
         m_curve_points[i + 1] = curve_points[c];
         c = c + 1;
-    }
-
-    for (int i = 1; i < n - 1; i++)
-    {
-        std::cout<<glm::to_string(m_curve_points[i])<<std::endl;
     }
 
     std::size_t vertex_buffer_size = sizeof(curve_points[0])*(2*num_interpolated_points-2);
