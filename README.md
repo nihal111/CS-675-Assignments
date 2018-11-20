@@ -2,6 +2,25 @@ To execute the assignment-
 
 First run `make` at the root directory and then execute `./main`.
 
+## Keys used to move the camera about the room.
+- Press 4 to increase the camera x-coordinate
+- Press 5 to decrease the camera x-coordinate
+- Press 6 to increase the camera y-coordinate
+- Press 7 to decrease the camera y-coordinate
+- Press 8 to increase the camera z-coordinate
+- Press 9 to decrease the camera z-coordinate
+
+## Camera Curve
+- While moving the camera, click the mouse to add a control point.
+- After adding the control points, click 0 to draw the interpolated bezier curve. Note the first and last point are added by default and they are at the door and in front of the box respectively.
+
+## Lighting
+- Press TAB to toggle the lamp.
+- Press Space to toggle the wall light.
+
+## Animation
+- Press ENTER to start the entire animation. At first the camera will move on the designated bezier curve which ends at a point in front of the musical box. After the camera animation, the character animation starts. 
+
 ## Keys used to control the box
 - Press 1 to select the music box
 - After pressing 1, Press B to select the base box
@@ -52,6 +71,11 @@ Press the following keys to change the view angle
 - Press S to increase the camera X coordinate
 - Press Q to decrease the camera Z coordinate
 - Press E to increase the camera Z coordinate
+
+## Movie time!
+Here is the movie we made - [Graphics Assignment Movie Box][1]
+
+[1]: https://www.youtube.com/watch?v=xFk834AydTE
 
 Nihal Singh - 150040015 
 
