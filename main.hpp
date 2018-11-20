@@ -113,6 +113,7 @@ glm::vec4* mouse_curve_points;
 
 // ----- Control points are in place.
 bool camera_animation_start = false;
+bool start_playback = false;
 bool points_in_place = false;
 
 // ---- Save animation

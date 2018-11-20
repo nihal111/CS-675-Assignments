@@ -119,8 +119,12 @@ void renderGL(void)
   if (camera_animation_start && !direct_box_animation)
   {
     no_update = true;
-    if (camera_pos_count < num_interpolated_points - 1)
+    if (camera_pos_count < num_interpolated_points - 2)
     {
+      if (camera_pos_count == num_interpolated_points - 2)
+      {
+        std::cout<<glm::to_string(mouse_curve_points[camera_pos_count])<<std::endl;
+      }
       camera_pos_count = camera_pos_update(camera_pos_count);
       //Creating the lookat matrix
       lookat_matrix = glm::lookAt(glm::vec3(c_pos),base_box_position,glm::vec3(c_up));
@@ -130,9 +134,11 @@ void renderGL(void)
       playback_init();
       // Stop the camera animation.
       camera_animation_start = false;
+      start_playback = true;
+      c_pos = glm::vec4(-11.5, -1.0, 7.0, 1.0);
     }
   }
-  else if (playback_running || direct_box_animation)
+  else if (start_playback || playback_running || direct_box_animation)
   {
     if (direct_box_animation && !box_playback_initialized)
     {
@@ -196,7 +202,7 @@ void renderGL(void)
   {
     glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(view_matrix));
     glBindVertexArray (mouse_curve_vao);
-    glDrawArrays(GL_LINES, 0, num_interpolated_points);
+    glDrawArrays(GL_LINES, 0, 2*num_interpolated_points - 2);
   }
 
   if ((camera_animation_start || playback_running) && animation_update)

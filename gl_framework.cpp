@@ -318,7 +318,7 @@ namespace csX75
   //!GLFW mouse callback
   void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
   {
-    double xpos, ypos;
+    double xpos, ypos, zpos;
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwGetCursorPos(window, &xpos, &ypos);
 
@@ -327,11 +327,50 @@ namespace csX75
       case GLFW_MOUSE_BUTTON_LEFT:
         if (action == GLFW_PRESS)
         {
+          GLint viewport[4];                  // Where The Viewport Values Will Be Stored
+          glGetIntegerv(GL_VIEWPORT, viewport);           // Retrieves The Viewport Values (X, Y, Width, Height)
+
+          GLdouble modelview[16];                 // Where The 16 Doubles Of The Modelview Matrix Are To Be Stored
+          glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+
+          glm::mat4 mv = glm::make_mat4(modelview);
+
+          GLdouble projection[16];                // Where The 16 Doubles Of The Projection Matrix Are To Be Stored
+          glGetDoublev(GL_PROJECTION_MATRIX, projection);     // Retrieve The Projection Matrix
+
+          glm::mat4 p = glm::make_mat4(projection);
+
+          GLfloat winX, winY, winZ;               // Holds Our X, Y and Z Coordinates
+          winX = (float)xpos;                  // Holds The Mouse X Coordinate
+          winY = (float)ypos;                  // Holds The Mouse Y Coordinate
+          winY = (float)viewport[3] - winY;           // Subtract The Current Mouse Y Coordinate From The Screen Height.
+          glReadPixels(winX, winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+          winZ = winZ - 0.5;
+
+          float in[4];
+
+          in[0]=(winX-(float)viewport[0])/(float)viewport[2]*2.0-1.0;
+          in[1]=(winY-(float)viewport[1])/(float)viewport[3]*2.0-1.0;
+          in[2]=2.0*winZ-1.0;
+          in[3]=1.0;
+
+          glm::vec4 inv = glm::vec4(in[0], in[1], in[2], in[3]);
+
+          glm::mat4 inverse_view_matrix = glm::inverse(view_matrix);
+
+          glm::vec4 new_pos = inverse_view_matrix*inv;
+
+          new_pos.w = 1.0/new_pos.w;
+
+          new_pos.x *= new_pos.w;
+          new_pos.y *= new_pos.w;
+          new_pos.z *= new_pos.w;
+          
           glm::vec3 camera_pos = glm::vec3(c_pos.x, c_pos.y, c_pos.z);
           glm::vec3 look_direction = normalize(glm::vec3(0.0) - camera_pos);
           glm::vec3 mouse_position = camera_pos + 2.0*look_direction;
 
-          add_sphere_points(mouse_position.x, mouse_position.y, mouse_position.z);
+          add_sphere_points(new_pos.x, new_pos.y, new_pos.z);
         }
       default:
           break;
