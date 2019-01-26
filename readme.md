@@ -10,15 +10,15 @@ This repository contains the solutions for all the assignments for the CS 675 co
 
 [PS1 - mydraw: Rasterization based interactive drawing](https://www.cse.iitb.ac.in/~paragc/teaching/2018/cs475/assignments/A1/A1.shtml)
 
-[Report 1]()
+[Report 1](assignment-1/doc/submit.pdf)
 
 [PS2 - The Music Box: Modelling.](https://www.cse.iitb.ac.in/~paragc/teaching/2018/cs475/assignments/A2/A2.shtml)
 
-[Report 2]()
+[Report 2](assignment-2/doc/submit.pdf)
 
 [PS3 - The Music Box: Rendering and Animation.](https://www.cse.iitb.ac.in/~paragc/teaching/2018/cs475/assignments/A3/A3.shtml)
 
-[Report 3]()
+[Report 3](assignment-3/doc/submit.pdf)
 
 ## Final Project Video
 
